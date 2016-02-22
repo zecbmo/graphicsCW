@@ -91,7 +91,7 @@ void Scene3D::Init(HWND* wnd, Input* in)
 
 	//OpenGL settings
 	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.7f, 1.0f);				// Black Background
+	glClearColor(0.0f, 0.0f, 0.7f, 1.0f);				// Black Background *no it isnt
 	glClearDepth(1.0f);									// Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
@@ -102,8 +102,9 @@ void Scene3D::Init(HWND* wnd, Input* in)
 	glEnable(GL_COLOR_MATERIAL);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Initialise other variables
-
-	point_light_.Init(GL_LIGHT0, MAT);
+	light_.Init();
+	
+	
 		//////////////////// texturing ////////////////////
 	glEnable(GL_TEXTURE_2D);
 
@@ -127,7 +128,15 @@ void Scene3D::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
 	glLoadIdentity();// load Identity Matrix
 
+	light_.Render();
   
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+
+	gluLookAt(0, 0, 6, 0, 0, 0, 0, 1, 0);
+	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+
+
 
 
 	SwapBuffers(hdc);// Swap the frame buffers.

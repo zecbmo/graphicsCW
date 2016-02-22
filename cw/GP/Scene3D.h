@@ -54,7 +54,7 @@ protected:
 	HDC	hdc;
 	HGLRC hrc;			//hardware RENDERING CONTEXT
 	int s_wdith, s_height;
-	Light point_light_;
+	Light light_;
 
 };
 
