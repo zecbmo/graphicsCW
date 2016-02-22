@@ -10,7 +10,7 @@
 #include <gl/glu.h>
 
 
-void setVSync(bool sync); //obtained from Stewart McCready CGT
+void SetVSync(bool sync); //obtained from Stewart McCready CGT
 //#include "wglextGary.h"
 
 // Globals
@@ -50,7 +50,7 @@ void RegisterMyWindow(HINSTANCE hInstance)
 BOOL InitialiseMyWindow(HINSTANCE hInstance, int nCmdShow)
 {
 	hwnd = CreateWindow("FirstWindowClass",
-		"My First Window",
+		"Does it even matter what this is called?",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -82,7 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
 	scene.Init(&hwnd, &input);
 	timer.Initialize();
-	setVSync(false);
+	SetVSync(false);
 	while (TRUE)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -145,7 +145,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 }
 
-void setVSync(bool sync)  //obtained from Stewart McCready CGT
+void SetVSync(bool sync)  //obtained from Stewart McCready CGT
 {
 	// Function pointer for the wgl extention function we need to enable/disable
 	// vsync

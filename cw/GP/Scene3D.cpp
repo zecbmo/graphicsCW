@@ -4,6 +4,8 @@
 #include "include\SOIL.h"
 
 
+
+
 bool Scene3D::CreatePixelFormat(HDC hdc) 
 { 
     PIXELFORMATDESCRIPTOR pfd = {0}; 
@@ -101,6 +103,7 @@ void Scene3D::Init(HWND* wnd, Input* in)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Initialise other variables
 
+	point_light_.Init(GL_LIGHT0, MAT);
 		//////////////////// texturing ////////////////////
 	glEnable(GL_TEXTURE_2D);
 
