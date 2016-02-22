@@ -1,0 +1,32 @@
+﻿Build started 04/02/2016 11:42:59.
+     1>Project "C:\Users\Zecbmo\Google Drive\graphics programming\second semester\texturing - Copy\GP\GP.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\..\..\Desktop\Shape.cpp Camera.cpp Input.cpp Main.cpp Scene3D.cpp TextRenderer.cpp Timer.cpp Vector3.cpp
+         Shape.cpp
+         Camera.cpp
+     1>Camera.cpp(23): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>Camera.cpp(24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>Camera.cpp(25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>Camera.cpp(26): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>Camera.cpp(27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>Camera.cpp(28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+         Input.cpp
+     1>c:\users\zecbmo\google drive\graphics programming\second semester\texturing - copy\gp\Input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+         Main.cpp
+     1>c:\users\zecbmo\google drive\graphics programming\second semester\texturing - copy\gp\Input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+     1>c:\users\zecbmo\google drive\graphics programming\second semester\texturing - copy\gp\TextRenderer.h(9): fatal error C1083: Cannot open include file: 'SOIL.h': No such file or directory
+         Scene3D.cpp
+     1>c:\users\zecbmo\google drive\graphics programming\second semester\texturing - copy\gp\Input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+     1>c:\users\zecbmo\google drive\graphics programming\second semester\texturing - copy\gp\TextRenderer.h(9): fatal error C1083: Cannot open include file: 'SOIL.h': No such file or directory
+         TextRenderer.cpp
+     1>c:\users\zecbmo\google drive\graphics programming\second semester\texturing - copy\gp\TextRenderer.h(9): fatal error C1083: Cannot open include file: 'SOIL.h': No such file or directory
+         Timer.cpp
+         Vector3.cpp
+     1>Vector3.cpp(104): warning C4552: '*': operator has no effect; expected operator with side-effect
+     1>Vector3.cpp(105): warning C4552: '*': operator has no effect; expected operator with side-effect
+     1>Vector3.cpp(106): warning C4552: '*': operator has no effect; expected operator with side-effect
+     1>Done Building Project "C:\Users\Zecbmo\Google Drive\graphics programming\second semester\texturing - Copy\GP\GP.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.52
