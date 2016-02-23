@@ -8,6 +8,8 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include "Vector3.h"
+#include <string>
+#include "ErrorSystem.h"
 
 //Questions to ask paul
 	//Spot lights direction - should it be normalised??
@@ -32,7 +34,7 @@ class Light
 {
 	//from this light class, you will be able to create and manage different light sources
 	//on initialisation the type can be defined alongside some templates that will set up the light
-
+	//all lights will be init with some default values ie poision, colours, attenuation etc
 public:
 	Light() {};
 	~Light() {};
@@ -80,6 +82,9 @@ public:
 	inline float GetLinearAttenuation() { return linear_attenuation_; };
 	inline void SetQuadraticAttenuation(float quad) { quadratic_attenuation_ = quad; };	
 
+	//ID
+	inline std::string GetID() { return id_; };
+
 	//on or off?
 	inline void SetOn(bool on) { on_ = on; }; //for if the light is on or off
 	inline bool GetOn() { return on_; };
@@ -91,8 +96,11 @@ private:
 	//helper functions
 	void LightTemplateHelperFunction(LightTemplate default_light);
 	void InitHelperFunction(float glLightDefine);
+	void SetID(); //private and called at the end of init. set by opengl
+
 	//member variables
 	int gl_light_num_; //Stores GL_LIGHT0 etc
+	std::string id_; //Stores a string literal of the gl_light_num (For Error reporting and Identifiying problems)
 						
 	float ambient_[4]; //reminders:: comes from everywhere - minimum light value
 	float diffuse_[4]; //from a particular direction - calculated using light and surface normal

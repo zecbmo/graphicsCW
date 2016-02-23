@@ -1,0 +1,29 @@
+#include "ErrorSystem.h"
+
+void error::ValueError(std::string id, std::string message, float value, bool destroy_window )
+{
+	char buffer[255];
+	sprintf_s(buffer, "%s %s : %.2f", id.c_str(), message.c_str(), value);
+	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
+
+	if (destroy_window)
+		DestroyWindow(GetActiveWindow());
+}
+void error::ValueError(std::string id, std::string message, int value, bool destroy_window)
+{
+	char buffer[255];
+	sprintf_s(buffer, "%s %s : %d", id.c_str(), message.c_str(), value);
+	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
+
+	if (destroy_window)
+		DestroyWindow(GetActiveWindow());
+}
+void error::ErrorMessage(std::string message, bool destroy_window)
+{
+	char buffer[255];
+	sprintf_s(buffer, "%s",  message.c_str());
+	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
+
+	if(destroy_window)
+		DestroyWindow(GetActiveWindow());
+}

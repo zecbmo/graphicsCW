@@ -1,12 +1,12 @@
-﻿Build started 22/02/2016 20:58:31.
+﻿Build started 23/02/2016 08:32:50.
      1>Project "Z:\bitBuket\Graphics Coursework\cw\GP\GP.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (GP.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"Z:\bitBuket\Graphics Coursework\cw\GP\\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Scene3D.cpp
-         Scene3D.cpp
-     1>z:\bitbuket\graphics coursework\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"Z:\bitBuket\Graphics Coursework\cw\GP\\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ErrorSystem.cpp
+         ErrorSystem.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Z:\bitBuket\Graphics Coursework\cw\Debug\CW.exe" /INCREMENTAL /NOLOGO /LIBPATH:"Z:\bitBuket\Graphics Coursework\cw\GP\\lib" winmm.lib opengl32.lib glu32.lib Msimg32.lib SOIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"Z:\bitBuket\Graphics Coursework\cw\Debug\CW.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Z:\bitBuket\Graphics Coursework\cw\Debug\CW.lib" /MACHINE:X86 Debug\Camera.obj
+         Debug\ErrorSystem.obj
          Debug\Input.obj
          Debug\Light.obj
          Debug\Main.obj
@@ -17,9 +17,13 @@
          Debug\Timer.obj
          Debug\TokenStream.obj
          Debug\Vector3.obj
+     1>SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'Z:\bitBuket\Graphics Coursework\cw\Debug\vc120.pdb'; linking object as if no debug info
+     1>SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'Z:\bitBuket\Graphics Coursework\cw\Debug\vc120.pdb'; linking object as if no debug info
+     1>SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'Z:\bitBuket\Graphics Coursework\cw\Debug\vc120.pdb'; linking object as if no debug info
+     1>SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'Z:\bitBuket\Graphics Coursework\cw\Debug\vc120.pdb'; linking object as if no debug info
          GP.vcxproj -> Z:\bitBuket\Graphics Coursework\cw\Debug\CW.exe
      1>Done Building Project "Z:\bitBuket\Graphics Coursework\cw\GP\GP.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.07
+Time Elapsed 00:00:07.42

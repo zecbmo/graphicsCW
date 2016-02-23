@@ -170,6 +170,14 @@ void Light::Render()
 		float position[4] = { vec_pos_.getX(), vec_pos_.getY(), vec_pos_.getZ(), l_type };
 		float spot_dir[3] = { spot_direction_.getX(), spot_direction_.getY(), spot_direction_.getZ() };
 
+		if ((spot_cutoff_ != 180) && (spot_cutoff_ > 90 || spot_cutoff_ < 0))
+		{
+			//throw error here!
+			error::ValueError(id_, "spot light cutoff out of range",spot_cutoff_);
+			//Make sure to keep cut off within bounds
+		}
+
+
 		glLightfv(gl_light_num_, GL_AMBIENT, ambient_);
 		glLightfv(gl_light_num_, GL_DIFFUSE, diffuse_);
 		glLightfv(gl_light_num_, GL_SPECULAR, specular_);
@@ -204,10 +212,10 @@ void Light::LightTemplateHelperFunction(LightTemplate default_light)
 					break;
 	}
 }
-void Light::InitHelperFunction(float glLightDefine)
+void Light::InitHelperFunction(float glLightDefine) //defaults for either init functions
 {
 	gl_light_num_ = glLightDefine;
-	vec_pos_ = Vector3(1.0f, 1.0f, 0.0f);
+	vec_pos_ = Vector3(0.0f, 0.0f, 0.0f);
 	spot_direction_ = Vector3(0.0f, 1.0f, 0.0f);
 	spot_cutoff_ = 180.0f;
 	spot_exponent_ = 0;
@@ -215,5 +223,28 @@ void Light::InitHelperFunction(float glLightDefine)
 	linear_attenuation_ = 0.2f;
 	quadratic_attenuation_ = 0.0f;
 	on_ = true;
+	SetID();
 
+}
+void Light::SetID()
+{
+	switch (gl_light_num_)
+	{
+	case GL_LIGHT0:		id_ = "GL_LIGHT0";
+						break;
+	case GL_LIGHT1:		id_ = "GL_LIGHT1";
+						break; 
+	case GL_LIGHT2:		id_ = "GL_LIGHT2";
+						break; 
+	case GL_LIGHT3:		id_ = "GL_LIGHT3";
+						break; 
+	case GL_LIGHT4:		id_ = "GL_LIGHT4";
+						break; 
+	case GL_LIGHT5:		id_ = "GL_LIGHT5";
+						break;
+	case GL_LIGHT6:		id_ = "GL_LIGHT6";
+						break; 
+	case GL_LIGHT7:		id_ = "GL_LIGHT7";
+						break;
+	}
 }

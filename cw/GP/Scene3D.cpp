@@ -103,7 +103,7 @@ void Scene3D::Init(HWND* wnd, Input* in)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Initialise other variables
 	light_.Init();
-	
+	light_.SetSpotCutoff(5252);
 	
 		//////////////////// texturing ////////////////////
 	glEnable(GL_TEXTURE_2D);
@@ -120,6 +120,10 @@ void Scene3D::Update(float dt)
 	// Do important update here
 	// Handle user input, update variables etc
 	
+	
+	light_.SetPosition(Vector3(-1.0f, 1.0f, 1.0f));
+
+
 	Render();
 }
 
@@ -132,7 +136,6 @@ void Scene3D::Render()
   
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
-
 	gluLookAt(0, 0, 6, 0, 0, 0, 0, 1, 0);
 	gluSphere(gluNewQuadric(), 1.0, 40, 40);
 
