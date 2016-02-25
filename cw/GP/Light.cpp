@@ -4,15 +4,15 @@
 void Light::Init(int glLightDefine) //which light to use e.g. GL_LIGHT0
 {
 	InitHelperFunction(glLightDefine);
-	LightTemplateHelperFunction(DEFAULT);
+	SetByTemplate(DEFAULT);
 	light_type_ = DIRECTIONAL_LIGHT;
 	
 }
 
-void Light::Init(int glLightDefine, LightType type, LightTemplate default_light)
+void Light::Init(int glLightDefine, LightType type, MatTemplate default_light)
 {
 	InitHelperFunction(glLightDefine);
-	LightTemplateHelperFunction(default_light);
+	SetByTemplate(default_light);
 	light_type_ = type;
 	if (light_type_ == SPOT_LIGHT)
 	{
@@ -22,86 +22,6 @@ void Light::Init(int glLightDefine, LightType type, LightTemplate default_light)
 	{
 		spot_cutoff_ = 180.0f;
 	}
-}
-void Light::SetAllValues(ColourValues ambient, ColourValues diffuse, ColourValues specular)
-{
-	SetAmbientColour(ambient);
-	SetDiffuseColour(diffuse);
-	SetSpecularColour(specular);
-}
-void Light::SetAllValues(ColourValues defaults)
-{
-	SetAmbientColour(defaults);
-	SetDiffuseColour(defaults);
-	SetSpecularColour(defaults);
-}
-void Light::SetAmbientColour(float r, float g, float b, float a)
-{
-	ambient_[0] = r;
-	ambient_[1] = g;
-	ambient_[2] = b;
-	ambient_[3] = a;
-}
-void Light::SetAmbientColour(ColourValues colour_values)
-{
-	ambient_[0] = colour_values.r;
-	ambient_[1] = colour_values.g;
-	ambient_[2] = colour_values.b;
-	ambient_[3] = colour_values.a;
-}
-ColourValues Light::GetAmbientColour()
-{
-	float r = ambient_[0];
-	float g = ambient_[1];
-	float b = ambient_[2];
-	float a = ambient_[3];
-	return ColourValues(r, g, b, a);
-}
-
-void Light::SetDiffuseColour(float r, float g, float b, float a)
-{
-	diffuse_[0] = r;
-	diffuse_[1] = g;
-	diffuse_[2] = b;
-	diffuse_[3] = a;
-}
-void Light::SetDiffuseColour(ColourValues colour_values)
-{
-	diffuse_[0] = colour_values.r;
-	diffuse_[1] = colour_values.g;
-	diffuse_[2] = colour_values.b;
-	diffuse_[3] = colour_values.a;
-}
-ColourValues Light::GetDiffuseColour()
-{
-	float r = diffuse_[0];
-	float g = diffuse_[1];
-	float b = diffuse_[2];
-	float a = diffuse_[3];
-	return ColourValues(r, g, b, a);
-}
-
-void Light::SetSpecularColour(float r, float g, float b, float a)
-{
-	specular_[0] = r;
-	specular_[1] = g;
-	specular_[2] = b;
-	specular_[3] = a;
-}
-void Light::SetSpecularColour(ColourValues colour_values)
-{
-	specular_[0] = colour_values.r;
-	specular_[1] = colour_values.g;
-	specular_[2] = colour_values.b;
-	specular_[3] = colour_values.a;
-}
-ColourValues Light::GetSpecularColour()
-{
-	float r = specular_[0];
-	float g = specular_[1];
-	float b = specular_[2];
-	float a = specular_[3];
-	return ColourValues(r, g, b, a);
 }
 void Light::SetPosition(Vector3 position)
 {
@@ -190,28 +110,6 @@ void Light::Render()
 	}
 
 }
-void Light::LightTemplateHelperFunction(LightTemplate default_light)
-{
-	switch (default_light) //Sets up template lights because doing this is tedious
-	{
-	case DEFAULT:	SetAmbientColour(ColourValues(0.2f, 0.2f, 0.2f, 1.0f));
-					SetDiffuseColour(ColourValues(0.8f, 0.8f, 0.8f, 1.0f));
-					SetSpecularColour(ColourValues(0.5f, 0.5f, 0.5f, 1.0f));
-					break;
-	case AMBIENT:	SetAmbientColour(ColourValues(0.3f, 0.3f, 0.3f, 1.0f));
-					SetDiffuseColour(ColourValues(0.8f, 0.8f, 0.8f, 1.0f));
-					SetSpecularColour(ColourValues(0.0f, 0.0f, 0.0f, 0.0f));
-					break;
-	case NATURAL:	SetAmbientColour(ColourValues(0.3f, 0.3f, 0.3f, 1.0f));
-					SetDiffuseColour(ColourValues(1.0f, 1.0f, 1.0f, 1.0f));
-					SetSpecularColour(ColourValues(0.6f, 0.6f, 0.6f, 1.0f));
-					break;
-	case SHINY:		SetAmbientColour(ColourValues(0.2f, 0.2f, 0.2f, 1.0f));
-					SetDiffuseColour(ColourValues(0.8f, 0.8f, 0.8f, 1.0f));
-					SetSpecularColour(ColourValues(1.0f, 1.0f, 1.0f, 1.0f));
-					break;
-	}
-}
 void Light::InitHelperFunction(float glLightDefine) //defaults for either init functions
 {
 	gl_light_num_ = glLightDefine;
@@ -247,4 +145,74 @@ void Light::SetID()
 	case GL_LIGHT7:		id_ = "GL_LIGHT7";
 						break;
 	}
+}
+
+void Light::SetColourByTemplate(Colour colour, ColourModifier modifier)
+{
+	switch (colour)
+	{
+	case RED:
+		SetAmbientColour(0.8f, 0.2f, 0.2f, 1);
+		SetDiffuseColour(1.0f, 0.0f, 0.0f, 1);
+		SetSpecularColour(0.7, 0.0f, 0.0f, 1);
+		DisableValue(modifier);
+		break;
+	case BLUE:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case GREEN:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case PINK:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case ORANGE:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case YELLOW:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case PURPLE:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case BROWN:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case BLACK:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	case WHITE:
+		/*SetAmbientColour();
+		SetDiffuseColour();
+		SetSpecularColour();*/
+		DisableValue(modifier);
+		break;
+	}
+
+
+
 }

@@ -75,6 +75,149 @@ void Scene3D::InitializeOpenGL(int width, int height)
 
 void Scene3D::Init(HWND* wnd, Input* in)
 {
+	InitHelper(wnd, in);
+
+
+	//////// Lighting
+	glEnable(GL_LIGHTING);
+	light_.Init(GL_LIGHT0, SPOT_LIGHT, NATURAL);
+
+	
+
+	/////// Materials 
+	glEnable(GL_COLOR_MATERIAL);
+
+	/////// Textures 
+
+
+}
+
+void Scene3D::Update(float dt)
+{
+	
+	// Do important update here
+	light_.SetPosition(Vector3(-2.0f, 0.0f, 1.0f));
+
+
+	Render();
+}
+
+void Scene3D::Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
+	glLoadIdentity();// load Identity Matrix
+
+	//Camera
+	gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
+
+	//Light done first	
+	//light_.Render();
+
+	GLfloat Light_Ambient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	GLfloat Light_Diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat Light_Specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat Light_Position[] = { -6.0f, 0.0f, 3.0f, 0.0f };
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, Light_Specular);
+	glEnable(GL_LIGHT0);
+
+	glColor4f(0.8, 0.0, 0.8, 1);
+	//Materials temp;
+	//temp.Init(DEFAULT);
+	//temp.SetShininess(50);
+	//temp.SetEmission(0.1, 0, 0.1, 1);
+	//temp.SetColourByTemplate(RED);
+	//temp.BindMaterial();	
+	//gluSphere(gluNewQuadric(), 1.0, 40, 40);
+
+
+	GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
+	GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
+	GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 };
+	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat no_shininess[] = { 0.0 };
+	GLfloat low_shininess[] = { 5.0 };
+	GLfloat high_shininess[] = { 100.0 };
+	GLfloat mat_emission[] = { 0.3, 0.2, 0.2, 0.0 };
+
+	glPushMatrix();
+	glTranslatef(-3.75, 0.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
+	glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-1.25, 0.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(1.25, 0.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(3.75, 0.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
+	glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glPopMatrix();
+
+
+	float ambient[4] = { 0.135, 0.2225, 0.1575, 0.95 };
+	float diffuse[4] = { 0.54, 0.89, 0.63, 0.95 };
+	float specular[4] =  { 0.316228, 0.316228, 0.316228, 0.95 };
+	float emission[4] =  {0.0, 0.0, 0.0,  0.0 };
+	float shininess = 12.8;
+
+	glColor4f(0.54, 0.89, 0.63, 0.95);
+
+	glPushMatrix();
+	glTranslatef(3.75, -3.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, emission);
+	gluSphere(gluNewQuadric(), 1.0, 20, 20);
+	glPopMatrix();
+
+	//Render HUD last
+
+	SwapBuffers(hdc);// Swap the frame buffers.
+}		
+
+void Scene3D::Resize()
+{
+	if(hwnd == NULL)
+		return;
+
+	GetClientRect(*hwnd, &screenRect);	
+	ResizeGLWindow(screenRect.right, screenRect.bottom);	
+}
+void Scene3D::InitHelper(HWND* wnd, Input* in)
+{
 	hwnd = wnd;
 	input = in;
 
@@ -96,60 +239,4 @@ void Scene3D::Init(HWND* wnd, Input* in)
 	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
-
-	//Also, do any other setting variables here for your app if you wish. 
-
-	glEnable(GL_COLOR_MATERIAL);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	// Initialise other variables
-	light_.Init();
-	light_.SetSpotCutoff(5252);
-	
-		//////////////////// texturing ////////////////////
-	glEnable(GL_TEXTURE_2D);
-
-
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-
-}
-
-void Scene3D::Update(float dt)
-{
-	
-	// Do important update here
-	// Handle user input, update variables etc
-	
-	
-	light_.SetPosition(Vector3(-1.0f, 1.0f, 1.0f));
-
-
-	Render();
-}
-
-void Scene3D::Render() 
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
-	glLoadIdentity();// load Identity Matrix
-
-	light_.Render();
-  
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
-	gluLookAt(0, 0, 6, 0, 0, 0, 0, 1, 0);
-	gluSphere(gluNewQuadric(), 1.0, 40, 40);
-
-
-
-
-	SwapBuffers(hdc);// Swap the frame buffers.
-}		
-
-void Scene3D::Resize()
-{
-	if(hwnd == NULL)
-		return;
-
-	GetClientRect(*hwnd, &screenRect);	
-	ResizeGLWindow(screenRect.right, screenRect.bottom);	
 }

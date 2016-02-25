@@ -82,11 +82,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseColour.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ErrorSystem.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Materials.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Scene3D.cpp" />
     <ClCompile Include="Shapes.cpp" />
@@ -96,9 +98,12 @@
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseColour.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ErrorSystem.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Materials.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Input.h" />

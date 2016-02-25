@@ -6,8 +6,12 @@ void error::ValueError(std::string id, std::string message, float value, bool de
 	sprintf_s(buffer, "%s %s : %.2f", id.c_str(), message.c_str(), value);
 	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
 
+
 	if (destroy_window)
-		DestroyWindow(GetActiveWindow());
+	{
+		//DestroyWindow(GetActiveWindow());
+		exit(1);
+	}
 }
 void error::ValueError(std::string id, std::string message, int value, bool destroy_window)
 {
@@ -16,7 +20,10 @@ void error::ValueError(std::string id, std::string message, int value, bool dest
 	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
 
 	if (destroy_window)
-		DestroyWindow(GetActiveWindow());
+	{
+		//DestroyWindow(GetActiveWindow());
+		exit(1);
+	}
 }
 void error::ErrorMessage(std::string message, bool destroy_window)
 {
@@ -24,6 +31,10 @@ void error::ErrorMessage(std::string message, bool destroy_window)
 	sprintf_s(buffer, "%s",  message.c_str());
 	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
 
-	if(destroy_window)
-		DestroyWindow(GetActiveWindow());
+
+	if (destroy_window)
+	{
+		//DestroyWindow(GetActiveWindow());
+		exit(1);
+	}
 }

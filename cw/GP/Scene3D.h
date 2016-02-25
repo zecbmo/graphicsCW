@@ -15,12 +15,14 @@
 #include "Shapes.h"
 #include "Model.h"
 #include "Light.h"
+#include "Materials.h"
 
 #define COLOUR_DEPTH 16	//Colour depth
 /*
 •	The scene must show lighting from at least 1 light source.Preferably multiple lights or different types, colours and some animated.
 •	The scene must show use of texturing.Additionally demonstrating animated textures or advance use of texturing coordinates.
-•	A working camera.The user must be able to manipulate the view through using the mouse and keyboard to control the camera.Additionally, you should provide multiple cameras each with a different focus such as limited controls, fixed views, procedurally controlled views or different camera types.
+•	A working camera.The user must be able to manipulate the view through using the mouse and keyboard to control the camera.Additionally, 
+	you should provide multiple cameras each with a different focus such as limited controls, fixed views, procedurally controlled views or different camera types.
 •	A clear example of using the matrix stack for Hierarchical modelling and animation through hierarchical means.
 •	Use of transparency effects / Alpha blending
 •	Use of display lists and vertex arrays
@@ -46,6 +48,7 @@ protected:
 	bool CreatePixelFormat(HDC hdc);
 	void ResizeGLWindow(int width, int height);	//width and height
 	void InitializeOpenGL(int width, int height); // width and height
+	void InitHelper(HWND* wnd, Input* in);
 	
 	//vars
 	HWND* hwnd;
