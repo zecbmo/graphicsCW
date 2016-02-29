@@ -189,6 +189,11 @@ bool Model::LoadModel(char* filename)
     int numFaces = ( int )faces.size( ) / 9;
 	m_vertexCount = numFaces * 3;
 	
+
+	/*verts vector3
+		texCoords
+		norms
+	int	faces*/
    // You must add code here to sort the model data
 	// Model data is stored in stored in vectors verts, norms, texC and faces
 	// Sort through the data and store it in the vectors provided (see header file)

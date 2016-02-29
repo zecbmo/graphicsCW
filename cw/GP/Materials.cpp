@@ -1,27 +1,28 @@
 #include "Materials.h"
 
 
-void Materials::Init()
+void Material::Init()
 {
 	SetMaterialByTemplate(DEFAULT);
-	shininess_ = 0;
-	SetEmission(Colour_RGBA(0.0, 0.0, 0.0, 1.0));
 	colour_ = Colour_RGBA(1, 1, 1, 1);
 	direct_colour_control_ = false;
+	gl_face_to_draw_ = GL_FRONT;
 }
-void Materials::Init(MaterialProperty material_template, Colour colour)
+void Material::Init(MaterialProperty material_template, Colour colour)
 {
 	SetMaterialByTemplate(material_template);
 	SetColourByTemplate(colour);
 	direct_colour_control_ = false;
+	gl_face_to_draw_ = GL_FRONT;
 }
-void Materials::Init(MaterialProperty material_template, Colour_RGBA colour)
+void Material::Init(MaterialProperty material_template, Colour_RGBA colour)
 {
 	SetMaterialByTemplate(material_template);
 	colour_ = colour;
 	direct_colour_control_ = false;
+	gl_face_to_draw_ = GL_FRONT;
 }
-void Materials::SetMaterialByTemplate(MaterialProperty material)
+void Material::SetMaterialByTemplate(MaterialProperty material)
 {
 	switch (material)
 	{
@@ -183,7 +184,7 @@ void Materials::SetMaterialByTemplate(MaterialProperty material)
 		SetSpecularColour(0.4, 0.4, 0.4, 1.0);
 		SetEmission(0.0, 0.0, 0.0, 0.0);
 		SetShininess(10.0);
-		default_material_colour_ = Colour_RGBA();
+		default_material_colour_ = Colour_RGBA(0.01, 0.01, 0.01, 1.0);
 		break;
 	case DEFAULT:
 		SetAmbientColour(0.2, 0.2, 0.2, 1.0);
@@ -196,50 +197,50 @@ void Materials::SetMaterialByTemplate(MaterialProperty material)
 	}
 
 }
-void  Materials::SetMaterialByTemplate(MaterialProperty material, Colour colour)
+void  Material::SetMaterialByTemplate(MaterialProperty material, Colour colour)
 {
 	SetMaterialByTemplate(material);
 	SetColourByTemplate(colour);
 }
-void  Materials::SetMaterialByTemplate(MaterialProperty material, Colour_RGBA colour)
+void  Material::SetMaterialByTemplate(MaterialProperty material, Colour_RGBA colour)
 {
 	SetMaterialByTemplate(material);
 	colour_ = colour;
 }
 
-void  Materials::SetColourByTemplate(Colour colour)
+void  Material::SetColourByTemplate(Colour colour)
 {
 	switch (colour)
 	{
 	case RED:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(1,0,0,1);
 		break;
 	case BLUE:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(0,0,1,1);
 		break;
 	case GREEN:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(0,1,0,1);
 		break;
 	case PINK:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(1,0,1,1);
 		break;
 	case ORANGE:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(1, 0.5f, 0.0f, 1);
 		break;
 	case YELLOW:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(1,1, 0.0f,1 );
 		break;
 	case PURPLE:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(0.5, 0, 1, 1);
 		break;
 	case BROWN:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(0.5, 0.25, 0, 1);
 		break;
 	case BLACK:
-		colour_ = Colour_RGBA();
+		colour_ = Colour_RGBA(0.0f, 0.0f, 0.0f, 1);
 		break;
 	case WHITE:
-		colour_ = Colour_RGBA(0.8f, 0.8f, 0.8f, 1);
+		colour_ = Colour_RGBA(1.0f, 1.0f, 1.0f, 1);
 		break;
 	case PROPERTIES_ONLY:
 		colour_ = Colour_RGBA(1,1,1,1);
@@ -250,21 +251,21 @@ void  Materials::SetColourByTemplate(Colour colour)
 	}
 }
 
-void Materials::SetEmission(Colour_RGBA colour_values)
+void Material::SetEmission(Colour_RGBA colour_values)
 {
 	emission_[0] = colour_values.r;
 	emission_[1] = colour_values.g;
 	emission_[2] = colour_values.b;
 	emission_[3] = colour_values.a;
 }
-void Materials::SetEmission(float r, float g, float b, float a)
+void Material::SetEmission(float r, float g, float b, float a)
 {
 	emission_[0] = r;
 	emission_[1] = g;
 	emission_[2] = b;
 	emission_[3] = a;
 }
-Colour_RGBA  Materials::GetEmission()
+Colour_RGBA  Material::GetEmission()
 {
 	float r = emission_[0];
 	float g = emission_[1];
@@ -273,22 +274,23 @@ Colour_RGBA  Materials::GetEmission()
 	return Colour_RGBA(r, g, b, a);
 }
 
-void Materials::BindMaterial()
+void Material::BindMaterial()
 {
-	if (!direct_colour_control_)
+	if (direct_colour_control_)
 	{
-		glColor4f(colour_.r, colour_.g, colour_.b, colour_.a);
+		glDisable(GL_COLOR_MATERIAL);
 	}
 	else
 	{
-		glColor4f(1, 1, 1, 1);
+		glEnable(GL_COLOR_MATERIAL);
+		glColor4f(colour_.r, colour_.g, colour_.b, colour_.a);
 	}
 
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient_);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse_);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, specular_);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &shininess_);
-	glMaterialfv(GL_FRONT, GL_EMISSION, emission_);
+	glMaterialfv(gl_face_to_draw_, GL_AMBIENT, ambient_);
+	glMaterialfv(gl_face_to_draw_, GL_DIFFUSE, diffuse_);
+	glMaterialfv(gl_face_to_draw_, GL_SPECULAR, specular_);
+	glMaterialfv(gl_face_to_draw_, GL_SHININESS, &shininess_);
+	glMaterialfv(gl_face_to_draw_, GL_EMISSION, emission_);
 	
 }
 

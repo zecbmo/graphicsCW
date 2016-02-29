@@ -2,35 +2,7 @@
 
 
 
-void BaseColour::SetByTemplate(DefaultTemplate default_temp)
-{
-	switch (default_temp) //Sets up template lights because doing this is tedious
-	{
-	case DEFAULT:	
-		SetAmbientColour(Colour_RGBA(0.2f, 0.2f, 0.2f, 1.0f));
-		SetDiffuseColour(Colour_RGBA(0.8f, 0.8f, 0.8f, 1.0f));
-		SetSpecularColour(Colour_RGBA(0.0f, 0.0f, 0.0f, 1.0f));
-		break;
-	case AMBIENT:	
-		SetAmbientColour(Colour_RGBA(0.3f, 0.3f, 0.3f, 1.0f));
-		SetDiffuseColour(Colour_RGBA(0.8f, 0.8f, 0.8f, 1.0f));
-		SetSpecularColour(Colour_RGBA(0.2f, 0.2f, 0.2f, 1.0f));
-		break;
-	case NATURAL:	
-		SetAmbientColour(Colour_RGBA(0.3f, 0.3f, 0.3f, 1.0f));
-		SetDiffuseColour(Colour_RGBA(1.0f, 1.0f, 1.0f, 1.0f));
-		SetSpecularColour(Colour_RGBA(0.6f, 0.6f, 0.6f, 1.0f));
-		break;
-	case SHINY:		
-		SetAmbientColour(Colour_RGBA(0.2f, 0.2f, 0.2f, 1.0f));
-		SetDiffuseColour(Colour_RGBA(0.8f, 0.8f, 0.8f, 1.0f));
-		SetSpecularColour(Colour_RGBA(1.0f, 1.0f, 1.0f, 1.0f));
-		break;
-	case PURE_WHITE: 
-		SetAllValues(Colour_RGBA(1, 1, 1, 1));
-		break;
-	}
-}
+
 
 void BaseColour::SetAllValues(Colour_RGBA ambient, Colour_RGBA diffuse, Colour_RGBA specular)
 {

@@ -10,7 +10,7 @@
 //Light.h Created by Gary McCartan 1402860
 //Lecture materials and http://archive.gamedev.net/archive/reference/programming/features/superquadric/page2.html used as reference
 
-
+enum LightTemplate { LIGHT_DEFAULT, AMBIENT, NATURAL, SHINY, PURE_WHITE }; //set for light... created here as was intented to be for both light and materials
 enum LightType {DIRECTIONAL_LIGHT, POINT_LIGHT, SPOT_LIGHT};
 
 
@@ -24,12 +24,16 @@ public:
 	~Light() {};
 
 	//init functions
-	void Init(int glLightDefine = GL_LIGHT0); //the defualt int will set up the default lights 
-	void Init(int glLightDefine, LightType type, MatTemplate default_light = DEFAULT); //passing an enum type I will have templates for different types of lights
+	void Init(int gl_light_define = GL_LIGHT0); //the defualt int will set up the default lights 
+	void Init(int gl_light_define, LightType type, LightTemplate default_light = LIGHT_DEFAULT); //passing an enum type I will have templates for different types of lights
 	
 
+	void SetLightByTemplate(LightTemplate default_temp); //aimed mostly at light
+
 	//colour templates
-	void SetColourByTemplate(Colour colour, ColourModifier modifier);
+	void SetColourByTemplate(Colour colour, ColourModifier modifier = NONE);
+
+
 
 	//position
 	void SetPosition(Vector3 position);

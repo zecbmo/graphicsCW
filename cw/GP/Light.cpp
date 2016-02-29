@@ -1,18 +1,18 @@
 #include "Light.h"
 
 
-void Light::Init(int glLightDefine) //which light to use e.g. GL_LIGHT0
+void Light::Init(int gl_light_define) //which light to use e.g. GL_LIGHT0
 {
-	InitHelperFunction(glLightDefine);
-	SetByTemplate(DEFAULT);
+	InitHelperFunction(gl_light_define);
+	SetLightByTemplate(LIGHT_DEFAULT);
 	light_type_ = DIRECTIONAL_LIGHT;
 	
 }
 
-void Light::Init(int glLightDefine, LightType type, MatTemplate default_light)
+void Light::Init(int gl_light_define, LightType type, LightTemplate default_light)
 {
-	InitHelperFunction(glLightDefine);
-	SetByTemplate(default_light);
+	InitHelperFunction(gl_light_define);
+	SetLightByTemplate(default_light);
 	light_type_ = type;
 	if (light_type_ == SPOT_LIGHT)
 	{
@@ -146,21 +146,49 @@ void Light::SetID()
 						break;
 	}
 }
-
+void Light::SetLightByTemplate(LightTemplate default_temp)
+{
+	switch (default_temp) //Sets up template lights because doing this is tedious
+	{
+	case LIGHT_DEFAULT:
+		SetAmbientColour(Colour_RGBA(0.2f, 0.2f, 0.2f, 1.0f));
+		SetDiffuseColour(Colour_RGBA(0.8f, 0.8f, 0.8f, 1.0f));
+		SetSpecularColour(Colour_RGBA(0.0f, 0.0f, 0.0f, 1.0f));
+		break;
+	case AMBIENT:
+		SetAmbientColour(Colour_RGBA(0.3f, 0.3f, 0.3f, 1.0f));
+		SetDiffuseColour(Colour_RGBA(0.8f, 0.8f, 0.8f, 1.0f));
+		SetSpecularColour(Colour_RGBA(0.2f, 0.2f, 0.2f, 1.0f));
+		break;
+	case NATURAL:
+		SetAmbientColour(Colour_RGBA(0.3f, 0.3f, 0.3f, 1.0f));
+		SetDiffuseColour(Colour_RGBA(1.0f, 1.0f, 1.0f, 1.0f));
+		SetSpecularColour(Colour_RGBA(0.6f, 0.6f, 0.6f, 1.0f));
+		break;
+	case SHINY:
+		SetAmbientColour(Colour_RGBA(0.2f, 0.2f, 0.2f, 1.0f));
+		SetDiffuseColour(Colour_RGBA(0.8f, 0.8f, 0.8f, 1.0f));
+		SetSpecularColour(Colour_RGBA(1.0f, 1.0f, 1.0f, 1.0f));
+		break;
+	case PURE_WHITE:
+		SetAllValues(Colour_RGBA(1, 1, 1, 1));
+		break;
+	}
+}
 void Light::SetColourByTemplate(Colour colour, ColourModifier modifier)
 {
 	switch (colour)
 	{
 	case RED:
-		SetAmbientColour(0.8f, 0.2f, 0.2f, 1);
-		SetDiffuseColour(1.0f, 0.0f, 0.0f, 1);
-		SetSpecularColour(0.7, 0.0f, 0.0f, 1);
+		SetAmbientColour(1.0f, 0.2f, 0.2f, 1);
+		SetDiffuseColour(1.0f, 0.2f, 0.2f, 1);
+		SetSpecularColour(0.7, 0.1f, 0.1f, 1);
 		DisableValue(modifier);
 		break;
 	case BLUE:
-		/*SetAmbientColour();
-		SetDiffuseColour();
-		SetSpecularColour();*/
+		SetAmbientColour(0.2f, 0.2f, 1.0f, 1);
+		SetDiffuseColour(0.2f, 0.2f, 1.0f, 1);
+		SetSpecularColour(0.1, 0.1f, 0.7f, 1);
 		DisableValue(modifier);
 		break;
 	case GREEN:

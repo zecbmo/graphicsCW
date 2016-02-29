@@ -6,6 +6,10 @@
 //This material class will allow you to add materials to objects effiecently
 //A material can be created in the Object Class and stored relative to that object
 //the function BindMaterial() must be called before any drawing takes place
+//By default material will be set using the glColor4f i.e uses the materials colour_ member. (initialised to white)
+//this can be disabled by setting SetDirectColourControl to true and allows you to colour material based on The properties of the ambient, diffuse and speclar
+//by using the glColor4f you can change colours of default materials eg you can have a red plastic or a blue plastic
+//user colours can be set with SetColour();
 
 //class created using lecture slides as reference (even though they told me emission was a single float)
 //Material properties borrowed from http://globe3d.sourceforge.net/g3d_html/gl-materials__ads.htm
@@ -15,11 +19,11 @@ enum MaterialProperty {	GLASS, BRASS, BRONZE, POLISHED_BRONZE, CHROME, COPPER,
 					POLISHED_SILVER, EMERALD, JADE, OBSIDIAN, PEARL,
 					RUBY, TURQUOISE, PLASTIC, RUBBER, DEFAULT};
 
-class Materials :public BaseColour
+class Material :public BaseColour
 {
 public:
-	Materials() {};
-	~Materials() {};
+	Material() {};
+	~Material() {};
 
 	//initialisers
 	void Init();		 //by default only the properties will be supplied (no colour/white)
@@ -41,9 +45,10 @@ public:
 	void SetColourByTemplate(Colour colour); //Set colour based on enum template
 
 	//colour stuff
-	inline void SetColor(Colour_RGBA colour) { colour_ = colour; };
+	inline void SetColour(Colour_RGBA colour) { colour_ = colour; };
 	inline Colour_RGBA GetColour() { return colour_; };
-
+	inline void SetAlpha(float alpha) { colour_.a = alpha; };
+	inline float GetAlpha() { return colour_.a; };
 	inline void SetShininess(float shiny) { shininess_ = shiny; };
 	inline float GetShininess() {return shininess_;};
 	void SetEmission(Colour_RGBA colour_values);
@@ -55,6 +60,10 @@ public:
 	//allowing for more direct manipulation over ambient diffuse etc
 	inline void SetDirectColourControl(bool control) { direct_colour_control_ = control; };
 	inline bool GetDirectColourControl() { return direct_colour_control_; };
+
+	//Setting which face to draw
+	inline void SetFaceToDraw(int gl_face_id) { gl_face_to_draw_ = gl_face_id; };
+
 	
 private:
 	Colour_RGBA colour_;
@@ -62,6 +71,7 @@ private:
 	float shininess_;
 	float emission_[4];
 	bool direct_colour_control_; //direct colour control 
+	int gl_face_to_draw_; //the eg GL_FRONT, or GL_FRONT_AND_BACK. set to front by default
 };
 
 #endif

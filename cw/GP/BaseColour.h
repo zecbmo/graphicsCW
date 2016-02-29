@@ -12,7 +12,7 @@
 #include "ErrorSystem.h"
 
 enum ColourModifier {NO_AMBIENT, NO_DIFFUSE, NO_SPECULAR, NONE};
-enum DefaultTemplate { DEFAULT, AMBIENT, NATURAL, SHINY, PURE_WHITE }; //sets default colours for lights/Materials
+
 enum Colour {	RED, BLUE, GREEN, PINK, ORANGE, YELLOW, PURPLE,			//Able to quickly set default colours for materials/lights
 				BROWN, BLACK, WHITE, PROPERTIES_ONLY, MATERIAL_DEFAULT}; //Then can be ajusted to suit the property
 
@@ -42,9 +42,8 @@ public:
 	BaseColour() {};
 	~BaseColour() {};
 
-	void SetByTemplate(DefaultTemplate default_temp);
-
 	
+		
 	void DisableValue(ColourModifier colour);
 	void SetAllValues(Colour_RGBA ambient, Colour_RGBA diffuse, Colour_RGBA specular);
 	void SetAllValues(Colour_RGBA defaults);

@@ -80,12 +80,13 @@ void Scene3D::Init(HWND* wnd, Input* in)
 
 	//////// Lighting
 	glEnable(GL_LIGHTING);
-	light_.Init(GL_LIGHT0, SPOT_LIGHT, NATURAL);
-
-	
-
+	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
+	//light_.SetColourByTemplate(BLUE);
+	light_.SetPosition(Vector3(-2.0f, 0.0f, 0.0f));
+	light_.SetAllValues(1,1,1,1);
+	light_.ResetAmbientToZero();
 	/////// Materials 
-	glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_COLOR_MATERIAL);
 
 	/////// Textures 
 
@@ -96,7 +97,7 @@ void Scene3D::Update(float dt)
 {
 	
 	// Do important update here
-	light_.SetPosition(Vector3(-2.0f, 0.0f, 1.0f));
+	
 
 
 	Render();
@@ -113,96 +114,60 @@ void Scene3D::Render()
 	//Light done first	
 	//light_.Render();
 
-	GLfloat Light_Ambient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat Light_Specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat Light_Position[] = { -6.0f, 0.0f, 3.0f, 0.0f };
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
-	glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, Light_Specular);
-	glEnable(GL_LIGHT0);
-
-	glColor4f(0.8, 0.0, 0.8, 1);
-	//Materials temp;
-	//temp.Init(DEFAULT);
-	//temp.SetShininess(50);
-	//temp.SetEmission(0.1, 0, 0.1, 1);
-	//temp.SetColourByTemplate(RED);
-	//temp.BindMaterial();	
-	//gluSphere(gluNewQuadric(), 1.0, 40, 40);
-
-
-	GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
-	GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
-	GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 };
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat no_shininess[] = { 0.0 };
-	GLfloat low_shininess[] = { 5.0 };
-	GLfloat high_shininess[] = { 100.0 };
-	GLfloat mat_emission[] = { 0.3, 0.2, 0.2, 0.0 };
-
+	Material temp;
+	temp.Init(JADE);
+	temp.SetDirectColourControl(false);
+	temp.SetColourByTemplate(PURPLE);
+	temp.BindMaterial();
 	glPushMatrix();
-	glTranslatef(-3.75, 0.0, 0.0);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-	glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glTranslatef(-5, 0, 0);
+	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
+	temp.SetMaterialByTemplate(JADE);
+	temp.SetDirectColourControl(true);
+	temp.SetColourByTemplate(BROWN);
+	temp.BindMaterial();
 	glPushMatrix();
-	glTranslatef(-1.25, 0.0, 0.0);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glTranslatef(-2.5, 0, 0);
+	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(1.25, 0.0, 0.0);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-	gluSphere(gluNewQuadric(), 1.0, 40, 40);
-	glPopMatrix();
+	temp.SetMaterialByTemplate(BRONZE);
+	temp.SetColourByTemplate(WHITE);
+	temp.SetDirectColourControl(false);
+	temp.BindMaterial();
 
 	glPushMatrix();
-	glTranslatef(3.75, 0.0, 0.0);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-	glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	gluSphere(gluNewQuadric(), 1.0, 40, 40);
+	glTranslatef(0, 0, 0);
+	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
 
-	float ambient[4] = { 0.135, 0.2225, 0.1575, 0.95 };
-	float diffuse[4] = { 0.54, 0.89, 0.63, 0.95 };
-	float specular[4] =  { 0.316228, 0.316228, 0.316228, 0.95 };
-	float emission[4] =  {0.0, 0.0, 0.0,  0.0 };
-	float shininess = 12.8;
+	temp.SetMaterialByTemplate(POLISHED_COPPER);
+	temp.SetColourByTemplate(ORANGE);
 
-	glColor4f(0.54, 0.89, 0.63, 0.95);
+	temp.BindMaterial();
 
 	glPushMatrix();
-	glTranslatef(3.75, -3.0, 0.0);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-	gluSphere(gluNewQuadric(), 1.0, 20, 20);
+	glTranslatef(2.5, 0, 0);
+	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
+	temp.SetMaterialByTemplate(COPPER);
+	temp.SetColourByTemplate(BLACK);
+
+	temp.BindMaterial();
+
+	glPushMatrix();
+	glTranslatef(5, 0, 0);
+	gluSphere(gluNewQuadric(), 1, 20, 20);
+	glPopMatrix();
+
+
+
+
+	light_.Render();
 	//Render HUD last
 
 	SwapBuffers(hdc);// Swap the frame buffers.
