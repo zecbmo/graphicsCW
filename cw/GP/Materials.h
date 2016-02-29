@@ -39,6 +39,7 @@ public:
 	// this allows for a specific colour to be set to a material based on default material types or a Colour_RGBA
 	//PROPERTIES_ONLY will only apply the properties ie. white/no colour (1,1,1,1,)
 	//MATERIAL_DEFAULT will pass in the colour based on the material eg Gold would be yellow and bronze would be brown
+	//need to have direct colour control disabled for these 
 	void SetMaterialByTemplate(MaterialProperty material, Colour colour);
 	void SetMaterialByTemplate(MaterialProperty material, Colour_RGBA colour);
 

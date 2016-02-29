@@ -30,9 +30,9 @@ void Light::SetPosition(Vector3 position)
 }
 void Light::SetPosition(float x, float y, float z)
 {
-	vec_pos_.setX(x);
-	vec_pos_.setY(y);
-	vec_pos_.setZ(z);
+	vec_pos_.SetX(x);
+	vec_pos_.SetY(y);
+	vec_pos_.SetZ(z);
 
 }
 Vector3 Light::GetPosition()
@@ -62,9 +62,9 @@ void Light::SetSpotDirection(Vector3 direction)
 }
 void Light::SetSpotDirection(float x, float y, float z)
 {
-	spot_direction_.setX(x);
-	spot_direction_.setY(y);
-	spot_direction_.setZ(z);
+	spot_direction_.SetX(x);
+	spot_direction_.SetY(y);
+	spot_direction_.SetZ(z);
 }
 Vector3 Light::GetSpotDirection()
 {
@@ -87,8 +87,8 @@ void Light::Render()
 			l_type = 1;
 		}
 
-		float position[4] = { vec_pos_.getX(), vec_pos_.getY(), vec_pos_.getZ(), l_type };
-		float spot_dir[3] = { spot_direction_.getX(), spot_direction_.getY(), spot_direction_.getZ() };
+		float position[4] = { vec_pos_.GetX(), vec_pos_.GetY(), vec_pos_.GetZ(), l_type };
+		float spot_dir[3] = { spot_direction_.GetX(), spot_direction_.GetY(), spot_direction_.GetZ() };
 
 		if ((spot_cutoff_ != 180) && (spot_cutoff_ > 90 || spot_cutoff_ < 0))
 		{

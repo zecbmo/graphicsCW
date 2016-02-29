@@ -201,21 +201,21 @@ bool Model::LoadModel(char* filename)
 	for (int i = 0; i < faces.size(); i+=3)
 	{
 		int vertToPush = faces[i]-1;
-		vertex.push_back(verts[vertToPush].getX());
-		vertex.push_back(verts[vertToPush].getY());
-		vertex.push_back(verts[vertToPush].getZ());
+		vertex.push_back(verts[vertToPush].GetX());
+		vertex.push_back(verts[vertToPush].GetY());
+		vertex.push_back(verts[vertToPush].GetZ());
 		//vertex.push_back(verts[vertToPush]);
 
 		int textCoordsToPush = faces[i + 1]-1;
-		texCoords.push_back(texC[textCoordsToPush].getX());
-		texCoords.push_back(texC[textCoordsToPush].getY());
+		texCoords.push_back(texC[textCoordsToPush].GetX());
+		texCoords.push_back(texC[textCoordsToPush].GetY());
 		//texCoords.push_back(0.0f); // no z in uv 
 		//texCoords.push_back(texC[textCoordsToPush]);
 
 		int normalToPush = faces[i + 2]-1;
-		normals.push_back(norms[normalToPush].getX());
-		normals.push_back(norms[normalToPush].getY());
-		normals.push_back(norms[normalToPush].getZ());
+		normals.push_back(norms[normalToPush].GetX());
+		normals.push_back(norms[normalToPush].GetY());
+		normals.push_back(norms[normalToPush].GetZ());
 		//normals.push_back(norms[normalToPush]);
 
 	}

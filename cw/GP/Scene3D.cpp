@@ -91,15 +91,42 @@ void Scene3D::Init(HWND* wnd, Input* in)
 	/////// Textures 
 
 
+	//cameras
+	
+	cameras_.push_back(&cam);
+	cameras_.push_back(&cam1);
+	cameras_.push_back(&cam2);
+
+	cameras_[1]->SetPosition(Vector3(0, 0, -10));
+	cameras_[2]->SetPosition(Vector3(10, 3, 10));
+	cam2.SetPosition(Vector3(10, 10, 0));
+	current_camera_view_ = cameras_[0];
+	int thisnUmber = 0;
 }
 
 void Scene3D::Update(float dt)
 {
 	
 	// Do important update here
+	if (input->isKeyDown('1'))
+	{
+		current_camera_view_ = cameras_[1];
+	}
+	else if(input->isKeyDown('2'))
+	{
+		current_camera_view_ = cameras_[2];
+	}
+	else
+	{
+		current_camera_view_ = cameras_[0];
+	}
 	
 
-
+	for (BaseCamera* iter : cameras_)
+	{
+		iter->Update();
+	}
+	
 	Render();
 }
 
@@ -109,9 +136,10 @@ void Scene3D::Render()
 	glLoadIdentity();// load Identity Matrix
 
 	//Camera
-	gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
-
+	
+	current_camera_view_->Render();
 	//Light done first	
+	light_.Render();
 	//light_.Render();
 
 	Material temp;
@@ -167,7 +195,7 @@ void Scene3D::Render()
 
 
 
-	light_.Render();
+	
 	//Render HUD last
 
 	SwapBuffers(hdc);// Swap the frame buffers.

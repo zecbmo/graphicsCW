@@ -7,31 +7,31 @@ class Vector3{
 
 public:
     Vector3(float x = 0, float y = 0, float z = 0);
-    Vector3 copy();
- 
- 
-    void set(float x, float y, float z);
-    void setX(float x);
-    void setY(float y);
-    void setZ(float z);
+	
+	Vector3 Copy(); 
+    void Set(float x, float y, float z);
+	void Set(Vector3 position);
+    void SetX(float x);
+    void SetY(float y);
+    void SetZ(float z);
 
-	float getX();
-	float getY();
-	float getZ();
+	float GetX();
+	float GetY();
+	float GetZ();
  
-    void add(const Vector3& v1, float scale=1.0);
-    void subtract(const Vector3& v1, float scale=1.0);
-    void scale(float scale);
+    void Add(const Vector3& v1, float scale=1.0);
+    void Subtract(const Vector3& v1, float scale=1.0);
+    void Scale(float scale);
  
-    float dot(const Vector3& v2);
-    Vector3 cross(const Vector3& v2);
+    float Dot(const Vector3& v2);
+    Vector3 Cross(const Vector3& v2);
  
-    void normalise();
-    float length();
-    float lengthSquared();
+    void Normalise();
+    float Length();
+    float LengthSquared();
  
-    bool equals(const Vector3& v2, float epsilon);
-	bool equals(const Vector3& v2);
+    bool Equals(const Vector3& v2, float epsilon);
+	bool Equals(const Vector3& v2);
  
     Vector3 operator+(const Vector3& v2);
     Vector3 operator-(const Vector3& v2);
