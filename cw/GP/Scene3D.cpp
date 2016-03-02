@@ -96,6 +96,7 @@ void Scene3D::Init(HWND* wnd, Input* in)
 	cameras_.push_back(&cam);
 	cameras_.push_back(&cam1);
 	cameras_.push_back(&cam2);
+	cameras_.push_back(new BaseCamera);
 
 	cameras_[1]->SetPosition(Vector3(0, 0, -10));
 	cameras_[2]->SetPosition(Vector3(10, 3, 10));
@@ -143,9 +144,9 @@ void Scene3D::Render()
 	//light_.Render();
 
 	Material temp;
-	temp.Init(JADE);
-	temp.SetDirectColourControl(false);
-	temp.SetColourByTemplate(PURPLE);
+	temp.Init(EMERALD, BLACK);
+	temp.SetDirectColourControl(true);
+	
 	temp.BindMaterial();
 	glPushMatrix();
 	glTranslatef(-5, 0, 0);
@@ -161,9 +162,9 @@ void Scene3D::Render()
 	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
-	temp.SetMaterialByTemplate(BRONZE);
+	temp.SetMaterialByTemplate(RUBBER);
 	temp.SetColourByTemplate(WHITE);
-	temp.SetDirectColourControl(false);
+	//temp.SetDirectColourControl(false);
 	temp.BindMaterial();
 
 	glPushMatrix();
@@ -172,7 +173,7 @@ void Scene3D::Render()
 	glPopMatrix();
 
 
-	temp.SetMaterialByTemplate(POLISHED_COPPER);
+	temp.SetMaterialByTemplate(RUBY);
 	temp.SetColourByTemplate(ORANGE);
 
 	temp.BindMaterial();
@@ -182,7 +183,7 @@ void Scene3D::Render()
 	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
-	temp.SetMaterialByTemplate(COPPER);
+	temp.SetMaterialByTemplate(PEWTER);
 	temp.SetColourByTemplate(BLACK);
 
 	temp.BindMaterial();
