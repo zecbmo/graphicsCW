@@ -83,9 +83,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseColour.cpp" />
-    <ClCompile Include="BaseCamera.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="ErrorSystem.cpp" />
     <ClCompile Include="FloatingCamera.cpp" />
+    <ClCompile Include="FPS_CAMERA.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -99,10 +101,13 @@
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="BaseColour.h" />
-    <ClInclude Include="BaseCamera.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ErrorSystem.h" />
     <ClInclude Include="FloatingCamera.h" />
+    <ClInclude Include="FPS_Camera.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Materials.h" />

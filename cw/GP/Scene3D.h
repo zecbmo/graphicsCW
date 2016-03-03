@@ -9,7 +9,7 @@
 #include <gl/glu.h>
 #include "Input.h"
 #include "Vector3.h"
-#include "BaseCamera.h"
+#include "CameraManager.h"
 #include "TextRenderer.h"
 #include <complex>
 #include "Shapes.h"
@@ -39,7 +39,7 @@ using namespace shapes;
 class Scene3D
 {
 public:
-	void Init(HWND* hwnd, Input* in);	//initialse function
+	void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
 	void Update(float dt);
 	void Render();	// render scene
 	void Resize();
@@ -58,14 +58,10 @@ protected:
 	HGLRC hrc;			//hardware RENDERING CONTEXT
 	int s_wdith, s_height;
 	Light light_;
-
+	float* dt_;
 
 	//Cameras 
-	BaseCamera cam;
-	BaseCamera cam1;
-	BaseCamera cam2;
-	std::vector<BaseCamera*> cameras_;
-	BaseCamera* current_camera_view_;
+	CameraManager camera_manager_;
 
 };
 

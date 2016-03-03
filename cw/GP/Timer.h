@@ -12,7 +12,7 @@ public:
 	
 
 	float GetTime();
-
+	float* GetTimePointer() { return &m_frameTime; };
 private:
 	INT64 m_frequency;
 	float m_ticksPerS;

@@ -12,27 +12,27 @@ void Input::SetKeyUp(WPARAM key)
 	keys[key] = false;
 }
 
-bool Input::isKeyDown(int key)
+bool Input::IsKeyDown(int key)
 {
 	return keys[key];
 }
 
-void Input::setMouseX(int pos)
+void Input::SetMouseX(int pos)
 {
 	mouse.x = pos;
 }
 
-void Input::setMouseY(int pos)
+void Input::SetMouseY(int pos)
 {
 	mouse.y = pos;
 }
 
-int Input::getMouseX()
+int Input::GetMouseX()
 {
 	return mouse.x;
 }
 
-int Input:: getMouseY()
+int Input:: GetMouseY()
 {
 	return mouse.y;
 }

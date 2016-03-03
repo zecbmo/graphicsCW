@@ -38,3 +38,15 @@ void error::ErrorMessage(std::string message, bool destroy_window)
 		exit(1);
 	}
 }
+void error::StringError(std::string id, std::string message, bool destroy_window)
+{
+	char buffer[255];
+	sprintf_s(buffer, "%s %s", id.c_str(), message.c_str());
+	MessageBox(NULL, buffer, "Idiot Programmer", MB_OK);
+
+	if (destroy_window)
+	{
+		//DestroyWindow(GetActiveWindow());
+		exit(1);
+	}
+}

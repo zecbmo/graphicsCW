@@ -17,11 +17,11 @@ public:
 	void SetKeyDown(WPARAM);
 	void SetKeyUp(WPARAM);
 
-	bool isKeyDown(int);
-	void setMouseX(int);
-	void setMouseY(int);
-	int getMouseX();
-	int getMouseY();
+	bool IsKeyDown(int);
+	void SetMouseX(int);
+	void SetMouseY(int);
+	int GetMouseX();
+	int GetMouseY();
 	// set mouse botton down (left, right, middle)
 	// set mouse botton up
 

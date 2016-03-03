@@ -36,6 +36,9 @@
     <Filter Include="Source Files\Math">
       <UniqueIdentifier>{7d0bb838-d086-4d70-8ada-f946451cf3b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{603a47c1-728d-4ac1-8dee-616f2d72625a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -77,10 +80,16 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="BaseCamera.cpp">
+    <ClCompile Include="FloatingCamera.cpp">
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="FloatingCamera.cpp">
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS_CAMERA.cpp">
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
@@ -124,10 +133,19 @@
     <ClInclude Include="Vector3.h">
       <Filter>Source Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCamera.h">
+    <ClInclude Include="FloatingCamera.h">
       <Filter>Source Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="FloatingCamera.h">
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS_Camera.h">
       <Filter>Source Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>

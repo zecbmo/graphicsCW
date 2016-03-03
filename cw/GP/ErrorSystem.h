@@ -14,7 +14,7 @@ namespace error
 	void ValueError(std::string id, std::string message, float value,  bool destroy_window = true );
 	void ValueError(std::string id, std::string message, int value,  bool destroy_window = true );
 	void ErrorMessage(std::string message, bool destroy_window = true);
-
+	void StringError(std::string id, std::string message, bool destroy_window = true);
 }
 
 #endif

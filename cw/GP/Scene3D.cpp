@@ -73,7 +73,7 @@ void Scene3D::InitializeOpenGL(int width, int height)
 
 
 
-void Scene3D::Init(HWND* wnd, Input* in)
+void Scene3D::Init(HWND* wnd, Input* in, float* dt)
 {
 	InitHelper(wnd, in);
 
@@ -93,40 +93,53 @@ void Scene3D::Init(HWND* wnd, Input* in)
 
 	//cameras
 	
-	cameras_.push_back(&cam);
-	cameras_.push_back(&cam1);
-	cameras_.push_back(&cam2);
-	cameras_.push_back(new BaseCamera);
+	camera_manager_.Init(input, dt, &screenRect, hwnd );
 
-	cameras_[1]->SetPosition(Vector3(0, 0, -10));
-	cameras_[2]->SetPosition(Vector3(10, 3, 10));
-	cam2.SetPosition(Vector3(10, 10, 0));
-	current_camera_view_ = cameras_[0];
+	camera_manager_.CreateCamera(FIXED_POSITION, "fixed one");
+	camera_manager_.CreateCamera(FIXED_POSITION, "fixed two");
+	camera_manager_.CreateCamera(FIRST_PERSON, "floating one");
+	camera_manager_.ChangeCamera("fixed one");
+	camera_manager_.CurrentCamera()->SetPosition(Vector3(0, 0, -10));
+	camera_manager_.GetCamera("floating one")->SetPosition(Vector3(10, 0, 10));
+	camera_manager_.GetCamera("floating one")->SetSensitivity(10,10);
+
+	camera_manager_.GetCamera("floating one")->SetAllSpeeds(10,10,10,10);
+
+
+
+
+
+
+	
+
+
 	int thisnUmber = 0;
+	
+	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
 }
 
 void Scene3D::Update(float dt)
 {
+	camera_manager_.Update();
 	
 	// Do important update here
-	if (input->isKeyDown('1'))
+	if (input->IsKeyDown('1'))
 	{
-		current_camera_view_ = cameras_[1];
+		camera_manager_.ChangeCamera("fixed two");
+		camera_manager_.GetCamera("fixed one")->SetPosition(Vector3(0,0, -40));
 	}
-	else if(input->isKeyDown('2'))
+	if (input->IsKeyDown('2'))
 	{
-		current_camera_view_ = cameras_[2];
+		camera_manager_.ChangeCamera("fixed one");
 	}
 	else
 	{
-		current_camera_view_ = cameras_[0];
+		camera_manager_.ChangeCamera("floating one");
 	}
 	
+	
 
-	for (BaseCamera* iter : cameras_)
-	{
-		iter->Update();
-	}
+	
 	
 	Render();
 }
@@ -138,12 +151,14 @@ void Scene3D::Render()
 
 	//Camera
 	
-	current_camera_view_->Render();
+	camera_manager_.Render();
 	//Light done first	
 	light_.Render();
+
 	//light_.Render();
 
 	Material temp;
+	
 	temp.Init(EMERALD, BLACK);
 	temp.SetDirectColourControl(true);
 	
@@ -154,7 +169,7 @@ void Scene3D::Render()
 	glPopMatrix();
 
 	temp.SetMaterialByTemplate(JADE);
-	temp.SetDirectColourControl(true);
+
 	temp.SetColourByTemplate(BROWN);
 	temp.BindMaterial();
 	glPushMatrix();
@@ -162,9 +177,9 @@ void Scene3D::Render()
 	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
-	temp.SetMaterialByTemplate(RUBBER);
-	temp.SetColourByTemplate(WHITE);
-	//temp.SetDirectColourControl(false);
+	temp.SetMaterialByTemplate(PLASTIC);
+	temp.SetColour(Colour_RGBA(1,0,1,1));
+	temp.SetDirectColourControl(false);
 	temp.BindMaterial();
 
 	glPushMatrix();
@@ -192,9 +207,6 @@ void Scene3D::Render()
 	glTranslatef(5, 0, 0);
 	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
-
-
-
 
 	
 	//Render HUD last

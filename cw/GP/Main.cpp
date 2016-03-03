@@ -79,9 +79,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
 	if (!InitialiseMyWindow(hInstance, nCmdShow))
 		return FALSE;
-
-	scene.Init(&hwnd, &input);
 	timer.Initialize();
+	float* dt = timer.GetTimePointer();
+	scene.Init(&hwnd, &input, dt);
+	
 	SetVSync(false);
 	while (TRUE)
 	{
@@ -101,7 +102,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 			scene.Update(timer.GetTime());
 		}
 
-		if (input.isKeyDown(VK_ESCAPE))
+		if (input.IsKeyDown(VK_ESCAPE))
 		{
 			break;
 		}
@@ -132,8 +133,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_MOUSEMOVE:
-			input.setMouseX(LOWORD(lParam));
-			input.setMouseY(HIWORD(lParam));
+			input.SetMouseX(LOWORD(lParam));
+			input.SetMouseY(HIWORD(lParam));
 			break;
 
 		case WM_DESTROY:
