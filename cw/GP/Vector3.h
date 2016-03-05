@@ -32,13 +32,15 @@ public:
  
     bool Equals(const Vector3& v2, float epsilon);
 	bool Equals(const Vector3& v2);
+
+	//void Lerp(float percent, Vector3& v2);
  
     Vector3 operator+(const Vector3& v2);
     Vector3 operator-(const Vector3& v2);
  
     Vector3& operator+=(const Vector3& v2);
     Vector3& operator-=(const Vector3& v2);
-
+	
 
 
 private:

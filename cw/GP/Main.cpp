@@ -8,14 +8,15 @@
 #include "Timer.h"
 #include <gl/gl.h>
 #include <gl/glu.h>
+#include "SceneManager.h"
 
 
 void SetVSync(bool sync); //obtained from Stewart McCready CGT
-//#include "wglextGary.h"
+
 
 // Globals
 HWND hwnd;
-Scene3D scene;
+TestScene scene;
 Timer timer;
 Input input;
 
@@ -99,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 			// update delta time
 			timer.Frame();
 			// Update and render scene
-			scene.Update(timer.GetTime());
+			scene.Update();
 		}
 
 		if (input.IsKeyDown(VK_ESCAPE))

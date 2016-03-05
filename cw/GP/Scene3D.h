@@ -33,35 +33,36 @@
 •	Advance features such as shadows and use of the stencil buffer
 •	The application should be carefully designed and constructed showing appropriate use of classes and well commented*/
 
+enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE};
 
 using namespace shapes;
 
 class Scene3D
 {
 public:
-	void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
-	void Update(float dt);
-	void Render();	// render scene
+	virtual void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
+	virtual void Update();
+	virtual void Render();	// render scene
 	void Resize();
+	inline SceneType GetSceneToLoad() { return scene_to_load_; };
 
 protected:
 	bool CreatePixelFormat(HDC hdc);
 	void ResizeGLWindow(int width, int height);	//width and height
 	void InitializeOpenGL(int width, int height); // width and height
-	void InitHelper(HWND* wnd, Input* in);
+	void InitHelper(HWND* wnd, Input* in, float* dt);
 	
 	//vars
-	HWND* hwnd;
-	Input* input;
+	HWND* hwnd_;
+	Input* input_;
 	RECT screenRect;
 	HDC	hdc;
 	HGLRC hrc;			//hardware RENDERING CONTEXT
 	int s_wdith, s_height;
-	Light light_;
 	float* dt_;
+	SceneType scene_to_load_;
 
-	//Cameras 
-	CameraManager camera_manager_;
+	
 
 };
 

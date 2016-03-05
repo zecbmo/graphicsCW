@@ -13,6 +13,7 @@
 #include "Input.h"
 #include <string>
 
+enum RotatingCameraType {ANIMATED, ROTATE_TO_TARGET};
 
 class Camera
 {
@@ -40,6 +41,14 @@ public:
 	virtual void SetBackwardSpeed(float speed) {};
 	virtual void SetStrafeSpeed(float speed) { };
 	virtual void SetVerticalSpeed(float speed) {};
+
+	//rotating camera
+	virtual void SetRotatingType(RotatingCameraType type) {  };
+	virtual void SetTarget(Vector3* target) {};
+	virtual void SetStartPoint(Vector3 start_point) {};
+	virtual void SetEndPoint(Vector3 end_point) {};
+	virtual void SetTimeDelay(float delay) {};
+	virtual void SetRotationTime(float time) {};
 
 
 protected:

@@ -60,7 +60,7 @@ void Scene3D::ResizeGLWindow(int width, int height)// Initialize The GL Window
 
 void Scene3D::InitializeOpenGL(int width, int height) 
 {  
-    hdc = GetDC(*hwnd);//  sets  global HDC
+    hdc = GetDC(*hwnd_);//  sets  global HDC
 
     if (!CreatePixelFormat(hdc))//  sets  pixel format
         PostQuitMessage (0);
@@ -75,72 +75,19 @@ void Scene3D::InitializeOpenGL(int width, int height)
 
 void Scene3D::Init(HWND* wnd, Input* in, float* dt)
 {
-	InitHelper(wnd, in);
-
-
-	//////// Lighting
-	glEnable(GL_LIGHTING);
-	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
-	//light_.SetColourByTemplate(BLUE);
-	light_.SetPosition(Vector3(-2.0f, 0.0f, 0.0f));
-	light_.SetAllValues(1,1,1,1);
-	light_.ResetAmbientToZero();
-	/////// Materials 
-	//glEnable(GL_COLOR_MATERIAL);
-
-	/////// Textures 
-
-
-	//cameras
-	
-	camera_manager_.Init(input, dt, &screenRect, hwnd );
-
-	camera_manager_.CreateCamera(FIXED_POSITION, "fixed one");
-	camera_manager_.CreateCamera(FIXED_POSITION, "fixed two");
-	camera_manager_.CreateCamera(FIRST_PERSON, "floating one");
-	camera_manager_.ChangeCamera("fixed one");
-	camera_manager_.CurrentCamera()->SetPosition(Vector3(0, 0, -10));
-	camera_manager_.GetCamera("floating one")->SetPosition(Vector3(10, 0, 10));
-	camera_manager_.GetCamera("floating one")->SetSensitivity(10,10);
-
-	camera_manager_.GetCamera("floating one")->SetAllSpeeds(10,10,10,10);
-
-
-
-
-
-
-	
-
-
-	int thisnUmber = 0;
-	
-	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
+	InitHelper(wnd, in, dt);
+	scene_to_load_ = BASE_SCENE;
+	//Individual inits will go here
+	//Init, Update and Render left here and allows for quick copy and paste to create new scenes
 }
 
-void Scene3D::Update(float dt)
+void Scene3D::Update()
 {
-	camera_manager_.Update();
-	
-	// Do important update here
-	if (input->IsKeyDown('1'))
+	if (input_->IsKeyDown('8'))
 	{
-		camera_manager_.ChangeCamera("fixed two");
-		camera_manager_.GetCamera("fixed one")->SetPosition(Vector3(0,0, -40));
+		scene_to_load_ = TESTING_SCENE;
 	}
-	if (input->IsKeyDown('2'))
-	{
-		camera_manager_.ChangeCamera("fixed one");
-	}
-	else
-	{
-		camera_manager_.ChangeCamera("floating one");
-	}
-	
-	
-
-	
-	
+	//Update Everything here	
 	Render();
 }
 
@@ -149,85 +96,25 @@ void Scene3D::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
 	glLoadIdentity();// load Identity Matrix
 
-	//Camera
-	
-	camera_manager_.Render();
-	//Light done first	
-	light_.Render();
-
-	//light_.Render();
-
-	Material temp;
-	
-	temp.Init(EMERALD, BLACK);
-	temp.SetDirectColourControl(true);
-	
-	temp.BindMaterial();
-	glPushMatrix();
-	glTranslatef(-5, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
-	glPopMatrix();
-
-	temp.SetMaterialByTemplate(JADE);
-
-	temp.SetColourByTemplate(BROWN);
-	temp.BindMaterial();
-	glPushMatrix();
-	glTranslatef(-2.5, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
-	glPopMatrix();
-
-	temp.SetMaterialByTemplate(PLASTIC);
-	temp.SetColour(Colour_RGBA(1,0,1,1));
-	temp.SetDirectColourControl(false);
-	temp.BindMaterial();
-
-	glPushMatrix();
-	glTranslatef(0, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
-	glPopMatrix();
-
-
-	temp.SetMaterialByTemplate(RUBY);
-	temp.SetColourByTemplate(ORANGE);
-
-	temp.BindMaterial();
-
-	glPushMatrix();
-	glTranslatef(2.5, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
-	glPopMatrix();
-
-	temp.SetMaterialByTemplate(PEWTER);
-	temp.SetColourByTemplate(BLACK);
-
-	temp.BindMaterial();
-
-	glPushMatrix();
-	glTranslatef(5, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
-	glPopMatrix();
-
-	
-	//Render HUD last
+	//Empty but left to remind of details of what is needed
 
 	SwapBuffers(hdc);// Swap the frame buffers.
 }		
 
 void Scene3D::Resize()
 {
-	if(hwnd == NULL)
+	if(hwnd_ == NULL)
 		return;
 
-	GetClientRect(*hwnd, &screenRect);	
+	GetClientRect(*hwnd_, &screenRect);
 	ResizeGLWindow(screenRect.right, screenRect.bottom);	
 }
-void Scene3D::InitHelper(HWND* wnd, Input* in)
+void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 {
-	hwnd = wnd;
-	input = in;
-
-	GetClientRect(*hwnd, &screenRect);	//get rect into our handy global rect
+	hwnd_ = wnd;
+	input_ = in;
+	dt_ = dt;
+	GetClientRect(*hwnd_, &screenRect);	//get rect into our handy global rect
 	InitializeOpenGL(screenRect.right, screenRect.bottom); // initialise openGL
 
 	const GLubyte *str;

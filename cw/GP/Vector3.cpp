@@ -117,6 +117,13 @@ void Vector3::Add(const Vector3& v1, float scale){
     this->y += (v1.y*scale);
     this->z += (v1.z*scale);
 }
+//void Vector3::Lerp(float percent, Vector3& v2)
+//{
+//	this->x = (1 - percent)*this->x + percent*v2.x;
+//	this->y = (1 - percent)*this->y + percent*v2.y;
+//	this->z = (1 - percent)*this->z + percent*v2.z;
+
+//}
  
 Vector3 Vector3::operator+(const Vector3& v2) {
 	return Vector3(this->x + v2.x, this->y+v2.y, this->z+v2.z);

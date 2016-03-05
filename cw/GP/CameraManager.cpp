@@ -39,22 +39,24 @@ void CameraManager::CreateCamera(CameraType type, std::string tag)
 		break;
 	case ROTATING:
 	{
-	
+		RotatingCamera* rot = new RotatingCamera;
+		rot->Init(input_, dt_, screen_rect_, hwnd_, tag);
+		camera_list_.push_back(rot);	
 	}
 		break;
 	case SCROLLING:
 	{
-
+		//Additions to be made at a later date
 	}
 		break;
 	case MOVABLE:
 	{
-
+		//Additions to be made at a later date
 	}
 		break;
 	case TRACKING:
 	{
-
+		//Additions to be made at a later date
 	}
 		break;
 	case PUSHABLE:

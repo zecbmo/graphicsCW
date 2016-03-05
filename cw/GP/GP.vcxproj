@@ -93,8 +93,11 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="RotatingCamera.cpp" />
     <ClCompile Include="Scene3D.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shapes.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TokenStream.cpp" />
@@ -109,9 +112,12 @@
     <ClInclude Include="FloatingCamera.h" />
     <ClInclude Include="FPS_Camera.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="RotatingCamera.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Scene3D.h" />

@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "FloatingCamera.h"
 #include "FPS_Camera.h"
+#include "RotatingCamera.h"
 #include <string>
 #include "ErrorSystem.h"
 
