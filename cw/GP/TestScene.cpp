@@ -69,6 +69,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	int lklk = 0;
 	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
 }
 
 void TestScene::Update()
@@ -164,26 +165,34 @@ void TestScene::Render()
 
 	temp.BindMaterial();
 
-	GLuint text2 = cloud_noise_.GetCloudNoiseTexture();
+	
+	GLuint text2 = cloud_noise_.GetCloudNoiseTexture(*dt_);
+	
+
 	
 	GLUquadricObj *qObj = gluNewQuadric();
 	gluQuadricNormals(qObj, GLU_SMOOTH);
 	gluQuadricTexture(qObj, GL_TRUE);
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, text);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glEnable(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glEnable(GL_BLEND);
+	glBindTexture(GL_TEXTURE_2D, text2);
+
+
 
 
 	
 	glPushMatrix();
 	glTranslatef(5, 0, 0);
-	gluSphere(qObj, 1, 20, 20);
+	gluSphere(qObj, 1, 40, 40);
 	glPopMatrix();
 
 	glBindTexture(GL_TEXTURE_2D, NULL);
+	glDisable(GL_BLEND);
 	//Render HUD last
 
 	SwapBuffers(hdc);// Swap the frame buffers.

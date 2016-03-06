@@ -15,28 +15,26 @@
 
 //reference http://lodev.org/cgtutor/randomnoise.html
 //converted to opengl textures 
-
-//RBG converters https://github.com/ratkins/RGBConverter/blob/master/RGBConverter.cpp
-
-
+//perlin noise math is essentially the same, however I have created the functions to 
+//convert this to an opengl texture and animate it 
 
 class Noise
 {
 public:
-	Noise() { GenerateNoise(); };
+	Noise() { GenerateNoise(); anim_counter_ = 0; speed_ = 10; };
 	~Noise() {};
 
 	void GenerateNoise();
-	GLuint GetCloudNoiseTexture();
+	GLuint GetCloudNoiseTexture(float dt);
 
 private:
 	
 	double SmoothNoise(double x, double y, double z);
 	double Turbulance(double x, double y, double z, double size);
-	Colour_RGBA HSLtoRGBA(double h, double s, double l);
-	float HUEtoRGB(double p, double q, double t);
 	double noise_[NOISE_DEPTH][NOISE_HEIGHT][NOISE_WIDTH];
 	Colour_RGBA colour_;
+	float anim_counter_;
+	float speed_;
 	
 };
 

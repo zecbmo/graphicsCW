@@ -20,6 +20,7 @@ private:
 	Light light_;
 	Noise cloud_noise_;
 	GLuint text;
+
 };
 
 

@@ -57,7 +57,7 @@ double Noise::Turbulance(double x, double y, double z, double size)
 {
 	double value = 0.0f;
 	double initial_size = size;
-
+	double z2 = z;
 	while (size >= 1)
 	{
 		value += SmoothNoise(x / size, y / size, z / size) * size;
@@ -69,52 +69,33 @@ double Noise::Turbulance(double x, double y, double z, double size)
 	return 0.0f;
 }
 
-Colour_RGBA Noise::HSLtoRGBA(double h, double s, double l)
+GLuint Noise::GetCloudNoiseTexture(float dt)
 {
-	double r, g, b;
-
-	if (s == 0) {
-		r = g = b = l; // achromatic
-	}
-	else 
-	{
-		double q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-		double p = 2 * l - q;
-		r = HUEtoRGB(p, q, h + 1 / 3);
-		g = HUEtoRGB(p, q, h);
-		b = HUEtoRGB(p, q, h - 1 / 3);
-	}
-	double a = l / 100.0;
-	return Colour_RGBA(r, g, b, a);
-}
-float Noise::HUEtoRGB(double p, double q, double t) 
-{
-	if (t < 0) t += 1;
-	if (t > 1) t -= 1;
-	if (t < 1 / 6) return p + (q - p) * 6 * t;
-	if (t < 1 / 2) return q;
-	if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-	return p;
-}
-
-GLuint Noise::GetCloudNoiseTexture()
-{
-	uint32_t image[NOISE_HEIGHT][NOISE_WIDTH];
-
+	uint32_t image[NOISE_HEIGHT][NOISE_WIDTH]; //storage for the RGBA values of each pixel
+		
 	for (int y = 0; y < NOISE_HEIGHT; y++)
 	{
 		for (int x = 0; x < NOISE_WIDTH; x++)
 		{
-			//converts a HSL colour to a pixel point from the noise
-			float l = UINT8(Turbulance(x, y, 0, 32));
-			l = l / 255.0;
-			colour_ = Colour_RGBA(1, 1, 1, l);//HSLtoRGBA(169, 255, l);
+			//this code is based off of Hue, Saturationa and light
+			//I have modified it so it is based off of a pure white texture 
+			//but it has varying alpha values
+			//this rgba hex colour is stored in a 2d image for conversion to a open gl texture
+			
+			float l = UINT8(Turbulance(x, y, anim_counter_, 32)); //turbulance smoothly interoplates along the z point givinig the animation effect
+			
+			float alpha = l / 255.0; //gets a decimal value of the light value which will be used as the alpha of each pixel
+				
+			//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
+			//I will put this fix on the to do list
+			colour_ = Colour_RGBA(alpha*.75, 1, 1, 1);
 
 			image[y][x] = colour_.ToHex();
-
+			
 		}
+		
 	}
-	 
+	anim_counter_ += dt*speed_;
 	GLuint texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
