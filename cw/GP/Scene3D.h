@@ -40,11 +40,14 @@ using namespace shapes;
 class Scene3D
 {
 public:
+	Scene3D() { is_loaded_ = false; };
 	virtual void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
 	virtual void Update();
 	virtual void Render();	// render scene
 	void Resize();
 	inline SceneType GetSceneToLoad() { return scene_to_load_; };
+	inline void SetSceneToLoad(SceneType type) { scene_to_load_ = type; };
+	inline bool IsLoaded() { return is_loaded_; };
 
 protected:
 	bool CreatePixelFormat(HDC hdc);
@@ -61,7 +64,7 @@ protected:
 	int s_wdith, s_height;
 	float* dt_;
 	SceneType scene_to_load_;
-
+	bool is_loaded_;
 	
 
 };

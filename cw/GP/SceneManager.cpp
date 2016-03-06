@@ -47,10 +47,27 @@ void SceneManager::LoadScene()
 	default:
 		break;
 	}
-	current_scene_->Init(hwnd_, input_, dt_);
+
+	if (current_scene_->IsLoaded())
+	{
+		current_scene_->SetSceneToLoad(current_scene_type_); 
+		//sets the enum type to match the scene being loaded. 
+		//eg if tests scene loads the base scene... it's scene to load variable becomes BASE_SCENE
+		//when we reload test scene this needs to be switched back to TEST_SCENE
+	}
+	else
+	{
+		current_scene_->Init(hwnd_, input_, dt_);
+	}
 }
 void SceneManager::CleanUp()
 {
 	
+}
+void SceneManager::Resize()
+{
+	test_scene_.Resize();
+	base_scene_.Resize();
+
 }
 

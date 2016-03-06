@@ -111,7 +111,6 @@
     <ClInclude Include="ErrorSystem.h" />
     <ClInclude Include="FloatingCamera.h" />
     <ClInclude Include="FPS_Camera.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Materials.h" />

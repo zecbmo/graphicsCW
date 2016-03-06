@@ -79,6 +79,7 @@ void Light::Render()
 	}
 	else
 	{
+		glEnable(GL_LIGHTING);
 		glEnable(gl_light_num_);
 		
 		float l_type = light_type_; //passed in as the last element within the lights position

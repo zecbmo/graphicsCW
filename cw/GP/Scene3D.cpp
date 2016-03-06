@@ -132,4 +132,6 @@ void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+
+	is_loaded_ = true;
 }

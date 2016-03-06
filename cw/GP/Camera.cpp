@@ -8,7 +8,7 @@ Camera::Camera()
 	pitch_ = 0;
 	yaw_ = 0;
 	roll_ = 0;
-
+	
 }
 void Camera::Init(Input* input, float* dt, RECT* screen_rect, HWND* hwnd,  std::string tag) //redefine this in child class and add pointers to objects which the class may need access to
 {

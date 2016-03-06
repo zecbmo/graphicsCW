@@ -24,18 +24,12 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	//glEnable(GL_COLOR_MATERIAL);
 
 	/////// Textures 
-
-
 	//cameras
-
 	camera_manager_.Init(input_, dt, &screenRect, hwnd_);
-
 	camera_manager_.CreateCamera(FIXED_POSITION, "fixed one");
 	camera_manager_.CreateCamera(FIXED_POSITION, "fixed two");
 	camera_manager_.CreateCamera(FIRST_PERSON, "fps one");
 	camera_manager_.CreateCamera(ROTATING, "rot one");
-
-
 
 	//fixed
 	camera_manager_.ChangeCamera("fixed one");
@@ -69,6 +63,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 
 void TestScene::Update()
 {
+
 	camera_manager_.Update();
 
 	// Do important update here
@@ -106,9 +101,9 @@ void TestScene::Render()
 	glLoadIdentity();// load Identity Matrix
 
 					 //Camera
-
 	camera_manager_.Render();
 	//Light done first	
+	int tempNm = GL_LIGHT0;
 	light_.Render();
 
 	//light_.Render();
@@ -155,7 +150,7 @@ void TestScene::Render()
 	glPopMatrix();
 
 	temp.SetMaterialByTemplate(PEWTER);
-	temp.SetColourByTemplate(BLACK);
+	temp.SetColourByTemplate(RED);
 
 	temp.BindMaterial();
 

@@ -16,7 +16,7 @@ void SetVSync(bool sync); //obtained from Stewart McCready CGT
 
 // Globals
 HWND hwnd;
-TestScene scene;
+SceneManager scene;
 Timer timer;
 Input input;
 

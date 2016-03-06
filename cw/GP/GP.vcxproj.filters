@@ -103,9 +103,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseColour.h">
       <Filter>Source Files\Light And Materials</Filter>
     </ClInclude>

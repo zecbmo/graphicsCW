@@ -19,7 +19,7 @@ public:
 
 	void Init(HWND* hwnd, Input* input, float* dt);
 	void Update();
-	inline void Resize() { current_scene_->Resize(); };
+	void Resize(); 
 	
 
 private:
