@@ -93,6 +93,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Noise.cpp" />
     <ClCompile Include="RotatingCamera.cpp" />
     <ClCompile Include="Scene3D.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="ErrorSystem.h" />
     <ClInclude Include="FloatingCamera.h" />
     <ClInclude Include="FPS_Camera.h" />
+    <ClInclude Include="Noise.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Materials.h" />

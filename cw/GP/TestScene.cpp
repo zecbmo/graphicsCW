@@ -1,5 +1,8 @@
 #include "TestScene.h"
 
+
+
+
 TestScene::TestScene()
 {
 }
@@ -12,7 +15,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	InitHelper(wnd, in, dt);
 
 	scene_to_load_ = TESTING_SCENE;
-
+	
 	//////// Lighting
 	glEnable(GL_LIGHTING);
 	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
@@ -50,15 +53,22 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 
 
 
+	
+	cloud_noise_.GenerateNoise();
 
+	text = SOIL_load_OGL_texture
+		(
+			"Textures/borg.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
+			SOIL_FLAG_COMPRESS_TO_DXT
 
-
-
-
-
-	int thisnUmber = 0;
-
+			);
+	std::string temp = SOIL_last_result();
+	int lklk = 0;
 	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 }
 
 void TestScene::Update()
@@ -150,16 +160,30 @@ void TestScene::Render()
 	glPopMatrix();
 
 	temp.SetMaterialByTemplate(PEWTER);
-	temp.SetColourByTemplate(RED);
+	temp.SetColourByTemplate(WHITE);
 
 	temp.BindMaterial();
 
+	GLuint text2 = cloud_noise_.GetCloudNoiseTexture();
+	
+	GLUquadricObj *qObj = gluNewQuadric();
+	gluQuadricNormals(qObj, GLU_SMOOTH);
+	gluQuadricTexture(qObj, GL_TRUE);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, text);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+
+	
 	glPushMatrix();
 	glTranslatef(5, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
+	gluSphere(qObj, 1, 20, 20);
 	glPopMatrix();
 
-
+	glBindTexture(GL_TEXTURE_2D, NULL);
 	//Render HUD last
 
 	SwapBuffers(hdc);// Swap the frame buffers.

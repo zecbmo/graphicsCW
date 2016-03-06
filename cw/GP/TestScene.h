@@ -2,6 +2,7 @@
 #define TEST_SCENE_
 
 #include "Scene3D.h"
+#include "Noise.h"
 
 class TestScene : public Scene3D
 {
@@ -17,6 +18,8 @@ public:
 private:
 	CameraManager camera_manager_;
 	Light light_;
+	Noise cloud_noise_;
+	GLuint text;
 };
 
 

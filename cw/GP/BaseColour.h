@@ -10,6 +10,7 @@
 #include "Vector3.h"
 #include <string>
 #include "ErrorSystem.h"
+#include <cstdint>
 
 enum ColourModifier {NO_AMBIENT, NO_DIFFUSE, NO_SPECULAR, NONE};
 
@@ -25,6 +26,11 @@ struct Colour_RGBA
 	Colour_RGBA(float r1, float g1, float b1, float a1) { r = r1; g = g1, b = b1; a = a1; };
 	
 	float r, g, b, a;
+
+	uint32_t ToHex()
+	{
+		return ((int(r*255) & 0xff) << 24) + ((int(g*255) & 0xff) << 16) + ((int(b*255) & 0xff) << 8) + (int(a*255) & 0xff);
+	}
 
 	Colour_RGBA operator=(Colour_RGBA *rhs) 
 	{
