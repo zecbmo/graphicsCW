@@ -127,7 +127,7 @@ void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 
 	//OpenGL settings
 	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.7f, 1.0f);				// Black Background *no it isnt
+	glClearColor(0.0f, 0.0f, 0.2f, 1.0f);				// Black Background *no it isnt
 	glClearDepth(1.0f);									// Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do

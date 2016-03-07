@@ -46,11 +46,7 @@ double Noise::SmoothNoise(double x, double y, double z)
 	value += (1 - fract_x) * (1 - fract_y) * (1 - fract_z) * noise_[z2][y2][x2];
 
 	return value;
-
-
-
-
-
+	
 }
 
 double Noise::Turbulance(double x, double y, double z, double size)
@@ -73,29 +69,50 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 {
 	uint32_t image[NOISE_HEIGHT][NOISE_WIDTH]; //storage for the RGBA values of each pixel
 		
+	//the noise code is based off of Hue, Saturation and light
+	//I have modified it so it is based off of a pure white texture 
+	//but it has varying alpha values
+	//this rgba hex colour is stored in a 2d image for conversion to a open gl texture
+
+	//As this is to represent clouds, we want large parts of the texture to be fully clear
+	//so any texel that has an alpha of less than 0.4 gets culled
+
+	//with the remaining texels starting them with an alpha of 0.4 makes it very jaged (not cloud like)
+	//so it is scalled so that all remain values lie between 0 and one
+	//ie 0.4 will be 0
+	//0.8 will be 1 (this is quick a fix but effective for gaining more clouds in the texture rather than one giant cloud covering the earth )
+
 	for (int y = 0; y < NOISE_HEIGHT; y++)
 	{
 		for (int x = 0; x < NOISE_WIDTH; x++)
-		{
-			//this code is based off of Hue, Saturationa and light
-			//I have modified it so it is based off of a pure white texture 
-			//but it has varying alpha values
-			//this rgba hex colour is stored in a 2d image for conversion to a open gl texture
+		{			
+			float light = UINT8(Turbulance(x, y, anim_counter_, 16)); //turbulance smoothly interoplates along the z point givinig the animation effect
 			
-			float l = UINT8(Turbulance(x, y, anim_counter_, 32)); //turbulance smoothly interoplates along the z point givinig the animation effect
-			
-			float alpha = l / 255.0; //gets a decimal value of the light value which will be used as the alpha of each pixel
+			float alpha = (light / 255.0)*1; //gets a decimal value of the light value which will be used as the alpha of each pixel
 				
+			if (alpha < 0.4) //culling
+			{
+				alpha *= 0; 
+			}
+			else
+			{				
+				alpha = (alpha * 2.5 )- 1; //making a wide range of remaining values
+			}
+		
+			if (alpha > 1)
+			{
+				alpha = 1; //making the top value stay in range
+			}
+
 			//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
 			//I will put this fix on the to do list
-			colour_ = Colour_RGBA(alpha*.75, 1, 1, 1);
-
-			image[y][x] = colour_.ToHex();
-			
-		}
-		
+			colour_ = Colour_RGBA(alpha, 1, 1, 1);
+			image[y][x] = colour_.ToHex();			
+		}	
 	}
 	anim_counter_ += dt*speed_;
+
+	//the follow creates the texture from the 2d array of pixel data
 	GLuint texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);

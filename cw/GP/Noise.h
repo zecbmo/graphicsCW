@@ -2,7 +2,7 @@
 #define NOISE_H_
 
 #define NOISE_DEPTH 64
-#define NOISE_WIDTH 192
+#define NOISE_WIDTH 256
 #define NOISE_HEIGHT 192
 
 #include <cstdlib>
@@ -21,7 +21,7 @@
 class Noise
 {
 public:
-	Noise() { GenerateNoise(); anim_counter_ = 0; speed_ = 10; };
+	Noise() { GenerateNoise(); anim_counter_ = 0; speed_ = 2; };
 	~Noise() {};
 
 	void GenerateNoise();

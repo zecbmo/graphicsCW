@@ -58,7 +58,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 
 	text = SOIL_load_OGL_texture
 		(
-			"Textures/borg.png",
+			"Textures/earth.bmp",
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
@@ -105,7 +105,7 @@ void TestScene::Update()
 
 	Render();
 }
-
+float rot = 0;
 void TestScene::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
@@ -117,6 +117,9 @@ void TestScene::Render()
 	int tempNm = GL_LIGHT0;
 	light_.Render();
 
+	GLUquadricObj *qObj = gluNewQuadric();
+	gluQuadricNormals(qObj, GLU_SMOOTH);
+	gluQuadricTexture(qObj, GL_TRUE);
 	//light_.Render();
 
 	Material temp;
@@ -139,14 +142,16 @@ void TestScene::Render()
 	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, text);
 	temp.SetMaterialByTemplate(PLASTIC);
-	temp.SetColour(Colour_RGBA(1, 0, 1, 1));
+	temp.SetColour(Colour_RGBA(1, 1, 1, 1));
 	temp.SetDirectColourControl(false);
 	temp.BindMaterial();
 
 	glPushMatrix();
-	glTranslatef(0, 0, 0);
-	gluSphere(gluNewQuadric(), 1, 20, 20);
+	glTranslatef(0, 2, 0);
+	gluSphere(qObj, 1, 40, 40);
 	glPopMatrix();
 
 
@@ -170,13 +175,11 @@ void TestScene::Render()
 	
 
 	
-	GLUquadricObj *qObj = gluNewQuadric();
-	gluQuadricNormals(qObj, GLU_SMOOTH);
-	gluQuadricTexture(qObj, GL_TRUE);
+	
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnable(GL_TEXTURE_2D);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glEnable(GL_BLEND);
@@ -185,10 +188,13 @@ void TestScene::Render()
 
 
 
-	
+	rot+= 5 * *dt_;
 	glPushMatrix();
-	glTranslatef(5, 0, 0);
-	gluSphere(qObj, 1, 40, 40);
+	glTranslatef(0, 2, 0);
+	glRotatef(rot, 0, 1, 0);
+	glRotatef(90, 1, 0, 0);
+
+	gluSphere(qObj, 1.004, 40, 40);
 	glPopMatrix();
 
 	glBindTexture(GL_TEXTURE_2D, NULL);
