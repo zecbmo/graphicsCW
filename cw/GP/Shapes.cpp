@@ -1,62 +1,155 @@
 #include "Shapes.h"
 
-shapes::shape shapes::getDiscShape(int resolution)
+Shapes::Shapes()
 {
-	float interval = (2 * PI)/resolution;
-	shape tronsDisc;
+}
 
+Shapes::~Shapes()
+{
+}
+
+void Shapes::CreateShape(ShapesType type, float resolution)
+{
+	type_ = type;
+	switch (type)
+	{
+	case DISC:
+		InitDisc(resolution);
+		break;
+	case SPHERE:
+		InitSphere(resolution);
+		break;
+	case CUBE:
+		InitCube();
+		break;
+	case PLANE:
+		InitPlane();
+		break;
+	default:
+		error::ErrorMessage("Shape not type not set!");
+		break;
+	}
+}
+
+void Shapes::Draw()
+{
+	switch (type_)
+	{
+	case DISC:
+		DrawDisc();
+		break;
+	case SPHERE:
+		DrawSphere();
+		break;
+	case CUBE:
+		DrawCube();
+		break;
+	case PLANE:
+		DrawPlane();
+		break;
+	default:
+		error::ErrorMessage("Shape not type not set!");
+		break;
+	}
+
+
+
+
+
+}
+
+void Shapes::InitDisc(float resolution)
+{
+	//creates a disc based on the parametric equation of a sphere
+	float interval = (2 * PI) / resolution;
 	float angle = 0;
 
 	float x, y, z, u, v;
-	//Loop for number of segments
+	
+	x = cos(angle);
+	u = (cos(angle) / 2) + 0.5;
+	y = sin(angle);
+	v = (sin(angle) / 2) + 0.5;
+	z = 0;
+
 	for (int i = 0; i < resolution; i++)
 	{
-		//Begin sampling at angle 0
-		//Calculate x, y, z
-	
+
+
+		//push back centre
+		vertices_.push_back(0);
+		vertices_.push_back(0);
+		vertices_.push_back(0);
+
+		UVs_.push_back(0.5);
+		UVs_.push_back(0.5);
+
+		//push back the point at side of disc
+		vertices_.push_back(x);
+		vertices_.push_back(y);
+		vertices_.push_back(z);
+
+		UVs_.push_back(u);
+		UVs_.push_back(v);
+
+
+		//push back next point on the disc... as pushing all 3 points of the face on to the vertex array 
+		//it was easier to simply calculate the next point
+		if (i == resolution)
+		{
+			//wraps to 0 if it is the final point
+			x = cos(0);
+			u = (cos(0) / 2) + 0.5;
+			y = sin(0);
+			v = (sin(0) / 2) + 0.5;
+			z = 0;
+		}
+		else
+		{
+			angle += interval;
+
 			x = cos(angle);
 			u = (cos(angle) / 2) + 0.5;
-	
 			y = sin(angle);
-			v = (sin(angle) / 2) + 0.5;		
-
+			v = (sin(angle) / 2) + 0.5;
 			z = 0;
-		
-		
-	
-		
-		tronsDisc.vertices.push_back(Vector3(x, y, z));
-		tronsDisc.normals.push_back(Vector3(0, 0, 1));
-		tronsDisc.UVs.push_back(Vector3(u, v, 0));
-		
-		
-		//	Increase angle by interval
-		angle += interval;
+		}
+		//push back next point
+		vertices_.push_back(x);
+		vertices_.push_back(y);
+		vertices_.push_back(z);
 
-		//		(To avoid problems it is sometimes best to clamp the last value back to zero)
-		//		We should then have the vertex data for the disc
+		UVs_.push_back(u);
+		UVs_.push_back(v);
 
+		for (int j = 0; j < 3; j++) //all normals are the same so pushed all at once
+		{
+			normals_.push_back(0);
+			normals_.push_back(0);
+			normals_.push_back(1);
+		}
+
+		
 	}
-	
-	return tronsDisc;
-	
 }
 
-shapes::shape shapes::getSphereShape(int resolution)
+void Shapes::InitSphere(float resolution)
 {
+	//loops arround longitude and latitude creating a vector of 3d points (vector3)
+	//once done it loops trough the vector of 3d points pushing them on to the vertex array in the correct order
+
 	float t_interval = (2 * PI) / resolution;
-	float d_interval = PI / resolution;
-	shape sphere;
+	float d_interval = PI / resolution;	
 
 	float delta = 0;
 	float theta = 0;
 
-	sphere.longAndLat.resize(resolution+1);
-	
+	longAndLat_.resize(resolution + 1);
 
 	float x, y, z, u, v;
-	//Loop for number of segments
-	for (int i = 0; i < resolution+1; i++)
+
+	//Loop and create first, the vector of 3d points
+	for (int i = 0; i < resolution + 1; i++)
 	{
 
 		for (int j = 0; j < resolution; j++)
@@ -64,16 +157,167 @@ shapes::shape shapes::getSphereShape(int resolution)
 			x = cos(theta)*sin(delta);
 			y = cos(delta);
 			z = sin(theta)*sin(delta);
+
+			longAndLat_[i].push_back(Vector3(x, y, z));
 			
-			sphere.longAndLat[i].push_back(Vector3(x, y, z));
-			sphere.normals.push_back(Vector3(x, y, z));
-					
-			theta += t_interval;			
+			theta += t_interval;
 		}
 		delta += d_interval;
 		theta = 0;
 	}
+	//second loop to put 3d points in correct order in vertex array
+	for (int i = 0; i < resolution; i++)
+	{
+		for (int j = 0; j < resolution; j++)
+		{
+			int offset = 1;
+			int offset2 = 1;
 
-	return sphere;
+			if (j + 1 >= resolution)
+			{
+				offset = 0 - j;
+			}
+					
+			float x1 = longAndLat_[i][j].GetX();
+			float x2 = longAndLat_[i+ offset2][j].GetX();
+			float x3 = longAndLat_[i][j+ offset].GetX();
+			float x4 = longAndLat_[i+ offset2][j+ offset].GetX();
 
+
+			float y1 = longAndLat_[i][j].GetY();
+			float y2 = longAndLat_[i+ offset2][j].GetY();
+			float y3 = longAndLat_[i][j + offset].GetY();
+			float y4 = longAndLat_[i + offset2][j + offset].GetY();
+
+			float z1 = longAndLat_[i][j].GetZ();
+			float z2 = longAndLat_[i + offset2][j].GetZ();
+			float z3 = longAndLat_[i][j + offset].GetZ();
+			float z4 = longAndLat_[i + offset2][j + offset].GetZ();
+			
+			//pushing points back
+			vertices_.push_back(x1);
+			vertices_.push_back(y1);
+			vertices_.push_back(z1);
+
+			//get the uv points based on the x,y,z values
+			float u1 = GetUSphere(x1, z1);
+			float v1 = GetVSphere(y1);
+
+
+			vertices_.push_back(x3);
+			vertices_.push_back(y3);
+			vertices_.push_back(z3);
+
+			float u3 = GetUSphere(x3, z3);
+			float v3 = GetVSphere(y3);
+
+			vertices_.push_back(x4);
+			vertices_.push_back(y4);
+			vertices_.push_back(z4);
+
+			float u4 = GetUSphere(x4, z4);
+			float v4 = GetVSphere(y4);
+
+			vertices_.push_back(x2);
+			vertices_.push_back(y2);
+			vertices_.push_back(z2);
+
+			float u2 = GetUSphere(x2, z2);
+			float v2 = GetVSphere(y2);
+
+			//the following safety checks are for wrapping the sphere at the edges
+			if (u4 < 0.75 && u1 > 0.75)
+			{
+				u4 += 1.0;
+			}
+			else if (u4 > 0.75 && u1 < 0.75)
+			{
+				u4 -= 1.0;
+			}
+
+			if (u3 < 0.75 && u1 > 0.75)
+			{
+				u3 += 1.0;
+			}
+			else if (u3 > 0.75 && u1 < 0.75)
+			{
+				u3 -= 1.0;
+			}
+			
+			//push all uvs back after the safety checks
+			UVs_.push_back(u1);
+			UVs_.push_back(v1);
+			UVs_.push_back(u3);
+			UVs_.push_back(v3);
+			UVs_.push_back(u4);
+			UVs_.push_back(v4);
+			UVs_.push_back(u2);
+			UVs_.push_back(v2);
+		}
+	}
+	normals_ = vertices_;
+}
+
+void Shapes::InitCube()
+{
+}
+
+void Shapes::InitPlane()
+{
+}
+
+void Shapes::DrawDisc()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, vertices_.data());
+	glTexCoordPointer(2, GL_FLOAT, 0, UVs_.data());
+	glNormalPointer(GL_FLOAT, 0, normals_.data());
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glDrawArrays(GL_TRIANGLES, 0, vertices_.size() / 3); //vertex size / 3
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void Shapes::DrawSphere()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, vertices_.data());
+	glTexCoordPointer(2, GL_FLOAT, 0, UVs_.data());
+	glNormalPointer(GL_FLOAT, 0, normals_.data());
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glDrawArrays(GL_QUADS, 0, vertices_.size() / 3); //vertex size / 3
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void Shapes::DrawCube()
+{
+}
+
+void Shapes::DrawPlane()
+{
+}
+
+float Shapes::GetUSphere(float x, float z)
+{
+	return 0.5 + (atan2(z, x) / (2 * PI));
+}
+
+float Shapes::GetVSphere(float y)
+{
+	return 0.5 + (asin(y) / PI);
 }

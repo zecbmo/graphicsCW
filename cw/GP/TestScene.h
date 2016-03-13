@@ -4,6 +4,7 @@
 #include "Scene3D.h"
 #include "Noise.h"
 
+
 class TestScene : public Scene3D
 {
 public:
@@ -20,6 +21,11 @@ private:
 	Light light_;
 	Noise cloud_noise_;
 	GLuint text;
+	SkyBox sky_box_;
+	Shapes disc_;
+
+	bool wireframe_;
+
 
 };
 

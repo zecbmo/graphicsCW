@@ -25,6 +25,7 @@ void CameraManager::CreateCamera(CameraType type, std::string tag)
 	{
 	case FIXED_POSITION:
 	{
+		
 		Camera* fixed = new Camera;
 		fixed->Init(input_, dt_, screen_rect_, hwnd_, tag);
 		camera_list_.push_back(fixed);

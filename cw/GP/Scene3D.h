@@ -16,26 +16,29 @@
 #include "Model.h"
 #include "Light.h"
 #include "Materials.h"
+#include "SkyBox.h"
 
 #define COLOUR_DEPTH 16	//Colour depth
 /*
 •	The scene must show lighting from at least 1 light source.Preferably multiple lights or different types, colours and some animated.
 •	The scene must show use of texturing.Additionally demonstrating animated textures or advance use of texturing coordinates.
+•	Use of transparency effects / Alpha blending
 •	A working camera.The user must be able to manipulate the view through using the mouse and keyboard to control the camera.Additionally, 
 	you should provide multiple cameras each with a different focus such as limited controls, fixed views, procedurally controlled views or different camera types.
+
+
 •	A clear example of using the matrix stack for Hierarchical modelling and animation through hierarchical means.
-•	Use of transparency effects / Alpha blending
 •	Use of display lists and vertex arrays
 •	Models loaded in from an external file
 •	Examples of Procedurally generated shapes
 •	User interaction(controlling objects in the scene other than the camera)
 •	A wireframe mode
 •	Advance features such as shadows and use of the stencil buffer
-•	The application should be carefully designed and constructed showing appropriate use of classes and well commented*/
+*/
 
 enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE};
 
-using namespace shapes;
+
 
 class Scene3D
 {

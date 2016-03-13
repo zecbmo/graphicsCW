@@ -7,8 +7,8 @@ void Noise::GenerateNoise()
 		for (int y = 0; y < NOISE_HEIGHT; y++)
 		{
 			for (int x = 0; x < NOISE_WIDTH; x++)
-			{
-				noise_[z][y][x] = (rand() % 32768) / 32768.0;
+			{	
+				noise_[z][y][x] = (rand() % 32768) / 32768.0;							
 			}
 		}
 	}
@@ -92,7 +92,7 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 				
 			if (alpha < 0.4) //culling
 			{
-				alpha *= 0; 
+				alpha = 0; 
 			}
 			else
 			{				

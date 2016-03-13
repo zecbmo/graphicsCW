@@ -20,7 +20,7 @@ void Light::Init(int gl_light_define, LightType type, LightTemplate default_ligh
 	}
 	else
 	{
-		spot_cutoff_ = 180.0f;
+		spot_cutoff_ = 180.0f; //cut off must be 180 if not a spot light
 	}
 }
 void Light::SetPosition(Vector3 position)

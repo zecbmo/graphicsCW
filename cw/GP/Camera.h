@@ -23,11 +23,14 @@ public:
 
 	//Shared Functions 
 	void Init(Input* input, float* dt, RECT* screen_rect, HWND* hwnd, std::string tag);
-	inline void SetPosition(Vector3 position) { position_ = position; };
-	inline std::string GetTag() { return tag_; };
+
 	bool CameraChanged();
 	void UpdatePosition();
-	void Render();
+	void Render();	
+
+	inline void SetPosition(Vector3 position) { position_ = position; };
+	inline Vector3 GetPosition() { return position_; };
+	inline std::string GetTag() { return tag_; };
 	
 	//virtual functions created for specific camera classes, identified in base camera class as to access this from the camera manager (Camera*) 
 	virtual void Update() {};

@@ -39,6 +39,9 @@
     <Filter Include="Source Files\Animation">
       <UniqueIdentifier>{603a47c1-728d-4ac1-8dee-616f2d72625a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SkyBox">
+      <UniqueIdentifier>{4044ad96-4836-4186-80cf-04865da01dc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,9 +74,6 @@
     <ClCompile Include="Scene3D.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Shapes.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Source Files\TextRender</Filter>
     </ClCompile>
@@ -104,6 +104,12 @@
     <ClCompile Include="Noise.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Source Files\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -132,9 +138,6 @@
     </ClInclude>
     <ClInclude Include="Scene3D.h">
       <Filter>Source Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Shapes.h">
-      <Filter>Source Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="TextRenderer.h">
       <Filter>Source Files\TextRender</Filter>
@@ -168,6 +171,12 @@
     </ClInclude>
     <ClInclude Include="Noise.h">
       <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Source Files\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes.h">
+      <Filter>Source Files\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

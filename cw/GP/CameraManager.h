@@ -45,6 +45,7 @@ private:
 	float* dt_;
 	RECT* screen_rect_;
 	HWND* hwnd_;
+	
 };
 
 

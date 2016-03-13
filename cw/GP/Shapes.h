@@ -1,49 +1,58 @@
 #pragma once
-
-#include <windows.h>
-#include <stdio.h>
-#include <mmsystem.h>
-#include <math.h>
+#include <Windows.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
-#include "Vector3.h"
 #include <vector>
+#include "Vector3.h"
+#include "ErrorSystem.h"
 
 #define PI 3.141592653589793238462643383279502884L /* pi */
 
-using std::vector;
+enum ShapesType {DISC, SPHERE, CUBE, PLANE};
 
+//lecture slides used as reference + http://www.cse.msu.edu/~cse872/tutorial4.html for the uv map of the sphere
 
+//The shapes class will only contain information on vertex's, normals and uv points
+//Will include the above shape "types"
+//Essentially a mesh class, but limited to certain shapes
 
-
-namespace shapes 
+class Shapes
 {
+public:
+	Shapes();
+	~Shapes();
 
-	struct shape
-	{
-	public:
-		vector<Vector3> vertices;
-		vector<Vector3> normals;
-		vector<Vector3> UVs;
-		vector< vector <Vector3> > longAndLat;
+	void CreateShape(ShapesType type, float resolution = 20);   //the initialiser function
+	void Draw();
+private:
+	void InitDisc(float resolution);
+	void InitSphere(float resolution);
+	void InitCube();
+	void InitPlane();
+	void DrawDisc();
+	void DrawSphere();
+	void DrawCube();
+	void DrawPlane();
 
-		shape operator=(const shape& b)
-		{
-			//shape n_shape;
-			this->vertices = b.vertices;
-			this->normals = b.normals;
-			this->UVs = b.UVs;
-			this->longAndLat = b.longAndLat;
-			return *this;
-		}
-	};
+	float GetUSphere(float x, float y);
+	float GetVSphere(float y);
 
-	shape getDiscShape(int resolution);
-	shape getSphereShape(int resolution);
 
+	ShapesType type_; //shape type saved to 
+
+	std::vector<float> vertices_, normals_, UVs_;
 	
+	std::vector< std::vector <Vector3> > longAndLat_; //used for spheres
 
+	Shapes operator=(const Shapes& b)
+	{
+		//shape n_shape;
+		this->vertices_ = b.vertices_;
+		this->normals_ = b.normals_;
+		this->UVs_ = b.UVs_;
+		this->longAndLat_ = b.longAndLat_;
+		return *this;
+	}
 
-
-}
+};
 

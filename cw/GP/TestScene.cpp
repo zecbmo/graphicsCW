@@ -25,13 +25,14 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	light_.ResetAmbientToZero();
 	/////// Materials 
 	//glEnable(GL_COLOR_MATERIAL);
+	sky_box_.Init(SPHERE_SKY, "Textures/stars.png");
 
 	/////// Textures 
 	//cameras
 	camera_manager_.Init(input_, dt, &screenRect, hwnd_);
 	camera_manager_.CreateCamera(FIXED_POSITION, "fixed one");
 	camera_manager_.CreateCamera(FIXED_POSITION, "fixed two");
-	camera_manager_.CreateCamera(FIRST_PERSON, "fps one");
+	camera_manager_.CreateCamera(FLOATING, "fps one");
 	camera_manager_.CreateCamera(ROTATING, "rot one");
 
 	//fixed
@@ -51,7 +52,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	camera_manager_.GetCamera("rot one")->SetTimeDelay(1.0f);
 	camera_manager_.GetCamera("rot one")->SetRotationTime(4);
 
-
+	disc_.CreateShape(SPHERE);
 
 	
 	cloud_noise_.GenerateNoise();
@@ -100,7 +101,11 @@ void TestScene::Update()
 		scene_to_load_ = BASE_SCENE;
 	}
 
-
+	if (input_->IsKeyDown('T'))
+	{
+		wireframe_ = !wireframe_;
+		input_->SetKeyUp('T');
+	}
 
 
 	Render();
@@ -111,12 +116,24 @@ void TestScene::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
 	glLoadIdentity();// load Identity Matrix
 
+	if (wireframe_)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	}
+
+
 					 //Camera
 	camera_manager_.Render();
+	sky_box_.Render(camera_manager_.CurrentCamera()->GetPosition());
 	//Light done first	
 	int tempNm = GL_LIGHT0;
 	light_.Render();
-
+	//glDisable(GL_LIGHTING);
 	GLUquadricObj *qObj = gluNewQuadric();
 	gluQuadricNormals(qObj, GLU_SMOOTH);
 	gluQuadricTexture(qObj, GL_TRUE);
@@ -165,14 +182,17 @@ void TestScene::Render()
 	gluSphere(gluNewQuadric(), 1, 20, 20);
 	glPopMatrix();
 
-	temp.SetMaterialByTemplate(PEWTER);
-	temp.SetColourByTemplate(WHITE);
-
+	
+	temp.SetMaterialByTemplate(GOLD, WHITE);
 	temp.BindMaterial();
-
+	
 	
 	GLuint text2 = cloud_noise_.GetCloudNoiseTexture(*dt_);
 	
+	glBindTexture(GL_TEXTURE_2D, text);
+	glRotatef(-20, 0, 1, 0);
+	disc_.Draw();
+
 
 	
 	
@@ -186,7 +206,7 @@ void TestScene::Render()
 	glBindTexture(GL_TEXTURE_2D, text2);
 
 
-
+	
 
 	rot+= 5 * *dt_;
 	glPushMatrix();
