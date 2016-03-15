@@ -11,46 +11,61 @@ Shapes::~Shapes()
 void Shapes::CreateShape(ShapesType type, float resolution)
 {
 	type_ = type;
-	switch (type)
+	is_quad_ = false;
+
+	switch (type_)
 	{
 	case DISC:
 		InitDisc(resolution);
 		break;
 	case SPHERE:
 		InitSphere(resolution);
+		is_quad_ = true;
 		break;
-	case CUBE:
+	case CUBE_ST:
 		InitCube();
+		is_quad_ = true;
+		break;
+	case CUBE_CT:
+		InitCube(false);
+		is_quad_ = true;
 		break;
 	case PLANE:
 		InitPlane();
+		is_quad_ = true;
+		break;
+	case PLANE_TILED:
+		InitPlane(resolution);
+		is_quad_ = true;
 		break;
 	default:
-		error::ErrorMessage("Shape not type not set!");
 		break;
 	}
 }
 
 void Shapes::Draw()
 {
-	switch (type_)
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, vertices_.data());
+	glTexCoordPointer(2, GL_FLOAT, 0, UVs_.data());
+	glNormalPointer(GL_FLOAT, 0, normals_.data());
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	if (is_quad_)
 	{
-	case DISC:
-		DrawDisc();
-		break;
-	case SPHERE:
-		DrawSphere();
-		break;
-	case CUBE:
-		DrawCube();
-		break;
-	case PLANE:
-		DrawPlane();
-		break;
-	default:
-		error::ErrorMessage("Shape not type not set!");
-		break;
+		glDrawArrays(GL_QUADS, 0, vertices_.size() / 3); //vertex size / 3
 	}
+	else
+	{
+		glDrawArrays(GL_TRIANGLES, 0, vertices_.size() / 3); //vertex size / 3
+	}
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 
 
@@ -258,59 +273,207 @@ void Shapes::InitSphere(float resolution)
 	normals_ = vertices_;
 }
 
-void Shapes::InitCube()
+void Shapes::InitCube(bool single_texture)
 {
-}
-
-void Shapes::InitPlane()
-{
-}
-
-void Shapes::DrawDisc()
-{
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glVertexPointer(3, GL_FLOAT, 0, vertices_.data());
-	glTexCoordPointer(2, GL_FLOAT, 0, UVs_.data());
-	glNormalPointer(GL_FLOAT, 0, normals_.data());
+	float x = 0.5;
+	float y = 0.5;
+	float z = 0.5;
 	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glDrawArrays(GL_TRIANGLES, 0, vertices_.size() / 3); //vertex size / 3
+	vertices_ =
+	{
+		//front face
+		-x, -y, z,//bottom left		
+		-x, y, z, //top left
+		x, y, z,  //top right
+		x, -y, z,	//bottom right
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		//back face
+		x, -y, -z,	//bottom right
+		x, y, -z,  //top right
+		-x, y, -z, //top left
+		- x, -y, -z,//bottom left			
+
+		//left face
+		-x, -y, -z,//bottom left		
+		-x, y, -z, //top left
+		-x, y, z,  //top right
+		-x, -y, z,	//bottom right
+
+		//right face
+		x, -y, z,	//bottom right
+		x, y, z,  //top right
+		x, y, -z, //top left
+		x, -y, -z,//bottom left		
+		
+		//top face
+		-x, y, z,//bottom left		
+		-x, y, -z, //top left
+		x, y, -z,  //top right
+		x, y, z,	//bottom right
+		
+
+		//bottom face
+		x, -y, z,	//bottom right
+		x, -y, -z,  //top right
+		-x, -y, -z, //top left
+		-x, -y, z,//bottom left		
+		
+
+	};
+
+	//match the uv for each face
+	if (single_texture)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			UVs_.push_back(0);
+			UVs_.push_back(1);
+			UVs_.push_back(0);
+			UVs_.push_back(0);
+			UVs_.push_back(1);
+			UVs_.push_back(0);
+			UVs_.push_back(1);
+			UVs_.push_back(1);
+		}
+	}
+	else
+	{
+		float a = 0;
+		float b = 0.25;
+		float c = 0.5;
+		float d = 0.75;
+		float e = 1;
+		float f = 0;
+		float g = 1.0 / 3.0;
+		float h = 1.0 / 1.5;
+		float i = 1;
+		
+
+
+		UVs_ =
+		{
+			//front face
+			b,h,
+			b,g,
+			c,g,
+			c,h,
+			
+			//back face
+			d,h,
+			d,g,
+			e,g,
+			e,h,
+			
+			//left face
+			a,h,
+			a,g,
+			b,g,
+			b,h,		
+
+			//right face
+			c,h,
+			c,g,
+			d,g,
+			d,h,
+
+			//top face
+			b,g,
+			b,f,
+			c,f,
+			c,g,
+
+			//bottom face
+			c,h,
+			c,i,
+			b,i,
+			b,h,
+		};
+	}
+	//front face normals
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(0);
+		normals_.push_back(1);
+
+	}
+
+	//back face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(0);
+		normals_.push_back(-1);
+
+	}
+
+	//left face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(-1);
+		normals_.push_back(0);
+		normals_.push_back(0);
+
+	}
+	//right face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(1);
+		normals_.push_back(0);
+		normals_.push_back(0);
+
+	}
+	//top face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(-1);
+		normals_.push_back(0);
+
+	}
+	//bottom face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(1);
+		normals_.push_back(0);
+
+	}
+
 }
-
-void Shapes::DrawSphere()
+void Shapes::InitPlane(float resolution)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	float x = 0.5;
+	float y = 0.5;
+	float z = 0;
 
-	glVertexPointer(3, GL_FLOAT, 0, vertices_.data());
-	glTexCoordPointer(2, GL_FLOAT, 0, UVs_.data());
-	glNormalPointer(GL_FLOAT, 0, normals_.data());
+	vertices_ = 
+	{		
+		-x, -y, z,//bottom left		
+		-x, y, z, //top left
+		x, y, z,  //top right
+		x, -y, z	//bottom right
+	};
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glDrawArrays(GL_QUADS, 0, vertices_.size() / 3); //vertex size / 3
+	UVs_ =
+	{
+		0, 1 * resolution, //bottom left	
+		0, 0, //top left
+		1 * resolution, 0, //top right
+		1 * resolution, 1 * resolution, //bottom right
+	};
+	//add normals to each of the 4 corners
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(0);
+		normals_.push_back(1);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
+
 }
 
-void Shapes::DrawCube()
-{
-}
 
-void Shapes::DrawPlane()
-{
-}
 
 float Shapes::GetUSphere(float x, float z)
 {

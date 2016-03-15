@@ -17,6 +17,17 @@ void SkyBox::Init(SkyBoxType type, std::string filename)
 	{
 		error::StringError(filename, ": Texture not set for SkyBox. Check filename.");
 	}
+	switch (type_)
+	{
+	case CUBE_SKY:
+		shape_.CreateShape(CUBE_CT);
+		break;
+	case SPHERE_SKY:
+		shape_.CreateShape(SPHERE);
+		break;
+	default:
+		break;
+	}
 }
 void SkyBox::Render(Vector3 camera_position)
 {
@@ -35,27 +46,13 @@ void SkyBox::Draw()
 {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture_);
-	switch (type_)
-	{
-	case CUBE_SKY: 
-		
-		break;
-	case SPHERE_SKY:
-	{
-		GLUquadricObj *qObj = gluNewQuadric();
-		gluQuadricNormals(qObj, GLU_SMOOTH);
-		gluQuadricTexture(qObj, GL_TRUE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glRotatef(90, 1, 0, 0);
-		gluSphere(qObj, 5, 80, 160);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glScalef(10, 10, 10);
+	shape_.Draw();
 	
-	}
-		break;
-	default:
-		error::ErrorMessage("SkyBox type not set");
-		break;
-	}
+
 
 	glBindTexture(GL_TEXTURE_2D, NULL);
 	glDisable(GL_TEXTURE_2D);

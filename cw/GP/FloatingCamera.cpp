@@ -16,8 +16,15 @@ void FloatingCamera::MouseControls()
 
 	float diffx = input_->GetMouseX() - cenX;
 	float diffy = input_->GetMouseY() - cenY;
-	yaw_ = yaw_ + diffx * (*dt_) * x_speed_;
-	pitch_ = pitch_ - diffy * (*dt_) * y_speed_;
+	
+	float deadzone = 1; //stops the camera moving on a 4k monitor when the mouse is still :D
+
+	if (abs(diffx) > deadzone || abs(diffy) > deadzone)
+	{
+		yaw_ = yaw_ + diffx * (*dt_) * x_speed_;
+		pitch_ = pitch_ - diffy * (*dt_) * y_speed_;
+	}
+	
 	if (pitch_ > 80 || pitch_ < -80)
 	{
 		pitch_ = prev_pitch_;

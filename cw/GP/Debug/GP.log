@@ -1,0 +1,3 @@
+﻿  TestScene.cpp
+z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+  GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe

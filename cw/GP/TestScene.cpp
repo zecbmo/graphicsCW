@@ -25,7 +25,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	light_.ResetAmbientToZero();
 	/////// Materials 
 	//glEnable(GL_COLOR_MATERIAL);
-	sky_box_.Init(SPHERE_SKY, "Textures/stars.png");
+	sky_box_.Init(CUBE_SKY, "Textures/stars.png");
 
 	/////// Textures 
 	//cameras
@@ -52,14 +52,17 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	camera_manager_.GetCamera("rot one")->SetTimeDelay(1.0f);
 	camera_manager_.GetCamera("rot one")->SetRotationTime(4);
 
-	disc_.CreateShape(SPHERE);
+
+
+	
+	disc_.CreateShape(CUBE_CT);
 
 	
 	cloud_noise_.GenerateNoise();
 
 	text = SOIL_load_OGL_texture
 		(
-			"Textures/earth.bmp",
+			"Textures/day_skybox.png",
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
@@ -185,14 +188,17 @@ void TestScene::Render()
 	
 	temp.SetMaterialByTemplate(GOLD, WHITE);
 	temp.BindMaterial();
-	
-	
-	GLuint text2 = cloud_noise_.GetCloudNoiseTexture(*dt_);
-	
-	glBindTexture(GL_TEXTURE_2D, text);
-	glRotatef(-20, 0, 1, 0);
-	disc_.Draw();
 
+	GLuint text2 = cloud_noise_.GetCloudNoiseTexture(*dt_);
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, text);
+	glTranslatef(5, 5, 0);
+	glRotatef(-20, 0, 1, 0);
+	glScalef(5, 5, 5);
+	disc_.Draw();
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
 
 	
 	

@@ -8,6 +8,7 @@
 #include "SOIL.h"
 #include <string>
 #include "Vector3.h"
+#include "Shapes.h"
 
 enum SkyBoxType {CUBE_SKY, SPHERE_SKY};
 class SkyBox
@@ -25,5 +26,6 @@ private:
 	GLuint cube_;
 	GLuint texture_;
 	SkyBoxType type_;
+	Shapes shape_;
 };
 
