@@ -9,6 +9,7 @@
 #include "Scene3D.h"
 #include "TestScene.h"
 #include "EarthScene.h"
+#include "TronScene.h"
 
 
 

@@ -31,7 +31,7 @@ void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
 	
 	//shapes
 	sphere_.CreateShape(SPHERE, 40);
-	sphere2_.CreateShape(SPHERE_HALF_UV, 40);
+	sphere2_.CreateShape(SPHERE, 40);
 
 
 	/////// Textures 
@@ -57,8 +57,8 @@ void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	//movement vars
 	earth_speed_ = 1;
@@ -114,6 +114,7 @@ void EarthScene::Render()
 	glPushMatrix();
 	glTranslatef(0, 0, 0);
 	glRotatef(cloud_rot_, 0, 1, 0);
+	glRotatef(160, 0, 1, 0);
 	glScalef(4.02, 4.02, 4.02);
 	sphere2_.Draw();
 	glPopMatrix();

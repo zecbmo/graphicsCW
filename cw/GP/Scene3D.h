@@ -36,7 +36,7 @@
 •	Advance features such as shadows and use of the stencil buffer
 */
 
-enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE};
+enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE, TRON_SCENE};
 
 
 

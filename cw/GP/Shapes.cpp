@@ -47,6 +47,142 @@ void Shapes::CreateShape(ShapesType type, float resolution)
 	}
 }
 
+void Shapes::CreateCustomQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float depth)
+{
+	//this function will allow ypou to create custom shapes based on 4 points and a given depth...
+	// a == bottom left corner
+	// b == top left
+	// c == top right
+	// d == bottom right
+	//with these 4 points and the depth you can create any qaud
+	//based on looking down the z axis at the xy plane
+	//Points must be placed in the order as described, or it could lead to rendering problems
+	is_quad_ = true;
+
+	float ax = a.GetX();
+	float ay = a.GetY();
+	float az = a.GetZ();
+
+	float bx = b.GetX();
+	float by = b.GetY();
+	float bz = b.GetZ();
+
+	float cx = c.GetX();
+	float cy = c.GetY();
+	float cz = c.GetZ();
+
+	float dx = d.GetX();
+	float dy = d.GetY();
+	float dz = d.GetZ();
+
+	vertices_ =
+	{
+		//front face
+		ax, ay, az,//bottom left		
+		bx, by, bz, //top left
+		cx, cy, cz,  //top right
+		dx, dy, dz,	//bottom right
+
+		//back face
+		dx, dy, dz - depth,	//bottom right	
+		cx, cy, cz - depth,  //top right
+		bx, by, bz - depth, //top left
+		ax, ay, az - depth,//bottom left		
+						
+
+		//left face
+		ax, ay, az - depth,//bottom left		
+		bx, by, bz - depth, //top left
+		bx, by, bz, //top left
+		ax, ay, az,//bottom left
+
+		//right face
+		dx, dy, dz,	//bottom right	
+		cx, cy, cz,  //top right
+		cx, cy, cz - depth,  //top right	
+		dx, dy, dz - depth,	//bottom right	
+		
+
+	   //top face
+		bx, by, bz, //top left		
+		bx, by, bz - depth, //top left
+		cx, cy, cz - depth,  //top right
+		cx, cy, cz,  //top right
+
+
+					//bottom face
+		ax, ay, az - depth,//bottom left			
+		dx, dy, dz - depth,	//bottom right
+		dx, dy, dz, //bottom left
+		ax, ay, az,//bottom left	
+
+
+	};
+
+	for (int i = 0; i < 6; i++)
+	{
+		UVs_.push_back(0);
+		UVs_.push_back(1);
+		UVs_.push_back(0);
+		UVs_.push_back(0);
+		UVs_.push_back(1);
+		UVs_.push_back(0);
+		UVs_.push_back(1);
+		UVs_.push_back(1);
+	}
+
+	//front face normals
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(0);
+		normals_.push_back(1);
+
+	}
+
+	//back face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(0);
+		normals_.push_back(-1);
+
+	}
+
+	//left face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(-1);
+		normals_.push_back(0);
+		normals_.push_back(0);
+
+	}
+	//right face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(1);
+		normals_.push_back(0);
+		normals_.push_back(0);
+
+	}
+	//top face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(-1);
+		normals_.push_back(0);
+
+	}
+	//bottom face
+	for (int i = 0; i < 4; i++)
+	{
+		normals_.push_back(0);
+		normals_.push_back(1);
+		normals_.push_back(0);
+
+	}
+}
+
 void Shapes::Draw()
 {
 	glEnableClientState(GL_VERTEX_ARRAY);

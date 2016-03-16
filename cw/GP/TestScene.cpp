@@ -25,7 +25,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	light_.ResetAmbientToZero();
 	/////// Materials 
 	//glEnable(GL_COLOR_MATERIAL);
-	sky_box_.Init(CUBE_SKY, "Textures/stars.png");
+	sky_box_.Init(CUBE_SKY, "Textures/skyUP.png");
 
 	/////// Textures 
 	//cameras
@@ -53,6 +53,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	camera_manager_.GetCamera("rot one")->SetRotationTime(4);
 
 
+	custom_.CreateCustomQuad(Vector3(-10, -1, 0), Vector3(-10, 2, 0), Vector3(-8, 1, 0), Vector3(-9, -1, 0), 3);
 
 	
 	disc_.CreateShape(CUBE_CT);
@@ -193,6 +194,11 @@ void TestScene::Render()
 	glEnable(GL_LIGHTING);
 
 	
+	/////custom shapes
+
+	custom_.Draw();
+
+
 	
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -202,9 +208,6 @@ void TestScene::Render()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glEnable(GL_BLEND);
 	glBindTexture(GL_TEXTURE_2D, text2);
-
-
-	
 
 	rot+= 5 * *dt_;
 	glPushMatrix();

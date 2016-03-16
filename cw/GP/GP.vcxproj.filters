@@ -42,6 +42,15 @@
     <Filter Include="Source Files\SkyBox">
       <UniqueIdentifier>{4044ad96-4836-4186-80cf-04865da01dc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes\tron">
+      <UniqueIdentifier>{d1291a38-cec9-4b6f-a020-3518056d7795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\tron\TronGameObjects">
+      <UniqueIdentifier>{ccc740aa-de3a-4d2c-9807-b22d956292bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\SharedGameObjects">
+      <UniqueIdentifier>{ca5fe6b7-06c4-4a00-8946-61da48621ca6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -113,6 +122,15 @@
     <ClCompile Include="EarthScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="TronScene.cpp">
+      <Filter>Source Files\Scenes\tron</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -183,6 +201,15 @@
     </ClInclude>
     <ClInclude Include="EarthScene.h">
       <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TronScene.h">
+      <Filter>Source Files\Scenes\tron</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Source Files\Scenes\SharedGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

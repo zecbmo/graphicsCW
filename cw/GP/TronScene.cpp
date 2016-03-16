@@ -1,0 +1,108 @@
+#include "TronScene.h"
+
+void TronScene::Init(HWND * hwnd, Input * in, float * dt)
+{
+	InitHelper(hwnd, in, dt);
+	scene_to_load_ = TRON_SCENE;
+
+	sky_box_.Init(CUBE_SKY, "Textures/tronsky.png");
+	sky_box_.InitCubeBox("Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png");
+	
+	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
+	light_.SetPosition(10, 10, 10);
+
+	camera_manager_.Init(input_, dt, &screenRect, hwnd_);
+	camera_manager_.CreateCamera(FLOATING, "main");
+	camera_manager_.GetCamera("main")->SetPosition(Vector3(0, 2, 0));
+	camera_manager_.GetCamera("main")->SetSensitivity(100, 100);
+	camera_manager_.GetCamera("main")->SetAllSpeeds(20, 20, 20, 20);
+	camera_manager_.ChangeCamera("main");
+
+	floor_.Init(50, 10, "Textures/tronfloor.png");
+	floor_.GetMaterial()->SetColour(Colour_RGBA(0, 0.25, 0.5, 1));
+	corridor_.Init(5, 1, "Textures/tronfloor.png");
+	corridor_.GetMaterial()->SetColour(Colour_RGBA(0, 0.25, 0.5, 1));
+	//Individual inits will go here
+	//Init, Update and Render left here and allows for quick copy and paste to create new scenes
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_COLOR_MATERIAL);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+}
+
+void TronScene::Update()
+{
+	SharedControls();
+	camera_manager_.Update();
+
+	if (input_->IsKeyDown('7'))
+	{
+		scene_to_load_ = TESTING_SCENE;
+	}
+
+	Render();
+}
+
+void TronScene::Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
+	glLoadIdentity();// load Identity Matrix
+	camera_manager_.Render();
+	light_.Render();
+	sky_box_.Render(camera_manager_.CurrentCamera()->GetPosition());
+		
+	DrawFloors();
+
+	SwapBuffers(hdc);// Swap the frame buffers.
+}
+
+void TronScene::DrawCorridor()
+{
+	corridor_.SetPosition(Vector3(42.5, 0, 0));
+	corridor_.Render();
+	corridor_.SetPosition(Vector3(37.5, 0, 0));
+	corridor_.Render();
+	corridor_.SetPosition(Vector3(32.5, 0, 0));
+	corridor_.Render();
+	corridor_.SetPosition(Vector3(27.5, 0, 0));
+	corridor_.Render();
+}
+void TronScene::DrawFloors()
+{
+	//four different rooms to be rendered
+	//with corridors between them
+	floor_.SetPosition(Vector3(0, 0, 0));
+	floor_.Render();
+
+	DrawCorridor();
+
+
+	floor_.SetPosition(Vector3(70, 0, 0));
+	floor_.Render();
+
+	glPushMatrix();
+	glRotatef(-90, 0, 1, 0);
+	DrawCorridor();
+	glPopMatrix();
+
+	floor_.SetPosition(Vector3(70, 0, 70));
+	floor_.Render();
+
+	glPushMatrix();
+	glTranslatef(70, 0, 0);
+	glRotatef(-90, 0, 1, 0);
+	DrawCorridor();
+	glPopMatrix();
+
+	floor_.SetPosition(Vector3(0, 0, 70));
+	floor_.Render();
+
+	glPushMatrix();
+	glTranslatef(70, 0, 70);
+	glRotatef(180, 0, 1, 0);
+	DrawCorridor();
+	glPopMatrix();
+
+
+}

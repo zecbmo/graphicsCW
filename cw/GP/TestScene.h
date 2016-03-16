@@ -23,6 +23,7 @@ private:
 	GLuint text;
 	SkyBox sky_box_;
 	Shapes disc_;
+	Shapes custom_;
 
 	
 

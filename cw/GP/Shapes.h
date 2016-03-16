@@ -25,6 +25,7 @@ public:
 	~Shapes();
 
 	void CreateShape(ShapesType type, float resolution = 20);   //the initialiser function
+	void CreateCustomQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float depth);
 	void Draw();
 private:
 	void InitDisc(float resolution);
