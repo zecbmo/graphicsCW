@@ -71,6 +71,9 @@ public:
 
 	void Render(); //might better being called update values
 
+	//debuging
+	void Debug(bool on_or_off);
+
 private:
 	//helper functions
 
@@ -94,6 +97,7 @@ private:
 	float quadratic_attenuation_;
 
 	bool on_;
+	bool debug_;
 
 };
 

@@ -105,11 +105,28 @@ void Light::Render()
 		glLightfv(gl_light_num_, GL_POSITION, position);
 		glLightfv(gl_light_num_, GL_SPOT_DIRECTION, spot_dir);
 		glLightfv(gl_light_num_, GL_SPOT_EXPONENT, &spot_exponent_);	//passed as reference as not glfloats
+		glLightfv(gl_light_num_, GL_SPOT_CUTOFF, &spot_cutoff_);	//passed as reference as not glfloats
 		glLightfv(gl_light_num_, GL_CONSTANT_ATTENUATION, &constant_attenuation_);
 		glLightfv(gl_light_num_, GL_LINEAR_ATTENUATION, &linear_attenuation_);
 		glLightfv(gl_light_num_, GL_QUADRATIC_ATTENUATION, &quadratic_attenuation_);
 	}
 
+	if (debug_)
+	{
+		glDisable(GL_LIGHTING);
+		glPushMatrix();
+		glTranslatef( vec_pos_.GetX(), vec_pos_.GetY(), vec_pos_.GetZ());
+		glColor4f(1, 1, 1, 1);
+		gluSphere(gluNewQuadric(), 0.5, 20, 20);
+		glPopMatrix();
+		glEnable(GL_LIGHTING);
+
+	}
+
+}
+void Light::Debug(bool on_or_off)
+{
+	debug_ = on_or_off;
 }
 void Light::InitHelperFunction(float glLightDefine) //defaults for either init functions
 {

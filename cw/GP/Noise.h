@@ -29,9 +29,9 @@ public:
 
 private:
 	
-	double SmoothNoise(double x, double y, double z);
-	double Turbulance(double x, double y, double z, double size);
-	double noise_[NOISE_DEPTH][NOISE_HEIGHT][NOISE_WIDTH];
+	float SmoothNoise(float x, float y, float z);
+	float Turbulance(float x, float y, float z, float size);
+	float noise_[NOISE_DEPTH][NOISE_HEIGHT][NOISE_WIDTH];
 	Colour_RGBA colour_;
 	float anim_counter_;
 	float speed_;

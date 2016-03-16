@@ -8,6 +8,7 @@
 #include "ErrorSystem.h"
 #include "Scene3D.h"
 #include "TestScene.h"
+#include "EarthScene.h"
 
 
 
@@ -33,8 +34,7 @@ private:
 	float* dt_;
 
 	//list of different scenes in game
-	TestScene test_scene_;
-	Scene3D base_scene_;
+
 };
 
 

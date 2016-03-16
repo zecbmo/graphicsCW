@@ -24,7 +24,7 @@ private:
 	SkyBox sky_box_;
 	Shapes disc_;
 
-	bool wireframe_;
+	
 
 
 };

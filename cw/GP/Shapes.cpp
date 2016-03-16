@@ -38,6 +38,10 @@ void Shapes::CreateShape(ShapesType type, float resolution)
 		InitPlane(resolution);
 		is_quad_ = true;
 		break;
+	case SPHERE_HALF_UV:
+		InitSphere(resolution);
+		is_quad_ = true;
+		break;
 	default:
 		break;
 	}
@@ -241,24 +245,48 @@ void Shapes::InitSphere(float resolution)
 			float v2 = GetVSphere(y2);
 
 			//the following safety checks are for wrapping the sphere at the edges
-			if (u4 < 0.75 && u1 > 0.75)
+			if (type_ == SPHERE)
 			{
-				u4 += 1.0;
-			}
-			else if (u4 > 0.75 && u1 < 0.75)
-			{
-				u4 -= 1.0;
-			}
+				if (u4 < 0.75 && u1 > 0.75)
+				{
+					u4 += 1.0;
+				}
+				else if (u4 > 0.75 && u1 < 0.75)
+				{
+					u4 -= 1.0;
+				}
 
-			if (u3 < 0.75 && u1 > 0.75)
-			{
-				u3 += 1.0;
+				if (u3 < 0.75 && u1 > 0.75)
+				{
+					u3 += 1.0;
+				}
+				else if (u3 > 0.75 && u1 < 0.75)
+				{
+					u3 -= 1.0;
+				}
 			}
-			else if (u3 > 0.75 && u1 < 0.75)
+			else
 			{
-				u3 -= 1.0;
+				float compare = 1.5;
+				float value = 2;
+				if (u4 < compare && u1 > compare)
+				{
+					u4 += value;
+				}
+				else if (u4 > compare && u1 < compare)
+				{
+					u4 -= value;
+				}
+
+				if (u3 < compare && u1 > compare)
+				{
+					u3 += value;
+				}
+				else if (u3 > compare && u1 < compare)
+				{
+					u3 -= value;
+				}
 			}
-			
 			//push all uvs back after the safety checks
 			UVs_.push_back(u1);
 			UVs_.push_back(v1);
@@ -477,7 +505,17 @@ void Shapes::InitPlane(float resolution)
 
 float Shapes::GetUSphere(float x, float z)
 {
-	return 0.5 + (atan2(z, x) / (2 * PI));
+	float num = 0;
+
+	if (type_ == SPHERE)
+	{
+		num = 0.5 + (atan2(z, x) / (2 * PI));
+	}
+	else
+	{
+		num = (0.5 + (atan2(z, x) / (2 * PI)))*2;
+	}
+	return num;
 }
 
 float Shapes::GetVSphere(float y)

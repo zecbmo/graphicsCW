@@ -66,7 +66,7 @@ BOOL InitialiseMyWindow(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 
-	ShowWindow(hwnd, nCmdShow);
+	
 	UpdateWindow(hwnd);
 	return TRUE;
 
@@ -83,7 +83,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 	timer.Initialize();
 	float* dt = timer.GetTimePointer();
 	scene.Init(&hwnd, &input, dt);
-	
+	ShowWindow(hwnd, nCmdShow);
 	SetVSync(false);
 	while (TRUE)
 	{

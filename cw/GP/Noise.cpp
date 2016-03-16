@@ -15,12 +15,12 @@ void Noise::GenerateNoise()
 	int blah = 0;
 }
 
-double Noise::SmoothNoise(double x, double y, double z)
+float Noise::SmoothNoise(float x, float y, float z)
 {
 	//get fractal
-	double fract_x = x - int(x);
-	double fract_y = y - int(y);
-	double fract_z = z - int(z);
+	float fract_x = x - int(x);
+	float fract_y = y - int(y);
+	float fract_z = z - int(z);
 
 	//wrap arround
 	int x1 = (int(x) + NOISE_WIDTH) % NOISE_WIDTH;
@@ -33,7 +33,7 @@ double Noise::SmoothNoise(double x, double y, double z)
 	int z2 = (z1 + NOISE_DEPTH - 1) % NOISE_DEPTH;
 
 	//smooth with bi-linear interpolation (we learnt this in class)
-	double value = 0.0f;
+	float value = 0.0f;
 
 	value += fract_x * fract_y * fract_z * noise_[z1][y1][x1];
 	value += fract_x * (1 - fract_y) * fract_z * noise_[z1][y2][x1];
@@ -45,15 +45,16 @@ double Noise::SmoothNoise(double x, double y, double z)
 	value += (1 - fract_x) * fract_y * (1 - fract_z) * noise_[z2][y1][x2];
 	value += (1 - fract_x) * (1 - fract_y) * (1 - fract_z) * noise_[z2][y2][x2];
 
+
 	return value;
 	
 }
 
-double Noise::Turbulance(double x, double y, double z, double size)
+float Noise::Turbulance(float x, float y, float z, float size)
 {
-	double value = 0.0f;
-	double initial_size = size;
-	double z2 = z;
+	float value = 0.0f;
+	float initial_size = size;
+	float z2 = z;
 	while (size >= 1)
 	{
 		value += SmoothNoise(x / size, y / size, z / size) * size;

@@ -78,7 +78,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 
 void TestScene::Update()
 {
-
+	SharedControls();
 	camera_manager_.Update();
 
 	// Do important update here
@@ -104,10 +104,9 @@ void TestScene::Update()
 		scene_to_load_ = BASE_SCENE;
 	}
 
-	if (input_->IsKeyDown('T'))
+	if (input_->IsKeyDown('0'))
 	{
-		wireframe_ = !wireframe_;
-		input_->SetKeyUp('T');
+		scene_to_load_ = EARTH_SCENE;
 	}
 
 
@@ -119,15 +118,7 @@ void TestScene::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
 	glLoadIdentity();// load Identity Matrix
 
-	if (wireframe_)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-	else
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	}
+	
 
 
 					 //Camera
@@ -190,6 +181,7 @@ void TestScene::Render()
 	temp.BindMaterial();
 
 	GLuint text2 = cloud_noise_.GetCloudNoiseTexture(*dt_);
+
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, text);

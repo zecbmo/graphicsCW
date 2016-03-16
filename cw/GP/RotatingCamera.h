@@ -11,7 +11,7 @@ public:
 
 	void Update();
 	//target based
-	inline void SetRotatingType(RotatingCameraType type) { type_ = type; };
+	inline void SetRotatingType(RotatingCameraType type) { type_ = type; target_ = NULL; };
 	inline void SetTarget(Vector3* target) { target_ = target; };
 
 	//animation based
@@ -19,6 +19,7 @@ public:
 	void SetEndPoint(Vector3 end_point);
 	inline void SetTimeDelay(float delay) { delay_ = delay; };
 	inline void SetRotationTime(float time) { rotation_time_ = time; };
+	inline void SetStrafeSpeed(float speed) { strafe_speed_ = speed; };
 
 private:
 	void Animate();
@@ -40,6 +41,8 @@ private:
 	float rotation_time_; //the time it takes for rotation to finish
 	float time_passed_; //monitors how much time has passed since rotation started (helps calculate lerp %)
 	bool waiting;
+	
+	float strafe_speed_;
 };
 
 

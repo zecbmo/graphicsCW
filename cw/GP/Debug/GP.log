@@ -1,3 +1,21 @@
-﻿  TestScene.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+﻿  Shapes.cpp
+z:\coding\graphics cw\cw\gp\shapes.cpp(83): warning C4244: 'initializing': conversion from 'long double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(89): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(91): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(121): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(122): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(123): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(131): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(133): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(160): warning C4244: 'initializing': conversion from 'long double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(161): warning C4244: 'initializing': conversion from 'long double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(166): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(168): warning C4101: 'v': unreferenced local variable
+z:\coding\graphics cw\cw\gp\shapes.cpp(168): warning C4101: 'u': unreferenced local variable
+z:\coding\graphics cw\cw\gp\shapes.cpp(375): warning C4305: 'initializing': truncation from 'double' to 'float'
+z:\coding\graphics cw\cw\gp\shapes.cpp(376): warning C4305: 'initializing': truncation from 'double' to 'float'
+z:\coding\graphics cw\cw\gp\shapes.cpp(512): warning C4244: '=': conversion from 'long double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(516): warning C4244: '=': conversion from 'long double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\shapes.cpp(523): warning C4244: 'return': conversion from 'long double' to 'float', possible loss of data
   GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe

@@ -127,11 +127,31 @@ void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 
 	//OpenGL settings
 	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.2f, 1.0f);				// Black Background *no it isnt
+	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);				// Black Background *no it isnt
 	glClearDepth(1.0f);									// Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
-
+	wireframe_ = false;
 	is_loaded_ = true;
+}
+
+void Scene3D::SharedControls()
+{
+
+	if (input_->IsKeyDown('T'))
+	{
+		wireframe_ = !wireframe_;
+		input_->SetKeyUp('T');
+	}
+
+	if (wireframe_)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	}
 }

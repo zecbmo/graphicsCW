@@ -36,7 +36,7 @@
 •	Advance features such as shadows and use of the stencil buffer
 */
 
-enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE};
+enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE};
 
 
 
@@ -57,6 +57,7 @@ protected:
 	void ResizeGLWindow(int width, int height);	//width and height
 	void InitializeOpenGL(int width, int height); // width and height
 	void InitHelper(HWND* wnd, Input* in, float* dt);
+	void SharedControls();
 	
 	//vars
 	HWND* hwnd_;
@@ -68,6 +69,7 @@ protected:
 	float* dt_;
 	SceneType scene_to_load_;
 	bool is_loaded_;
+	bool wireframe_;
 	
 
 };

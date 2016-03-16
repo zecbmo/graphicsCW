@@ -2,6 +2,7 @@
 
 void RotatingCamera::Update()
 {
+	UpdatePosition();
 	if ((end_pointer_ == NULL || start_pointer_ == NULL) && type_ == ANIMATED)
 	{
 		error::StringError(tag_, ": Rotating Camera, Start/End point not set");
@@ -18,7 +19,7 @@ void RotatingCamera::Update()
 	default: error::StringError(tag_, ": Rotating Camerea, Animation Type not Set." );
 		break;
 	}
-
+	
 }
 void RotatingCamera::SetStartPoint(Vector3 start_point)
 {
@@ -63,7 +64,44 @@ void RotatingCamera::Animate()
 }
 void  RotatingCamera::RotateToTarget()
 {
+	if (target_ == NULL)
+	{
+		error::StringError(tag_, ": Target not Set");
+	}
+	
 	look_at_vec_ = *target_;
+	
+	forward_vec_.SetX(-position_.GetX());
+	forward_vec_.SetY(-position_.GetY());
+	forward_vec_.SetZ(-position_.GetZ());
+	forward_vec_.Normalise();
+
+	//rotate arround centre point
+	if (input_->IsKeyDown('A'))
+	{
+		right_vec_ = forward_vec_.Cross(up_vec_);
+
+		Vector3 temp;
+		temp.SetX(right_vec_.GetX() * (*dt_) * strafe_speed_);
+		temp.SetY(right_vec_.GetY() * (*dt_) * strafe_speed_);
+		temp.SetZ(right_vec_.GetZ() * (*dt_) * strafe_speed_);
+
+		position_ = position_ - temp;
+	}
+	if (input_->IsKeyDown('D'))
+	{
+		right_vec_ = forward_vec_.Cross(up_vec_);
+
+		Vector3 temp;
+		temp.SetX(right_vec_.GetX() * (*dt_) * strafe_speed_);
+		temp.SetY(right_vec_.GetY() * (*dt_) * strafe_speed_);
+		temp.SetZ(right_vec_.GetZ() * (*dt_) * strafe_speed_);
+
+		position_ = position_ + temp;
+	}
+
+	
+
 }
 Vector3 RotatingCamera::Lerp(float percent, Vector3& v1, Vector3& v2)
 {

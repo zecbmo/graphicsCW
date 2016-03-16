@@ -85,6 +85,7 @@
     <ClCompile Include="BaseColour.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="EarthScene.cpp" />
     <ClCompile Include="ErrorSystem.cpp" />
     <ClCompile Include="FloatingCamera.cpp" />
     <ClCompile Include="FPS_CAMERA.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="BaseColour.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="EarthScene.h" />
     <ClInclude Include="ErrorSystem.h" />
     <ClInclude Include="FloatingCamera.h" />
     <ClInclude Include="FPS_Camera.h" />

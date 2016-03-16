@@ -110,6 +110,9 @@
     <ClCompile Include="Shapes.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
+    <ClCompile Include="EarthScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="Shapes.h">
       <Filter>Source Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="EarthScene.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
