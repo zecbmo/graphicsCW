@@ -24,6 +24,11 @@ public:
 	inline Material* GetMaterial() { return &material_; };
 
 protected:
+	void BeginObjectDrawing();
+	void EndObjectDrawing();
+
+
+
 	GLuint LoadTexture(std::string filename);
 	Vector3 position_;
 	Vector3 rotation_;

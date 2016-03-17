@@ -16,8 +16,7 @@ void SceneManager::Init(HWND* hwnd, Input* input, float* dt)
 	input_ = input;
 	dt_ = dt;
 	current_scene_ = new TronScene;
-	current_scene_->Init(hwnd_, input_, dt_);
-	
+	current_scene_->Init(hwnd_, input_, dt_);	
 }
 void SceneManager::Update()
 {

@@ -5,6 +5,7 @@
 #include "Noise.h"
 
 
+
 class TestScene : public Scene3D
 {
 public:
@@ -25,9 +26,13 @@ private:
 	Shapes disc_;
 	Shapes custom_;
 
-	
+	Floor floor_;
+
+	float matrix[16];
 
 
+	void DrawShadowMatrixScene();
+	void GenerateShadowMatrix(float matrix[16], float light_pos[4], GLfloat v0[3], GLfloat v1[3], GLfloat v2[3]);
 };
 
 

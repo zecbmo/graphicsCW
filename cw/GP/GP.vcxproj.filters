@@ -131,6 +131,15 @@
     <ClCompile Include="Floor.cpp">
       <Filter>Source Files\Scenes\SharedGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="TronWall.cpp">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="TronWall2.cpp">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="TronLight.cpp">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -210,6 +219,15 @@
     </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TronWall.h">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TronWall2.h">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TronLight.h">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

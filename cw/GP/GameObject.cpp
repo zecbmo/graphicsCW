@@ -17,14 +17,7 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-	glPushMatrix();
-
-	//do the transformations of the game object first
-	glTranslatef(position_.GetX(), position_.GetY(), position_.GetZ());
-	glRotatef(rotation_.GetX(), 1, 0, 0);
-	glRotatef(rotation_.GetY(), 0, 1, 0);
-	glRotatef(rotation_.GetZ(), 0, 0, 1);
-	glScalef(scale_.GetX(), scale_.GetY(), scale_.GetZ());
+	BeginObjectDrawing();
 
 	if (scale_ == Vector3(0, 0, 0))
 	{
@@ -37,8 +30,23 @@ void GameObject::Render()
 	material_.BindMaterial();
 	shape_.Draw();
 
+	EndObjectDrawing();
+}
 
+void GameObject::BeginObjectDrawing()
+{
+	glPushMatrix();
 
+	//do the transformations of the game object first
+	glTranslatef(position_.GetX(), position_.GetY(), position_.GetZ());
+	glRotatef(rotation_.GetX(), 1, 0, 0);
+	glRotatef(rotation_.GetY(), 0, 1, 0);
+	glRotatef(rotation_.GetZ(), 0, 0, 1);
+	glScalef(scale_.GetX(), scale_.GetY(), scale_.GetZ());
+}
+
+void GameObject::EndObjectDrawing()
+{
 	glPopMatrix();
 }
 

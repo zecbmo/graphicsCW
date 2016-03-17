@@ -169,7 +169,7 @@ void Shapes::CreateCustomQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float 
 	for (int i = 0; i < 4; i++)
 	{
 		normals_.push_back(0);
-		normals_.push_back(-1);
+		normals_.push_back(1);
 		normals_.push_back(0);
 
 	}
@@ -177,7 +177,7 @@ void Shapes::CreateCustomQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float 
 	for (int i = 0; i < 4; i++)
 	{
 		normals_.push_back(0);
-		normals_.push_back(1);
+		normals_.push_back(-1);
 		normals_.push_back(0);
 
 	}
@@ -591,7 +591,7 @@ void Shapes::InitCube(bool single_texture)
 	for (int i = 0; i < 4; i++)
 	{
 		normals_.push_back(0);
-		normals_.push_back(-1);
+		normals_.push_back(1);
 		normals_.push_back(0);
 
 	}
@@ -599,7 +599,7 @@ void Shapes::InitCube(bool single_texture)
 	for (int i = 0; i < 4; i++)
 	{
 		normals_.push_back(0);
-		normals_.push_back(1);
+		normals_.push_back(-1);
 		normals_.push_back(0);
 
 	}

@@ -17,6 +17,7 @@
 #include "Light.h"
 #include "Materials.h"
 #include "SkyBox.h"
+#include "Floor.h"
 
 #define COLOUR_DEPTH 16	//Colour depth
 /*

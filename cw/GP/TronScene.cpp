@@ -10,7 +10,7 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	
 	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
 	light_.SetPosition(10, 10, 10);
-
+	light_.Debug(true);
 	camera_manager_.Init(input_, dt, &screenRect, hwnd_);
 	camera_manager_.CreateCamera(FLOATING, "main");
 	camera_manager_.GetCamera("main")->SetPosition(Vector3(0, 2, 0));
@@ -22,6 +22,12 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	floor_.GetMaterial()->SetColour(Colour_RGBA(0, 0.25, 0.5, 1));
 	corridor_.Init(5, 1, "Textures/tronfloor.png");
 	corridor_.GetMaterial()->SetColour(Colour_RGBA(0, 0.25, 0.5, 1));
+
+	wall_.Init(10);
+	wall_two_.Init(12);
+	light_base_.Init(Vector3(0,1.5,0));
+
+
 	//Individual inits will go here
 	//Init, Update and Render left here and allows for quick copy and paste to create new scenes
 	glEnable(GL_TEXTURE_2D);
@@ -49,11 +55,13 @@ void TronScene::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
 	glLoadIdentity();// load Identity Matrix
 	camera_manager_.Render();
-	light_.Render();
+	
 	sky_box_.Render(camera_manager_.CurrentCamera()->GetPosition());
-		
+	light_.Render();
 	DrawFloors();
+	DrawStartingRoom();
 
+	
 	SwapBuffers(hdc);// Swap the frame buffers.
 }
 
@@ -103,6 +111,46 @@ void TronScene::DrawFloors()
 	glRotatef(180, 0, 1, 0);
 	DrawCorridor();
 	glPopMatrix();
+
+
+}
+void TronScene::DrawWall()
+{
+
+
+
+	glPushMatrix();
+	glTranslatef(-25, 0, 24);
+	wall_.Render();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(-25, 0, 10);
+	wall_.Render();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-25, 0, 0);
+	wall_two_.Render();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-25, 0, 12);
+	light_base_.Render();
+	glPopMatrix();
+
+}
+void TronScene::DrawStartingRoom()
+{
+	DrawWall();
+
+	glPushMatrix();
+	glRotatef(-90, 0, 1 ,0);
+	glScalef(1,1,-1);
+	DrawWall();
+	glPopMatrix();
+
+
 
 
 }

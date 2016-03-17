@@ -2,6 +2,9 @@
 
 #include "Scene3D.h"
 #include "Floor.h"
+#include "TronWall.h"
+#include "TronWall2.h"
+#include "TronLight.h"
 
 class TronScene : public Scene3D
 {
@@ -16,6 +19,8 @@ public:
 private:
 	void DrawCorridor();
 	void DrawFloors();
+	void DrawWall();
+	void DrawStartingRoom();
 
 
 	CameraManager camera_manager_;
@@ -25,8 +30,10 @@ private:
 
 	Floor floor_;
 	Floor corridor_;
-
-
+	
+	TronWall wall_;
+	TronWall2 wall_two_;
+	TronLight light_base_;
 
 
 };
