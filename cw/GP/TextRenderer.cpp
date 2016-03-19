@@ -11,11 +11,11 @@ BitmapTextRenderer::BitmapTextRenderer()
 BitmapTextRenderer::~BitmapTextRenderer()
 {
 }
-void BitmapTextRenderer::init(std::string filename)
+void BitmapTextRenderer::Init(std::string filename)
 {
 	glEnable(GL_TEXTURE_2D);
 
-	fontTexture = SOIL_load_OGL_texture
+	fontTexture_ = SOIL_load_OGL_texture
 		(
 			filename.c_str(),
 			SOIL_LOAD_AUTO,
@@ -25,18 +25,16 @@ void BitmapTextRenderer::init(std::string filename)
 			);
 
 	std::string temp = SOIL_last_result();
-	if (fontTexture == NULL)
+	if (temp == "Unable to open file")
 	{
-		char buffer[255];
-		sprintf_s(buffer, "NO PHOTO LOADED");
-		//std::cout << "fps: " << framecounter << std::endl;
-		OutputDebugString(buffer);
+		error::StringError(filename, ": Texture not loaded");
 	}
-
+	colour_ = Colour_RGBA(1, 1, 1, 1);
 }
 
-void BitmapTextRenderer::drawText(std::string text, float x, float y, float charWidth, float charHeight)
+void BitmapTextRenderer::DrawString(std::string text, float x, float y, float charWidth, float charHeight)
 {
+	
 	glTranslatef(x, y, 0);
 	for (int i = 0; i < text.length(); i++)
 	{
@@ -51,11 +49,11 @@ void BitmapTextRenderer::drawText(std::string text, float x, float y, float char
 		//and similar for y except divided 
 		float cellY = ((int)asciiCode / GRID_WIDTH)*cellsize;
 
-		
+		glColor4f(colour_.r, colour_.g, colour_.b, colour_.a);
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, fontTexture);
+		glBindTexture(GL_TEXTURE_2D, fontTexture_);
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 
 		glBegin(GL_QUADS);	//Begin drawing state
 
@@ -80,5 +78,6 @@ void BitmapTextRenderer::drawText(std::string text, float x, float y, float char
 	}
 
 	glBindTexture(GL_TEXTURE_2D, NULL);
+	glDisable(GL_BLEND);
 
 }

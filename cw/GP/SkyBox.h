@@ -19,11 +19,11 @@ public:
 
 	void Init(SkyBoxType type, std::string filename);
 	void InitCubeBox(std::string ft, std::string lf, std::string rt, std::string bk, std::string up, std::string dn);
-	void Render(Vector3 camera_position);
+	void Render(Vector3 camera_position, float speed = 0);
 
 private:
-	void Draw();
-	void MakeCube();
+	void Draw(float speed = 0);
+	
 	GLuint cube_;
 	GLuint texture_, ft_, lf_, rt_, bk_, up_t_, dn_;
 	SkyBoxType type_;

@@ -140,6 +140,9 @@
     <ClCompile Include="TronLight.cpp">
       <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="TronDiscArena.cpp">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -227,6 +230,9 @@
       <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
     </ClInclude>
     <ClInclude Include="TronLight.h">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TronDiscArena.h">
       <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
     </ClInclude>
   </ItemGroup>

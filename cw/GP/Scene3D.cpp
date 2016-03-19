@@ -134,6 +134,11 @@ void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 	wireframe_ = false;
 	is_loaded_ = true;
+	movement_speed_ = 10;
+	debug_title_font_.Init("fonts/trekfont.png");
+	debug_font_.Init("fonts/erasfont.png");
+	object_tracker_ = NULL;
+	
 }
 
 void Scene3D::SharedControls()
@@ -154,4 +159,317 @@ void Scene3D::SharedControls()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	}
+}
+
+void Scene3D::GameObjectMover(GameObject & gameObject)
+{
+	switch (movement_type_)
+	{
+	case ROTATION:
+		MoveRotation(gameObject);
+		break;
+	case POSITION:
+		MovePosition(gameObject);
+		break;
+	case SCALE:
+		MoveScale(gameObject);
+		break;
+	default:
+		break;
+	}
+
+	if (input_->IsKeyDown('M'))
+	{
+		switch (movement_type_)
+		{
+		case ROTATION:
+			movement_type_ = POSITION;
+			break;
+		case POSITION:
+			movement_type_ = SCALE;
+			break;
+		case SCALE:
+			movement_type_ = ROTATION;
+			break;
+		default:
+			break;
+		}
+		input_->SetKeyUp('M');
+	}
+	if (input_->IsKeyDown('+'))
+	{
+		movement_speed_ += 5;
+		input_->SetKeyUp('+');
+
+	}
+	if (input_->IsKeyDown('-'))
+	{
+		movement_speed_ -= 5;
+		input_->SetKeyUp('-');
+
+	}
+	
+	if (input_->IsKeyDown('X'))
+	{
+		rot_type_ = ROT_X;
+		input_->SetKeyUp('X');
+
+	}
+	if (input_->IsKeyDown('Y'))
+	{
+		rot_type_ = ROT_Y;
+		input_->SetKeyUp('Y');
+
+	}
+	if (input_->IsKeyDown('Z'))
+	{
+		rot_type_ = ROT_Z;
+		input_->SetKeyUp('Z');
+
+	}
+
+
+
+}
+
+void Scene3D::MovePosition(GameObject & gameObject)
+{
+	float x = gameObject.GetPosition().GetX();
+	float y = gameObject.GetPosition().GetY();
+	float z = gameObject.GetPosition().GetZ();
+
+
+
+	if (input_->IsKeyDown(VK_LEFT))
+	{
+		gameObject.SetPosition(Vector3(x - movement_speed_*(*dt_), y, z));
+	}
+	if (input_->IsKeyDown(VK_RIGHT))
+	{
+		gameObject.SetPosition(Vector3(x + movement_speed_*(*dt_), y, z));
+
+	}
+	if (input_->IsKeyDown(VK_UP))
+	{
+		gameObject.SetPosition(Vector3(x, y, z + movement_speed_*(*dt_)));
+	}
+	if (input_->IsKeyDown(VK_DOWN))
+	{
+		gameObject.SetPosition(Vector3(x, y, z - movement_speed_*(*dt_)));
+
+	}
+	if (input_->IsKeyDown('R'))
+	{
+		gameObject.SetPosition(Vector3(x, y + movement_speed_*(*dt_), z));
+
+	}
+	if (input_->IsKeyDown('F'))
+	{
+		gameObject.SetPosition(Vector3(x, y - movement_speed_*(*dt_), z));
+
+	}
+}
+
+void Scene3D::MoveRotation(GameObject & gameObject)
+{
+	float x = gameObject.GetRotation().GetX();
+	float y = gameObject.GetRotation().GetY();
+	float z = gameObject.GetRotation().GetZ();
+
+	float rot_speed = 1;
+
+	switch (rot_type_)
+	{
+	case ROT_X:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetRotation(x - rot_speed*(*dt_),y,z);
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetRotation(x + rot_speed*(*dt_), y, z);
+		}
+	}
+		break;
+	case ROT_Y:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetRotation(x, y - rot_speed*(*dt_), z);
+
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetRotation(x, y + rot_speed*(*dt_), z);
+
+		}
+	}
+		break;
+	case ROT_Z:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetRotation(x, y, z - rot_speed*(*dt_));
+
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetRotation(x, y, z + rot_speed*(*dt_));
+
+		}
+	}
+		break;
+	default:
+		break;
+	}
+
+
+}
+
+void Scene3D::MoveScale(GameObject & gameObject)
+{
+	float x = gameObject.GetScale().GetX();
+	float y = gameObject.GetScale().GetY();
+	float z = gameObject.GetScale().GetZ();
+
+	float scale_speed = 5;
+
+	if (input_->IsKeyDown(VK_LEFT))
+	{
+		gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z + scale_speed*(*dt_));
+	}
+	if (input_->IsKeyDown(VK_RIGHT))
+	{
+		gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z - scale_speed*(*dt_));
+	}
+	
+}
+
+void Scene3D::DisplayHUD(Camera* camera)
+{
+	//////////////////////////////////////switch to ortho
+	glDisable(GL_LIGHTING);
+	glDepthMask(GL_FALSE);  // disable writes to Z-Buffer
+	glDisable(GL_DEPTH_TEST);  // disable depth-testing
+	glMatrixMode(GL_PROJECTION);					// Select Projection
+	glPushMatrix();							// Push The Matrix
+	glLoadIdentity();						// Reset The Matrix
+	glOrtho(0, screenRect.right, -screenRect.bottom, 0, -10, 10);				// Select Ortho Mode, 0,0 to start fropm the top left
+	glMatrixMode(GL_MODELVIEW);					// Select Modelview Matrix
+	glPushMatrix();							// Push The Matrix
+	glLoadIdentity();
+	
+	/////////////////////////////////////  GUI drawing goes here
+	
+	
+	glPushMatrix();
+	GUIToScreenSize(0.85, 1);
+	ShowFPS();
+	glPopMatrix();
+
+	glPushMatrix();
+	GUIToScreenSize(0, 0.1);
+	glScalef(1.2, 1.2, 0);
+	debug_title_font_.DrawString(title_, 0, 0, 4, 4);
+	glPopMatrix();
+
+
+	glPushMatrix();
+
+	GUIToScreenSize(0.005, 0.15);
+
+	if (object_tracker_ == NULL)
+	{
+		debug_font_.DrawString("No object set for tracking", 0, 0, 4, 4);
+	}
+	else
+	{
+		ShowObjectStats();
+	}
+
+
+	glPopMatrix();
+
+
+	
+
+
+	///////////////////////////////////////// switch to projection
+
+
+	glMatrixMode(GL_PROJECTION);					// Select Projection
+	glPopMatrix();							// Pop The Matrix
+	glMatrixMode(GL_MODELVIEW);					// Select Modelview
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);  // disable writes to Z-Buffer
+	glEnable(GL_LIGHTING);
+	
+	
+}
+void Scene3D::ShowFPS()
+{
+	char buffer[255];
+	frametimer_ += *dt_;
+	framecounter_++;
+
+
+
+	if (frametimer_ >= 1)
+	{
+		fps_ = framecounter_;
+		frametimer_ = 0;
+		framecounter_ = 0;
+	}
+
+	sprintf_s(buffer, "FPS: %d\n", fps_);
+	debug_font_.DrawString(buffer, 0, 0, 4, 4);
+}
+void Scene3D::GUIToScreenSize(float x, float y) //x and y should be in range of 0 and 1
+{
+	float w = screenRect.right;
+	float h = screenRect.bottom;
+		
+	x = x * w;
+	y = y * h;
+
+	float s = (w / h)*8;
+	glTranslatef(x , -y, 0);
+	glScalef(s,s,0);
+		
+}
+void Scene3D::ShowObjectStats()
+{
+	Vector3 pos = object_tracker_->GetPosition();
+	float x = pos.GetX();
+	float y = pos.GetY();
+	float z = pos.GetZ();
+
+	Vector3 rot = object_tracker_->GetRotation();
+	float xr = rot.GetX();
+	float yr = rot.GetY();
+	float zr = rot.GetZ();
+
+	Vector3 scale = object_tracker_->GetScale();
+	float xs = scale.GetX();
+	float ys = scale.GetY();
+	float zs = scale.GetZ();
+
+
+	char buffer[255];
+	sprintf_s(buffer, "x: %.2f y: %.2f z: %.2f", x,y,z);
+	debug_font_.DrawString("Object Position", 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	debug_font_.DrawString(buffer, 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	debug_font_.DrawString("Object Rotation", 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	sprintf_s(buffer, "x: %.2f y: %.2f z: %.2f", xr, yr, zr);
+	debug_font_.DrawString(buffer, 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	debug_font_.DrawString("Object Scale", 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	sprintf_s(buffer, "x: %.2f y: %.2f z: %.2f", xs, ys, zs);
+	debug_font_.DrawString(buffer, 0, 0, 4, 4);
 }

@@ -131,20 +131,26 @@ void SkyBox::InitCubeBox(std::string ft, std::string lf, std::string rt, std::st
 
 
 }
-void SkyBox::Render(Vector3 camera_position)
+void SkyBox::Render(Vector3 camera_position, float speed)
 {
 	glColor4f(1, 1, 1, 1); //resets to default incase over writen by materials 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
 		glTranslatef(camera_position.GetX(), camera_position.GetY(), camera_position.GetZ());
-		Draw();
+		
+		
+		
+		Draw(speed);
+		
+		
+		
 	glPopMatrix();
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	
 }
-void SkyBox::Draw()
+void SkyBox::Draw(float speed)
 {
 	glEnable(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -152,6 +158,9 @@ void SkyBox::Draw()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	glScalef(4, 4, 4);
+
+
+	
 
 	if (type_ != CUBE_SIX)
 	{
@@ -167,7 +176,19 @@ void SkyBox::Draw()
 		glBindTexture(GL_TEXTURE_2D, ft_);
 		glPushMatrix();
 		glTranslatef(0, 0, 0.4999999);
+
+	
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix(); /////////////////////////////////////////////////problem?
+		glTranslatef(speed, speed, 0);
 		face_.Draw();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+	
+	
+
+
+
 		glPopMatrix();		
 
 		glBindTexture(GL_TEXTURE_2D, bk_);
@@ -208,16 +229,7 @@ void SkyBox::Draw()
 		glBindTexture(GL_TEXTURE_2D, NULL);
 	}
 
-}
-
-void SkyBox::MakeCube()
-{
-	cube_ = glGenLists(1);
-	glNewList(cube_, GL_COMPILE);
-
-
-
-	glEndList();
-
+	
 
 }
+

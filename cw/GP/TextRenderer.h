@@ -15,21 +15,23 @@
 #include <math.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
-
+#include "ErrorSystem.h"
 #include <string>
-
+#include "BaseColour.h"
 
 class BitmapTextRenderer
 {
 public:
 	BitmapTextRenderer();
 	~BitmapTextRenderer();
-	void init(std::string filename);
-	void drawText(std::string text, float x, float y, float charWidth, float charHeight);
-
+	void Init(std::string filename);
+	void DrawString(std::string text, float x, float y, float charWidth, float charHeight);
+	inline void SetColour(Colour_RGBA colour) { colour_ = colour; };
+	inline Colour_RGBA GetColour() { return colour_; };
 
 private: 
-	GLuint fontTexture;
+	GLuint fontTexture_;
+	Colour_RGBA colour_;
 
 };
 

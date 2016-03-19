@@ -106,6 +106,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TokenStream.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="TronDiscArena.cpp" />
     <ClCompile Include="TronLight.cpp" />
     <ClCompile Include="TronScene.cpp" />
     <ClCompile Include="TronWall.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TokenStream.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="TronDiscArena.h" />
     <ClInclude Include="TronLight.h" />
     <ClInclude Include="TronScene.h" />
     <ClInclude Include="TronWall.h" />

@@ -27,6 +27,8 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	//glEnable(GL_COLOR_MATERIAL);
 	sky_box_.Init(CUBE_SKY, "Textures/skyUP.png");
 
+	title_ = "Testing Scene";
+
 	/////// Textures 
 	//cameras
 	camera_manager_.Init(input_, dt, &screenRect, hwnd_);

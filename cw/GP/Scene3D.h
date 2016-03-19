@@ -19,6 +19,7 @@
 #include "SkyBox.h"
 #include "Floor.h"
 
+
 #define COLOUR_DEPTH 16	//Colour depth
 /*
 •	The scene must show lighting from at least 1 light source.Preferably multiple lights or different types, colours and some animated.
@@ -26,8 +27,6 @@
 •	Use of transparency effects / Alpha blending
 •	A working camera.The user must be able to manipulate the view through using the mouse and keyboard to control the camera.Additionally, 
 	you should provide multiple cameras each with a different focus such as limited controls, fixed views, procedurally controlled views or different camera types.
-
-
 •	A clear example of using the matrix stack for Hierarchical modelling and animation through hierarchical means.
 •	Use of display lists and vertex arrays
 •	Models loaded in from an external file
@@ -39,6 +38,9 @@
 
 enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE, TRON_SCENE};
 
+enum MovementType {ROTATION, POSITION, SCALE};
+
+enum RotationType {ROT_X, ROT_Y, ROT_Z};
 
 
 class Scene3D
@@ -59,7 +61,17 @@ protected:
 	void InitializeOpenGL(int width, int height); // width and height
 	void InitHelper(HWND* wnd, Input* in, float* dt);
 	void SharedControls();
+	void GameObjectMover(GameObject &gameObject);;
+	void MovePosition(GameObject &gameObject);
+	void MoveRotation(GameObject &gameObject);
+	void MoveScale(GameObject &gameObject);
+	void DisplayHUD(Camera* camera);
+	void ShowFPS();
+	void GUIToScreenSize(float x, float y);
+	void ShowObjectStats();
+
 	
+
 	//vars
 	HWND* hwnd_;
 	Input* input_;
@@ -71,6 +83,21 @@ protected:
 	SceneType scene_to_load_;
 	bool is_loaded_;
 	bool wireframe_;
+
+	float movement_speed_; //for moving objects within the scene
+	MovementType movement_type_;
+	RotationType rot_type_;
+
+	float frametimer_;
+	float framecounter_;
+	int fps_;
+	std::string title_;
+
+	BitmapTextRenderer debug_font_;
+	BitmapTextRenderer debug_title_font_;
+
+	GameObject* object_tracker_;
+
 	
 
 };

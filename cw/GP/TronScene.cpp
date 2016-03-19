@@ -4,17 +4,19 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 {
 	InitHelper(hwnd, in, dt);
 	scene_to_load_ = TRON_SCENE;
+	title_ = "Tron 3.0 : beta alpha 9";
 
 	sky_box_.Init(CUBE_SKY, "Textures/tronsky.png");
 	sky_box_.InitCubeBox("Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png");
 	
+
 	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
 	light_.SetPosition(10, 10, 10);
 	light_.Debug(true);
 	camera_manager_.Init(input_, dt, &screenRect, hwnd_);
-	camera_manager_.CreateCamera(FLOATING, "main");
+	camera_manager_.CreateCamera(FIRST_PERSON, "main");
 	camera_manager_.GetCamera("main")->SetPosition(Vector3(0, 2, 0));
-	camera_manager_.GetCamera("main")->SetSensitivity(100, 100);
+	camera_manager_.GetCamera("main")->SetSensitivity(200, 200);
 	camera_manager_.GetCamera("main")->SetAllSpeeds(20, 20, 20, 20);
 	camera_manager_.ChangeCamera("main");
 
@@ -27,14 +29,16 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	wall_two_.Init(12);
 	light_base_.Init(Vector3(0,1.5,0));
 
+	arena_.Init(Vector3(63, 0.01, 70));
 
-	//Individual inits will go here
-	//Init, Update and Render left here and allows for quick copy and paste to create new scenes
+
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_COLOR_MATERIAL);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	object_tracker_ = &arena_;
 }
 
 void TronScene::Update()
@@ -52,16 +56,22 @@ void TronScene::Update()
 
 void TronScene::Render()
 {
+
+	uv_speed_ = 0.5 * (*dt_);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
 	glLoadIdentity();// load Identity Matrix
 	camera_manager_.Render();
+	sky_box_.Render(camera_manager_.CurrentCamera()->GetPosition(), uv_speed_);
 	
-	sky_box_.Render(camera_manager_.CurrentCamera()->GetPosition());
+
 	light_.Render();
 	DrawFloors();
 	DrawStartingRoom();
 
+	arena_.Render();
 	
+	
+	DisplayHUD(camera_manager_.CurrentCamera());
 	SwapBuffers(hdc);// Swap the frame buffers.
 }
 
@@ -90,15 +100,6 @@ void TronScene::DrawFloors()
 	floor_.Render();
 
 	glPushMatrix();
-	glRotatef(-90, 0, 1, 0);
-	DrawCorridor();
-	glPopMatrix();
-
-	floor_.SetPosition(Vector3(70, 0, 70));
-	floor_.Render();
-
-	glPushMatrix();
-	glTranslatef(70, 0, 0);
 	glRotatef(-90, 0, 1, 0);
 	DrawCorridor();
 	glPopMatrix();

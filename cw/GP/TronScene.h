@@ -5,6 +5,7 @@
 #include "TronWall.h"
 #include "TronWall2.h"
 #include "TronLight.h"
+#include "TronDiscArena.h"
 
 class TronScene : public Scene3D
 {
@@ -34,6 +35,9 @@ private:
 	TronWall wall_;
 	TronWall2 wall_two_;
 	TronLight light_base_;
+	TronDiscArena arena_;
+
+	float uv_speed_; //for moving the skybox texture
 
 
 };

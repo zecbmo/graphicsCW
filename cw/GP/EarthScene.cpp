@@ -53,6 +53,7 @@ void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
 		error::ErrorMessage("Texture not loaded.");
 	}
 	
+	title_ = "Earth and Animated 3D noise clouds";
 	cloud_noise_.GenerateNoise();
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -122,7 +123,7 @@ void EarthScene::Render()
 	glBindTexture(GL_TEXTURE_2D, NULL);
 	glDisable(GL_BLEND);
 
-
+	//DisplayHUD(camera_manager_.CurrentCamera()); //im creating with how i rotate the camera in this scene, so this doesn't work properly :D
 	SwapBuffers(hdc);// Swap the frame buffers.
 
 

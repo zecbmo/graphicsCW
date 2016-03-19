@@ -53,6 +53,12 @@ public:
 	virtual void SetTimeDelay(float delay) {};
 	virtual void SetRotationTime(float time) {};
 
+	//getters
+	inline float GetPitch() { return pitch_; };
+	inline float GetYaw() { return yaw_; };
+	inline float GetRoll() { return roll_; };
+
+	inline Vector3 GetForwardVec() { return forward_vec_; };
 
 protected:
 	Vector3 position_;
