@@ -69,6 +69,8 @@ protected:
 	void ShowFPS();
 	void GUIToScreenSize(float x, float y);
 	void ShowObjectStats();
+	void ShowMovementType();
+	
 
 	
 

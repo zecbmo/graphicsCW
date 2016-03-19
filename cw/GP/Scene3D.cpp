@@ -161,8 +161,9 @@ void Scene3D::SharedControls()
 	}
 }
 
-void Scene3D::GameObjectMover(GameObject & gameObject)
+void Scene3D::GameObjectMover(GameObject &gameObject)
 {
+	object_tracker_ = &gameObject;
 	switch (movement_type_)
 	{
 	case ROTATION:
@@ -196,16 +197,16 @@ void Scene3D::GameObjectMover(GameObject & gameObject)
 		}
 		input_->SetKeyUp('M');
 	}
-	if (input_->IsKeyDown('+'))
+	if (input_->IsKeyDown(VK_ADD))
 	{
 		movement_speed_ += 5;
-		input_->SetKeyUp('+');
+		input_->SetKeyUp(VK_ADD);
 
 	}
-	if (input_->IsKeyDown('-'))
+	if (input_->IsKeyDown(VK_SUBTRACT))
 	{
 		movement_speed_ -= 5;
-		input_->SetKeyUp('-');
+		input_->SetKeyUp(VK_SUBTRACT);
 
 	}
 	
@@ -276,7 +277,7 @@ void Scene3D::MoveRotation(GameObject & gameObject)
 	float y = gameObject.GetRotation().GetY();
 	float z = gameObject.GetRotation().GetZ();
 
-	float rot_speed = 1;
+	float rot_speed = movement_speed_;
 
 	switch (rot_type_)
 	{
@@ -333,15 +334,15 @@ void Scene3D::MoveScale(GameObject & gameObject)
 	float y = gameObject.GetScale().GetY();
 	float z = gameObject.GetScale().GetZ();
 
-	float scale_speed = 5;
+	float scale_speed = movement_speed_;
 
 	if (input_->IsKeyDown(VK_LEFT))
 	{
-		gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z + scale_speed*(*dt_));
+		gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z - scale_speed*(*dt_));
 	}
 	if (input_->IsKeyDown(VK_RIGHT))
 	{
-		gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z - scale_speed*(*dt_));
+		gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z + scale_speed*(*dt_));
 	}
 	
 }
@@ -364,7 +365,7 @@ void Scene3D::DisplayHUD(Camera* camera)
 	
 	
 	glPushMatrix();
-	GUIToScreenSize(0.85, 1);
+	GUIToScreenSize(0.9, 0.94);
 	ShowFPS();
 	glPopMatrix();
 
@@ -377,15 +378,24 @@ void Scene3D::DisplayHUD(Camera* camera)
 
 	glPushMatrix();
 
-	GUIToScreenSize(0.005, 0.15);
+	
 
 	if (object_tracker_ == NULL)
 	{
+		GUIToScreenSize(0.005, 0.94);
 		debug_font_.DrawString("No object set for tracking", 0, 0, 4, 4);
 	}
 	else
 	{
+		glPushMatrix();
+		GUIToScreenSize(0.005, 0.2);
+		ShowMovementType();
+		glPopMatrix();
+
+		glPushMatrix();
+		GUIToScreenSize(0.005, 0.75);
 		ShowObjectStats();
+		glPopMatrix();
 	}
 
 
@@ -434,7 +444,7 @@ void Scene3D::GUIToScreenSize(float x, float y) //x and y should be in range of 
 	x = x * w;
 	y = y * h;
 
-	float s = (w / h)*8;
+	float s = (w / h)*6;
 	glTranslatef(x , -y, 0);
 	glScalef(s,s,0);
 		
@@ -472,4 +482,64 @@ void Scene3D::ShowObjectStats()
 	glTranslatef(0, -3, 0);
 	sprintf_s(buffer, "x: %.2f y: %.2f z: %.2f", xs, ys, zs);
 	debug_font_.DrawString(buffer, 0, 0, 4, 4);
+}
+
+void Scene3D::ShowMovementType()
+{
+	debug_font_.DrawString("Movement tool:", 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	debug_font_.DrawString("'M' to switch tool type.", 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	debug_font_.DrawString("+/- to change Speed.", 0, 0, 4, 4);
+	glTranslatef(0, -3, 0);
+	char buffer[255];
+	sprintf_s(buffer, "Speed: %.2f", movement_speed_);
+	debug_font_.DrawString(buffer, 0, 0, 4, 4);
+	glTranslatef(0, -6, 0);
+
+	switch (movement_type_)
+	{
+	case ROTATION:
+	{
+		switch (rot_type_)
+		{
+		case ROT_X:
+		{
+			debug_font_.DrawString("Rotation tool selected: x", 0, 0, 4, 4);
+		}
+			break;	
+		case ROT_Y:
+		{
+			debug_font_.DrawString("Rotation tool selected: y", 0, 0, 4, 4);
+
+		}
+			break;
+		case ROT_Z:
+		{
+			debug_font_.DrawString("Rotation tool selected: z", 0, 0, 4, 4);
+		}
+			break;
+		default:
+			break;
+		}
+		glTranslatef(0, -3, 0);
+		debug_font_.DrawString("'X' 'Y' or 'Z' to switch rotation type", 0, 0, 4, 4);
+	}
+		break;
+	case POSITION:
+	{
+		debug_font_.DrawString("Positioning tool selected", 0, 0, 4, 4);
+
+	
+	}
+		break;
+	case SCALE:
+	{
+		debug_font_.DrawString("Scale tool selected", 0, 0, 4, 4);
+	
+	}
+		break;
+	default:
+		break;
+	}
 }

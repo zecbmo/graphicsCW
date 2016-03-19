@@ -38,7 +38,7 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	object_tracker_ = &arena_;
+
 }
 
 void TronScene::Update()
@@ -50,7 +50,7 @@ void TronScene::Update()
 	{
 		scene_to_load_ = TESTING_SCENE;
 	}
-
+	GameObjectMover(arena_);
 	Render();
 }
 
