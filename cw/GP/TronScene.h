@@ -9,6 +9,7 @@
 #include "Cylinder.h"
 #include "plane.h"
 #include "Box.h"
+#include "TronRecogniser.h"
 
 class TronScene : public Scene3D
 {
@@ -47,6 +48,9 @@ private:
 
 	Box blue_box_;
 	Box red_box_;
+
+	TronRecogniser recogniser_;
+
 
 
 	Plane wall_pannel_;

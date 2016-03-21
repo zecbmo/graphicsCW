@@ -445,7 +445,7 @@ void Scene3D::GUIToScreenSize(float x, float y) //x and y should be in range of 
 	y = y * h;
 
 	float s = (w / h);
-	s = s*s*s*s;
+	s = s*4;
 	glTranslatef(x , -y, 0);
 	glScalef(s,s,0);
 		

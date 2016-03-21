@@ -112,6 +112,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="TronDiscArena.cpp" />
     <ClCompile Include="TronLight.cpp" />
+    <ClCompile Include="TronRecogniser.cpp" />
     <ClCompile Include="TronScene.cpp" />
     <ClCompile Include="TronWall.cpp" />
     <ClCompile Include="TronWall2.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Floor.h" />
     <ClInclude Include="TronDiscArena.h" />
     <ClInclude Include="TronLight.h" />
+    <ClInclude Include="TronRecogniser.h" />
     <ClInclude Include="TronScene.h" />
     <ClInclude Include="TronWall.h" />
     <ClInclude Include="TronWall2.h" />

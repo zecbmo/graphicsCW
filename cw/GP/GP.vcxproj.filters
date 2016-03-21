@@ -155,6 +155,9 @@
     <ClCompile Include="Box.cpp">
       <Filter>Source Files\Scenes\SharedGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="TronRecogniser.cpp">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -258,6 +261,9 @@
     </ClInclude>
     <ClInclude Include="Box.h">
       <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TronRecogniser.h">
+      <Filter>Source Files\Scenes\tron\TronGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

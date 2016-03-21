@@ -61,7 +61,7 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	red_box_.SetScale(1.5, 1.5, 1.5);
 
 
-
+	recogniser_.Init(1);
 
 
 	glEnable(GL_TEXTURE_2D);
@@ -88,7 +88,7 @@ void TronScene::Update()
 		scene_to_load_ = TESTING_SCENE;
 	}
 	///////////////////////////////////mover
-	GameObjectMover(red_box_);
+	GameObjectMover(recogniser_);
 	////////////////////////////////
 	Render();
 }
@@ -107,6 +107,9 @@ void TronScene::Render()
 	DrawFloors();
 	DrawStartingRoom();
 	DrawBoxes();
+
+	recogniser_.Render();
+
 
 	red_box_.Render();
 

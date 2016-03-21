@@ -1,28 +1,8 @@
-﻿  TronScene.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
-z:\coding\graphics cw\cw\gp\tronscene.cpp(31): warning C4305: 'argument': truncation from 'double' to 'float'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(45): warning C4305: 'argument': truncation from 'double' to 'float'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(99): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\tronscene.cpp(162): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(168): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(195): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(220): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(226): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(231): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(237): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(243): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(249): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(256): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(261): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(266): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(271): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(277): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(278): warning C4305: 'argument': truncation from 'double' to 'float'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(283): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(285): warning C4305: 'argument': truncation from 'double' to 'float'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(296): warning C4305: 'argument': truncation from 'double' to 'float'
-z:\coding\graphics cw\cw\gp\tronscene.cpp(313): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-z:\coding\graphics cw\cw\gp\tronscene.cpp(321): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-z:\coding\graphics cw\cw\gp\tronscene.cpp(344): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-z:\coding\graphics cw\cw\gp\tronscene.cpp(352): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-  GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe
+﻿  TronRecogniser.cpp
+m:\desktop\graphics\cw2\cw\gp\tronrecogniser.cpp(16): warning C4305: 'argument': truncation from 'double' to 'float'
+m:\desktop\graphics\cw2\cw\gp\tronrecogniser.cpp(21): warning C4305: 'argument': truncation from 'double' to 'float'
+m:\desktop\graphics\cw2\cw\gp\tronrecogniser.cpp(28): warning C4305: 'argument': truncation from 'double' to 'float'
+m:\desktop\graphics\cw2\cw\gp\tronrecogniser.cpp(29): warning C4305: 'argument': truncation from 'double' to 'float'
+m:\desktop\graphics\cw2\cw\gp\tronrecogniser.cpp(31): warning C4305: 'argument': truncation from 'double' to 'float'
+m:\desktop\graphics\cw2\cw\gp\tronrecogniser.cpp(36): warning C4305: 'argument': truncation from 'double' to 'float'
+  GP.vcxproj -> M:\Desktop\graphics\cw2\cw\Debug\CW.exe
