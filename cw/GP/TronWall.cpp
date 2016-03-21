@@ -37,6 +37,8 @@ void TronWall::Render()
 	material_.BindMaterial();
 	block_three_.Draw();
 
+	
+
 	EndObjectDrawing();
 
 	

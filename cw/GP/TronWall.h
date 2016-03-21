@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Cone.h"
 
 class TronWall : public GameObject
 {
@@ -12,6 +13,7 @@ public:
 	void Update();
 	void Render();
 
+	
 
 private:
 	Shapes block_one_;

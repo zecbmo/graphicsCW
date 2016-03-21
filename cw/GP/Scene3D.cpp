@@ -338,11 +338,11 @@ void Scene3D::MoveScale(GameObject & gameObject)
 
 	if (input_->IsKeyDown(VK_LEFT))
 	{
-		gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z - scale_speed*(*dt_));
+		gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z - scale_speed*(*dt_));
 	}
 	if (input_->IsKeyDown(VK_RIGHT))
 	{
-		gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z + scale_speed*(*dt_));
+		gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z + scale_speed*(*dt_));
 	}
 	
 }
@@ -444,7 +444,8 @@ void Scene3D::GUIToScreenSize(float x, float y) //x and y should be in range of 
 	x = x * w;
 	y = y * h;
 
-	float s = (w / h)*6;
+	float s = (w / h);
+	s = s*s*s*s;
 	glTranslatef(x , -y, 0);
 	glScalef(s,s,0);
 		

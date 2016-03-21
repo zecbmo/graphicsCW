@@ -8,7 +8,7 @@
 
 #define PI 3.141592653589793238462643383279502884L /* pi */
 
-enum ShapesType {DISC, SPHERE, CUBE_ST, CUBE_CT, PLANE, PLANE_TILED, SPHERE_HALF_UV};
+enum ShapesType {DISC, SPHERE, CUBE_ST, CUBE_CT, PLANE, PLANE_TILED, SPHERE_HALF_UV, CYLINDER};
 //st = single texture: one texture laoded on to all sides of the cube
 //ct = cube texture: one image has all the textures on it, layed out as an unwrapped cube
 
@@ -26,13 +26,14 @@ public:
 
 	void CreateShape(ShapesType type, float resolution = 20);   //the initialiser function
 	void CreateCustomQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float depth);
+	void CreateCone(float height, float resolution = 20);
 	void Draw();
 private:
 	void InitDisc(float resolution);
 	void InitSphere(float resolution);
 	void InitCube(bool single_texture = true);
 	void InitPlane(float resolution = 1); //resolution equals one as the default plane won't tile
-
+	void InitCylinder(float resolution);
 
 	float GetUSphere(float x, float y);
 	float GetVSphere(float y);

@@ -55,7 +55,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	camera_manager_.GetCamera("rot one")->SetRotationTime(4);
 
 
-	custom_.CreateCustomQuad(Vector3(-2, -1, 0), Vector3(-3, 2, 0), Vector3(2, 3, 0), Vector3(1, -2, 0), 3);
+	custom_.CreateShape(CYLINDER);
 
 	
 	//disc_.CreateShape(CUBE_CT);
@@ -305,6 +305,9 @@ void TestScene::DrawShadowMatrixScene()
 	glRotatef(rotation, 0, 1, 0);
 	
 	//disc_.Draw();
+	Material temp2;
+	temp2.Init(GOLD, WHITE);
+	glBindTexture(GL_TEXTURE_2D, text);
 	custom_.Draw();
 	glPopMatrix();
 
@@ -319,6 +322,7 @@ void TestScene::DrawShadowMatrixScene()
 	glRotatef(rotation, 0, 1, 0);
 	
 	//disc_.Draw();
+	glBindTexture(GL_TEXTURE_2D, text);
 	custom_.Draw();
 	glPopMatrix();
 }

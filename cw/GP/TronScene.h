@@ -6,6 +6,9 @@
 #include "TronWall2.h"
 #include "TronLight.h"
 #include "TronDiscArena.h"
+#include "Cylinder.h"
+#include "plane.h"
+#include "Box.h"
 
 class TronScene : public Scene3D
 {
@@ -22,7 +25,8 @@ private:
 	void DrawFloors();
 	void DrawWall();
 	void DrawStartingRoom();
-
+	void DrawWallPictures();
+	void DrawBoxes();
 
 	CameraManager camera_manager_;
 	Light light_;
@@ -37,6 +41,17 @@ private:
 	TronLight light_base_;
 	TronDiscArena arena_;
 
+	Cone cone_;
+	Cylinder light_beam_centres_;
+	Cylinder light_beam_outers_;
+
+	Box blue_box_;
+	Box red_box_;
+
+
+	Plane wall_pannel_;
+	Plane wall_display_;
+	Plane wall_display_2_;
 	float uv_speed_; //for moving the skybox texture
 
 
