@@ -3,7 +3,8 @@
 void SkyBox::Init(SkyBoxType type, std::string filename)
 {
 	type_ = type;
-
+	speed_ = 0;
+	moving_ = false;
 	texture_ = SOIL_load_OGL_texture
 		(
 			filename.c_str(),
@@ -159,7 +160,11 @@ void SkyBox::Draw(float speed)
 
 	glScalef(4, 4, 4);
 
-
+	if (moving_)
+	{
+		speed_ += speed;
+	}
+  
 	
 
 	if (type_ != CUBE_SIX)
@@ -180,7 +185,7 @@ void SkyBox::Draw(float speed)
 	
 		glMatrixMode(GL_TEXTURE);
 		glPushMatrix(); /////////////////////////////////////////////////problem?
-		glTranslatef(speed, speed, 0);
+		glTranslatef(speed_, speed_, 0);
 		face_.Draw();
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
@@ -195,35 +200,80 @@ void SkyBox::Draw(float speed)
 		glPushMatrix();
 		glTranslatef(0, 0, -0.4999999);
 		glRotatef(180, 0, 1, 0);
+
+
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix(); /////////////////////////////////////////////////problem?
+		glTranslatef(speed_, speed_, 0);
 		face_.Draw();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+
+
 		glPopMatrix();
 
 		glBindTexture(GL_TEXTURE_2D, lf_);
 		glPushMatrix();
 		glTranslatef(-0.4999999, 0, 0);
 		glRotatef(-90, 0, 1, 0);
+
+
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix(); /////////////////////////////////////////////////problem?
+		glTranslatef(speed_, speed_, 0);
 		face_.Draw();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+
+
 		glPopMatrix();
 
 		glBindTexture(GL_TEXTURE_2D, rt_);
 		glPushMatrix();
 		glTranslatef(0.4999999, 0, 0);
 		glRotatef(90, 0, 1, 0);
+
+
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix(); /////////////////////////////////////////////////problem?
+		glTranslatef(speed_, speed_, 0);
 		face_.Draw();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+
+
 		glPopMatrix();
 
 		glBindTexture(GL_TEXTURE_2D, up_t_);
 		glPushMatrix();
 		glTranslatef(0, 0.4999999, 0);
 		glRotatef(-90, 1, 0, 0);
+
+
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix(); /////////////////////////////////////////////////problem?
+		glTranslatef(speed_, speed_, 0);
 		face_.Draw();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+
+
 		glPopMatrix();
 
 		glBindTexture(GL_TEXTURE_2D, dn_);
 		glPushMatrix();
 		glTranslatef(0, -0.4999999, 0);
 		glRotatef(90, 1, 0, 0);
+
+
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix(); /////////////////////////////////////////////////problem?
+		glTranslatef(speed_, speed_, 0);
 		face_.Draw();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+
+
 		glPopMatrix();
 		
 		glBindTexture(GL_TEXTURE_2D, NULL);

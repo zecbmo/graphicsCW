@@ -28,6 +28,9 @@ private:
 	void DrawStartingRoom();
 	void DrawWallPictures();
 	void DrawBoxes();
+	void DrawRedBoxes();
+	void DrawRailings();
+	void DrawMCP();
 
 	CameraManager camera_manager_;
 	Light light_;
@@ -48,6 +51,13 @@ private:
 
 	Box blue_box_;
 	Box red_box_;
+	Box railings_;
+	Box railings_setter_;
+
+	Cylinder mcp_base_;
+	Cylinder mcp_cylinder_;
+	Cone mcp_cone_;
+	Plane mcp_;
 
 	TronRecogniser recogniser_;
 
