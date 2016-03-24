@@ -9,10 +9,12 @@ public:
 	~Cone() {};
 
 	void Init(float height, float resolution, std::string filename );
-	void Update();
+	void Update(float speed, float dt);
 	void Render();
+	inline void SetMoving(bool moving) { moving_ = moving; };
 
 private:
-
+	float speed_;
+	bool moving_;
 };
 

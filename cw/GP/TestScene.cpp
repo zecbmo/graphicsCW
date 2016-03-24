@@ -55,7 +55,7 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	camera_manager_.GetCamera("rot one")->SetRotationTime(4);
 
 
-	custom_.CreateShape(CYLINDER);
+	custom_.CreateShape(CUBE_CT);
 
 	
 	//disc_.CreateShape(CUBE_CT);

@@ -42,10 +42,6 @@ void Shapes::CreateShape(ShapesType type, float resolution)
 		InitSphere(resolution);
 		is_quad_ = true;
 		break;
-	case CYLINDER:
-		InitCylinder(resolution);
-		is_quad_ = true;
-		break;
 	default:
 		break;
 	}
@@ -740,8 +736,9 @@ void Shapes::InitPlane(float resolution)
 
 }
 
-void Shapes::InitCylinder(float resolution)
+void Shapes::CreateCylinder(float resolution, float height)
 {
+	is_quad_ = true;
 	//creates a disc based on the parametric equation of a sphere
 	float interval = (2 * PI) / resolution;
 	float angle = 0;
@@ -749,32 +746,25 @@ void Shapes::InitCylinder(float resolution)
 	float x, y, z, u, v;
 
 
-	for (int i = 0; i < resolution+1; i++)
+	for (int i = 0; i < height +1; i++)
 	{
-
 		for (int j = 0; j < resolution; j++)
 		{
-		
-				
+			x = cos(angle);
+			u = (cos(angle) / 2) + 0.5;
+			y = sin(angle);
+			v = (sin(angle) / 2) + 0.5;
+			z = i;
 
-				x = cos(angle);
-				u = (cos(angle) / 2) + 0.5;
-				y = sin(angle);
-				v = (sin(angle) / 2) + 0.5;
-				z = i;
-
-				angle += interval;
-			
-
+			angle += interval;
 			
 			longAndLat_[i].push_back(Vector3(x, y, z));
-
 		}
 		angle = 0;
 	}
 
 
-	for (int i = 0; i < resolution; i++)
+	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < resolution; j++)
 		{

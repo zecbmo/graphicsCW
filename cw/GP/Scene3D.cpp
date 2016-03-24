@@ -134,10 +134,11 @@ void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 	wireframe_ = false;
 	is_loaded_ = true;
-	movement_speed_ = 10;
+	movement_speed_ = 1;
 	debug_title_font_.Init("fonts/trekfont.png");
 	debug_font_.Init("fonts/erasfont.png");
 	object_tracker_ = NULL;
+	movement_type_ = POSITION;
 	
 }
 
@@ -158,6 +159,11 @@ void Scene3D::SharedControls()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	}
+
+	if (object_tracker_ != NULL)
+	{
+		widget_.Update(object_tracker_->GetPosition()); 
 	}
 }
 
@@ -228,6 +234,12 @@ void Scene3D::GameObjectMover(GameObject &gameObject)
 		input_->SetKeyUp('Z');
 
 	}
+	if (input_->IsKeyDown('C'))
+	{
+		rot_type_ = SCALE_ALL;
+		input_->SetKeyUp('C');
+
+	}
 
 
 
@@ -241,20 +253,20 @@ void Scene3D::MovePosition(GameObject & gameObject)
 
 
 
-	if (input_->IsKeyDown(VK_LEFT))
+	if (input_->IsKeyDown(VK_DOWN))
 	{
 		gameObject.SetPosition(Vector3(x - movement_speed_*(*dt_), y, z));
 	}
-	if (input_->IsKeyDown(VK_RIGHT))
+	if (input_->IsKeyDown(VK_UP))
 	{
 		gameObject.SetPosition(Vector3(x + movement_speed_*(*dt_), y, z));
 
 	}
-	if (input_->IsKeyDown(VK_UP))
+	if (input_->IsKeyDown(VK_RIGHT))
 	{
 		gameObject.SetPosition(Vector3(x, y, z + movement_speed_*(*dt_)));
 	}
-	if (input_->IsKeyDown(VK_DOWN))
+	if (input_->IsKeyDown(VK_LEFT))
 	{
 		gameObject.SetPosition(Vector3(x, y, z - movement_speed_*(*dt_)));
 
@@ -278,6 +290,11 @@ void Scene3D::MoveRotation(GameObject & gameObject)
 	float z = gameObject.GetRotation().GetZ();
 
 	float rot_speed = movement_speed_;
+
+	if (input_->IsKeyDown('R'))
+	{
+		gameObject.SetRotation(0, 0, 0);
+	}
 
 	switch (rot_type_)
 	{
@@ -336,13 +353,63 @@ void Scene3D::MoveScale(GameObject & gameObject)
 
 	float scale_speed = movement_speed_;
 
-	if (input_->IsKeyDown(VK_LEFT))
+	if (input_->IsKeyDown('R'))
 	{
-		gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z - scale_speed*(*dt_));
+		gameObject.SetScale(1, 1, 1);
 	}
-	if (input_->IsKeyDown(VK_RIGHT))
+
+	switch (rot_type_)
 	{
-		gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z + scale_speed*(*dt_));
+	case ROT_X:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetScale(x - scale_speed*(*dt_), y ,z);
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetScale(x + scale_speed*(*dt_), y,z);
+		}
+	}
+	break;
+	case ROT_Y:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetScale(x, y - scale_speed*(*dt_), z);
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetScale(x, y + scale_speed*(*dt_),z);
+		}
+	}
+	break;
+	case ROT_Z:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetScale(x, y, z - scale_speed*(*dt_));
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetScale(x, y, z + scale_speed*(*dt_));
+		}
+	}
+	break;
+	case SCALE_ALL:
+	{
+		if (input_->IsKeyDown(VK_LEFT))
+		{
+			gameObject.SetScale(x - scale_speed*(*dt_), y - scale_speed*(*dt_), z - scale_speed*(*dt_));
+		}
+		if (input_->IsKeyDown(VK_RIGHT))
+		{
+			gameObject.SetScale(x + scale_speed*(*dt_), y + scale_speed*(*dt_), z + scale_speed*(*dt_));
+		}
+	}
+	break;
+	default:
+		break;
 	}
 	
 }
@@ -396,6 +463,7 @@ void Scene3D::DisplayHUD(Camera* camera)
 		GUIToScreenSize(0.005, 0.75);
 		ShowObjectStats();
 		glPopMatrix();
+			
 	}
 
 
@@ -412,6 +480,11 @@ void Scene3D::DisplayHUD(Camera* camera)
 	glPopMatrix();							// Pop The Matrix
 	glMatrixMode(GL_MODELVIEW);					// Select Modelview
 	glPopMatrix();
+
+	widget_.Render();
+
+
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);  // disable writes to Z-Buffer
 	glEnable(GL_LIGHTING);
@@ -520,6 +593,11 @@ void Scene3D::ShowMovementType()
 			debug_font_.DrawString("Rotation tool selected: z", 0, 0, 4, 4);
 		}
 			break;
+		case SCALE_ALL:
+		{
+			debug_font_.DrawString("All not available for Rotaion! Please select x,y,z", 0, 0, 4, 4);
+		}
+		break;
 		default:
 			break;
 		}
@@ -536,7 +614,34 @@ void Scene3D::ShowMovementType()
 		break;
 	case SCALE:
 	{
-		debug_font_.DrawString("Scale tool selected", 0, 0, 4, 4);
+		switch (rot_type_)
+		{
+		case ROT_X:
+		{
+			debug_font_.DrawString("Scale tool selected: x", 0, 0, 4, 4);
+		}
+		break;
+		case ROT_Y:
+		{
+			debug_font_.DrawString("Scale tool selected: y", 0, 0, 4, 4);
+
+		}
+		break;
+		case ROT_Z:
+		{
+			debug_font_.DrawString("Scale tool selected: z", 0, 0, 4, 4);
+		}
+		break;
+		case SCALE_ALL:
+		{
+			debug_font_.DrawString("Scale tool selected: All", 0, 0, 4, 4);
+		}
+		break;
+		default:
+			break;
+		}
+		glTranslatef(0, -3, 0);
+		debug_font_.DrawString("'X' 'Y' 'Z' 'C' to switch scale type", 0, 0, 4, 4);
 	
 	}
 		break;

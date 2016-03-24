@@ -18,7 +18,7 @@
 #include "Materials.h"
 #include "SkyBox.h"
 #include "Floor.h"
-
+#include "Widget.h"
 
 #define COLOUR_DEPTH 16	//Colour depth
 /*
@@ -40,7 +40,7 @@ enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SC
 
 enum MovementType {ROTATION, POSITION, SCALE};
 
-enum RotationType {ROT_X, ROT_Y, ROT_Z};
+enum RotationType {ROT_X, ROT_Y, ROT_Z, SCALE_ALL}; //includes scale now
 
 
 class Scene3D
@@ -99,7 +99,7 @@ protected:
 	BitmapTextRenderer debug_title_font_;
 
 	GameObject* object_tracker_;
-
+	Widget widget_;
 	
 
 };
