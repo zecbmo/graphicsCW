@@ -1,5 +1,5 @@
 #include "Noise.h"
-
+#include "NoiseTexTask.h"
 void Noise::GenerateNoise()
 {
 	for (int z = 0; z < NOISE_DEPTH; z++)
@@ -50,11 +50,30 @@ float Noise::SmoothNoise(float x, float y, float z)
 	
 }
 
+void Noise::ThreadSmoothNoise(float x, float y, float z, float size, float* value)
+{
+	*value += SmoothNoise(x / size, y / size, z / size) * size;
+		
+}
+
 float Noise::Turbulance(float x, float y, float z, float size)
 {
 	float value = 0.0f;
 	float initial_size = size;
-	float z2 = z;
+
+	//std::vector<std::thread*> threads;
+
+	//while (size >= 1)
+	//{
+	//	threads.push_back(new std::thread(&Noise::ThreadSmoothNoise,this, x, y, z, size, &value));
+	//	size /= 2.0;
+	//}
+
+	//for (int i = 0; i < threads.size(); i++)
+	//{
+	//	threads[i]->join();
+	//}	
+
 	while (size >= 1)
 	{
 		value += SmoothNoise(x / size, y / size, z / size) * size;
@@ -62,13 +81,11 @@ float Noise::Turbulance(float x, float y, float z, float size)
 	}
 
 	return(128.0f * value / initial_size);
-
-	return 0.0f;
 }
 
 GLuint Noise::GetCloudNoiseTexture(float dt)
 {
-	uint32_t image[NOISE_HEIGHT][NOISE_WIDTH]; //storage for the RGBA values of each pixel
+	
 		
 	//the noise code is based off of Hue, Saturation and light
 	//I have modified it so it is based off of a pure white texture 
@@ -83,34 +100,59 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 	//ie 0.4 will be 0
 	//0.8 will be 1 (this is quick a fix but effective for gaining more clouds in the texture rather than one giant cloud covering the earth )
 
+
+	// Start timing
+	//the_clock::time_point start = the_clock::now();
+
+	//for (int y = 0; y < NOISE_HEIGHT; y++)
+	//{
+	//	for (int x = 0; x < NOISE_WIDTH; x++)
+	//	{			
+	//		float light = UINT8(Turbulance(x, y, anim_counter_, 16)); //turbulance smoothly interoplates along the z point givinig the animation effect
+	//		
+	//		float alpha = (light / 255.0)*1; //gets a decimal value of the light value which will be used as the alpha of each pixel
+	//			
+	//		if (alpha < 0.4) //culling
+	//		{
+	//			alpha = 0; 
+	//		}
+	//		else
+	//		{				
+	//			alpha = (alpha * 2.5 )- 1; //making a wide range of remaining values
+	//		}
+	//	
+	//		if (alpha > 1)
+	//		{
+	//			alpha = 1; //making the top value stay in range
+	//		}
+
+	//		//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
+	//		//I will put this fix on the to do list
+	//		colour_ = Colour_RGBA(alpha, 1, 1, 1);
+	//		image[y][x] = colour_.ToHex();			
+	//	}	
+	//}
+
+	
+
 	for (int y = 0; y < NOISE_HEIGHT; y++)
 	{
-		for (int x = 0; x < NOISE_WIDTH; x++)
-		{			
-			float light = UINT8(Turbulance(x, y, anim_counter_, 16)); //turbulance smoothly interoplates along the z point givinig the animation effect
-			
-			float alpha = (light / 255.0)*1; //gets a decimal value of the light value which will be used as the alpha of each pixel
-				
-			if (alpha < 0.4) //culling
-			{
-				alpha = 0; 
-			}
-			else
-			{				
-				alpha = (alpha * 2.5 )- 1; //making a wide range of remaining values
-			}
-		
-			if (alpha > 1)
-			{
-				alpha = 1; //making the top value stay in range
-			}
-
-			//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
-			//I will put this fix on the to do list
-			colour_ = Colour_RGBA(alpha, 1, 1, 1);
-			image[y][x] = colour_.ToHex();			
-		}	
+		farm.AddTask(new NoiseTextask(y, this));
 	}
+
+	farm.Run();
+
+	//the_clock::time_point end = the_clock::now();
+
+	// Compute the difference between the two times in milliseconds
+	//auto time_taken = duration_cast<milliseconds>(end - start).count();
+
+	//collect a wide range of times 
+	//if (times_.size() < 10000)
+	//{
+	//	times_.push_back(time_taken);
+	//}
+
 	anim_counter_ += dt*speed_;
 
 	//the follow creates the texture from the 2d array of pixel data
@@ -122,5 +164,77 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	return texture;
+}
+
+void Noise::WriteCollectedDataToFile()
+{
+	int lowest = 100000000;
+	int highest = 0;
+	int total = 0;
+	int size = times_.size();
+	
+	std::ofstream output;
+	output.open("data.txt");
+
+	output << "Data Collection of times taken to generate " << size << " noise textures in miliseconds.\n\n";
+	output << "List of idividual times.\n";
+
+	for (int i = 0; i < size; i++)
+	{
+		if (times_[i] < lowest)
+		{
+			lowest = times_[i];
+		}
+		if (times_[i] > highest)
+		{
+			highest = times_[i];
+		}
+
+		total += times_[i];
+		
+		output << times_[i] << "\n";
+
+		
+	}
+
+	float mean = total / size;
+
+	output << "\nFastest time: " << lowest << "\n";
+	output << "Slowest time: " << highest << "\n";
+	output << "Total time for " << size << " loops: " << total << "\n";
+	output << "Mean time: " << mean << "\n";
+
+	output.close();
+
+
+}
+
+void Noise::TexGenHelper(int y_pos)
+{
+	
+	for (int x = 0; x < NOISE_WIDTH; x++)
+	{
+		float light = UINT8(Turbulance(x, y_pos, anim_counter_, 16)); //turbulance smoothly interoplates along the z point givinig the animation effect
+
+		float alpha = (light / 255.0) * 1; //gets a decimal value of the light value which will be used as the alpha of each pixel
+
+		if (alpha < 0.4) //culling
+		{
+			alpha = 0;
+		}
+		else
+		{
+			alpha = (alpha * 2.5) - 1; //making a wide range of remaining values
+		}
+
+		if (alpha > 1)
+		{
+			alpha = 1; //making the top value stay in range
+		}
+
+		//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
+		//I will put this fix on the to do list		
+		image[y_pos][x] = Colour_RGBA(alpha, 1, 1, 1).ToHex();
+	}
 }
 

@@ -57,7 +57,7 @@ private:
 	Cylinder mcp_base_;
 	Cylinder mcp_cylinder_;
 	Cone mcp_cone_;
-	Plane mcp_;
+	Cylinder mcp_;
 
 	TronRecogniser recogniser_;
 

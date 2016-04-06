@@ -15,7 +15,8 @@ void SceneManager::Init(HWND* hwnd, Input* input, float* dt)
 	hwnd_ = hwnd;
 	input_ = input;
 	dt_ = dt;
-	current_scene_ = new TronScene;
+	current_scene_ = new EarthScene;
+	current_scene_type_ = EARTH_SCENE;
 	current_scene_->Init(hwnd_, input_, dt_);	
 }
 void SceneManager::Update()
@@ -62,6 +63,12 @@ void SceneManager::LoadScene()
 	}
 	else
 	{
+		//create two threads. 
+		//one that initialises the scene
+		//one that displays a loading screen
+		//the init thread will signal to the other thread when it is finished loading
+		//the init thread will continue on as the main thread
+
 		current_scene_->Init(hwnd_, input_, dt_);
 	}
 }

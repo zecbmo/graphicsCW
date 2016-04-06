@@ -47,6 +47,7 @@ class Scene3D
 {
 public:
 	Scene3D() { is_loaded_ = false; };
+	virtual ~Scene3D() {};
 	virtual void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
 	virtual void Update();
 	virtual void Render();	// render scene

@@ -84,11 +84,14 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	mcp_cone_.GetMaterial()->SetColourByTemplate(WHITE);
 	mcp_cone_.SetRotation(-90,0,0);
 	mcp_cone_.SetMoving(true);
-	mcp_.Init(5, 1, "Textures/mcp.jpg");
-	mcp_.SetPosition(Vector3(20, 10.37, 0.34));
-	mcp_.SetRotation(0, 90, 0);
+	mcp_.Init(60, 1, "Textures/mcp.png");
+	mcp_.SetPosition(Vector3(24, 12, 0.34));
+	mcp_.SetRotation(90, 0, 0);	
+	mcp_.SetScale(4, 4, 4);
+	mcp_.GetMaterial()->SetColour(Colour_RGBA(1,0.25,0.25,0.75));
 
 	recogniser_.Init(1);
+	recogniser_.SetPosition(Vector3(-5.16, 0, 61));
 
 
 	glEnable(GL_TEXTURE_2D);
@@ -119,7 +122,7 @@ void TronScene::Update()
 		scene_to_load_ = TESTING_SCENE;
 	}
 	///////////////////////////////////mover
-	//GameObjectMover(mcp_);
+	GameObjectMover(recogniser_);
 	////////////////////////////////
 	Render();
 }
@@ -143,7 +146,7 @@ void TronScene::Render()
 
 
 
-	railings_setter_.Render();
+	//railings_setter_.Render();
 
 	arena_.Render();
 	DrawWallPictures();		
@@ -564,7 +567,7 @@ void TronScene::DrawMCP()
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(24.16, 7, 0.34);
+	glTranslatef(24.16, 6.9, 0.34);
 	glRotatef(-90, 1, 0, 0);
 	glScalef(4, 4, 1.5);
 	mcp_cylinder_.Render();
@@ -585,8 +588,10 @@ void TronScene::DrawMCP()
 	mcp_cone_.Render();
 	glPopMatrix();
 
-
+	glEnable(GL_BLEND);
 	mcp_.Render();
+	glDisable(GL_BLEND);
+
 	glEnable(GL_LIGHTING);
 
 }

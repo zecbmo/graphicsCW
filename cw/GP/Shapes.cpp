@@ -823,49 +823,6 @@ void Shapes::CreateCylinder(float resolution, float height)
 			float u2 = 0;
 			float v2 = GetVSphere(y2);
 
-			//the following safety checks are for wrapping the cylinder at the edges
-			if (type_ == SPHERE)
-			{
-				if (u4 < 0.75 && u1 > 0.75)
-				{
-					u4 += 1.0;
-				}
-				else if (u4 > 0.75 && u1 < 0.75)
-				{
-					u4 -= 1.0;
-				}
-
-				if (u3 < 0.75 && u1 > 0.75)
-				{
-					u3 += 1.0;
-				}
-				else if (u3 > 0.75 && u1 < 0.75)
-				{
-					u3 -= 1.0;
-				}
-			}
-			else
-			{
-				float compare = 1.5;
-				float value = 2;
-				if (u4 < compare && u1 > compare)
-				{
-					u4 += value;
-				}
-				else if (u4 > compare && u1 < compare)
-				{
-					u4 -= value;
-				}
-
-				if (u3 < compare && u1 > compare)
-				{
-					u3 += value;
-				}
-				else if (u3 > compare && u1 < compare)
-				{
-					u3 -= value;
-				}
-			}
 			//push all uvs back after the safety checks
 			UVs_.push_back(u1);
 			UVs_.push_back(v1);

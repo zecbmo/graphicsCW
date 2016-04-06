@@ -51,6 +51,9 @@
     <Filter Include="Source Files\Scenes\SharedGameObjects">
       <UniqueIdentifier>{ca5fe6b7-06c4-4a00-8946-61da48621ca6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TaskFarm">
+      <UniqueIdentifier>{63aa23f5-56d7-4351-bbaa-103c136b3412}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -161,6 +164,18 @@
     <ClCompile Include="Widget.cpp">
       <Filter>Source Files\Scenes\SharedGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Farm.cpp">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClCompile>
+    <ClCompile Include="Task.cpp">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClCompile>
+    <ClCompile Include="NoiseTexTask.cpp">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClCompile>
+    <ClCompile Include="NoiseSmoothTask.cpp">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -270,6 +285,18 @@
     </ClInclude>
     <ClInclude Include="Widget.h">
       <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Farm.h">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClInclude>
+    <ClInclude Include="NoiseTexTask.h">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClInclude>
+    <ClInclude Include="NoiseSmoothTask.h">
+      <Filter>Source Files\TaskFarm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

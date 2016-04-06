@@ -1,5 +1,10 @@
 #include "EarthScene.h"
 
+EarthScene::~EarthScene()
+{
+	//cloud_noise_.WriteCollectedDataToFile();
+}
+
 void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
 {
 	InitHelper(hwnd, in, dt);
@@ -123,7 +128,7 @@ void EarthScene::Render()
 	glBindTexture(GL_TEXTURE_2D, NULL);
 	glDisable(GL_BLEND);
 
-	//DisplayHUD(camera_manager_.CurrentCamera()); //im creating with how i rotate the camera in this scene, so this doesn't work properly :D
+	DisplayHUD(camera_manager_.CurrentCamera()); //im creating with how i rotate the camera in this scene, so this doesn't work properly :D
 	SwapBuffers(hdc);// Swap the frame buffers.
 
 

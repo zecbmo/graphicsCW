@@ -7,7 +7,7 @@ class EarthScene : public Scene3D
 {
 public:
 	EarthScene() {};
-	~EarthScene() {};
+	~EarthScene();
 
 	void Init(HWND* hwnd, Input* in, float *dt);
 	void Update();
