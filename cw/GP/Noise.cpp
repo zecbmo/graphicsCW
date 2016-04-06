@@ -1,5 +1,6 @@
 #include "Noise.h"
 #include "NoiseTexTask.h"
+#include "NoiseSmoothTask.h"
 void Noise::GenerateNoise()
 {
 	for (int z = 0; z < NOISE_DEPTH; z++)
@@ -74,6 +75,14 @@ float Noise::Turbulance(float x, float y, float z, float size)
 	//	threads[i]->join();
 	//}	
 
+
+	//for (int y = 0; y < NOISE_HEIGHT; y++)
+	//{
+	//	smooth_farm_.AddTask(new NoiseSmoothtask(x, y, z, size, &value, this));
+	//}
+
+	//smooth_farm_.Run();
+
 	while (size >= 1)
 	{
 		value += SmoothNoise(x / size, y / size, z / size) * size;
@@ -137,10 +146,10 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 
 	for (int y = 0; y < NOISE_HEIGHT; y++)
 	{
-		farm.AddTask(new NoiseTextask(y, this));
+		tex_farm_.AddTask(new NoiseTextask(y, this));
 	}
 
-	farm.Run();
+	tex_farm_.Run();
 
 	//the_clock::time_point end = the_clock::now();
 

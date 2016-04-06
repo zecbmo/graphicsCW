@@ -1,22 +1,21 @@
-﻿  NoiseSmoothTask.cpp
-  Noise.cpp
-z:\coding\graphics cw\cw\gp\noise.cpp(11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(200): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(217): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(227): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Farm.cpp
+﻿  Noise.cpp
+z:\coding\graphics cw\cw\gp\noise.cpp(12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(209): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(226): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(228): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(236): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
   Compiling...
-  NoiseTexTask.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
   TestScene.cpp
+z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
   SceneManager.cpp
+z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+  NoiseTexTask.cpp
+  NoiseSmoothTask.cpp
   Main.cpp
+z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
   EarthScene.cpp
-SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'Z:\Coding\Graphics CW\cw\Debug\vc120.pdb'; linking object as if no debug info
-SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'Z:\Coding\Graphics CW\cw\Debug\vc120.pdb'; linking object as if no debug info
-SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'Z:\Coding\Graphics CW\cw\Debug\vc120.pdb'; linking object as if no debug info
-SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'Z:\Coding\Graphics CW\cw\Debug\vc120.pdb'; linking object as if no debug info
+z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
+z:\coding\graphics cw\cw\gp\earthscene.cpp(124): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  Generating Code...
   GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe

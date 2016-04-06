@@ -57,7 +57,8 @@ private:
 	Colour_RGBA colour_;
 	float anim_counter_;
 	float speed_;
-	Farm farm;
+	Farm tex_farm_;
+	//Farm smooth_farm_;
 	std::vector<int> times_;
 	
 };
