@@ -46,7 +46,7 @@ public:
 	void GenerateNoise();
 	GLuint GetCloudNoiseTexture(float dt);
 	void WriteCollectedDataToFile();
-	void TexGenHelper(int y_pos);
+	void TexGenHelper(int y_pos, int amount);
 	void ThreadSmoothNoise(float x, float y, float z, float size, float* value);
 private:
 	uint32_t image[NOISE_HEIGHT][NOISE_WIDTH]; //storage for the RGBA values of each pixel

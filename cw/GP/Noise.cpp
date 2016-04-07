@@ -111,7 +111,7 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 
 
 	// Start timing
-	//the_clock::time_point start = the_clock::now();
+	the_clock::time_point start = the_clock::now();
 
 	//for (int y = 0; y < NOISE_HEIGHT; y++)
 	//{
@@ -142,25 +142,27 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 	//	}	
 	//}
 
-	
+	int amount = 4;
 
-	for (int y = 0; y < NOISE_HEIGHT; y++)
+	for (int y = 0; y < NOISE_HEIGHT; y+=amount)
 	{
-		tex_farm_.AddTask(new NoiseTextask(y, this));
+		tex_farm_.AddTask(new NoiseTextask(y, amount, this));
 	}
 
 	tex_farm_.Run();
 
-	//the_clock::time_point end = the_clock::now();
+	the_clock::time_point end = the_clock::now();
 
-	// Compute the difference between the two times in milliseconds
-	//auto time_taken = duration_cast<milliseconds>(end - start).count();
+	 //Compute the difference between the two times in milliseconds
+	auto time_taken = duration_cast<milliseconds>(end - start).count();
 
 	//collect a wide range of times 
-	//if (times_.size() < 10000)
-	//{
-	//	times_.push_back(time_taken);
-	//}
+	int size = times_.size();
+
+	if (times_.size() < 10000)
+	{
+		times_.push_back(time_taken);
+	}
 
 	anim_counter_ += dt*speed_;
 
@@ -218,32 +220,34 @@ void Noise::WriteCollectedDataToFile()
 
 }
 
-void Noise::TexGenHelper(int y_pos)
+void Noise::TexGenHelper(int y_pos, int amount)
 {
-	
-	for (int x = 0; x < NOISE_WIDTH; x++)
+	for (int i = y_pos; i < (y_pos + amount); i++)
 	{
-		float light = UINT8(Turbulance(x, y_pos, anim_counter_, 16)); //turbulance smoothly interoplates along the z point givinig the animation effect
-
-		float alpha = (light / 255.0) * 1; //gets a decimal value of the light value which will be used as the alpha of each pixel
-
-		if (alpha < 0.4) //culling
+		for (int x = 0; x < NOISE_WIDTH; x++)
 		{
-			alpha = 0;
-		}
-		else
-		{
-			alpha = (alpha * 2.5) - 1; //making a wide range of remaining values
-		}
+			float light = UINT8(Turbulance(x, i, anim_counter_, 16)); //turbulance smoothly interoplates along the z point givinig the animation effect
 
-		if (alpha > 1)
-		{
-			alpha = 1; //making the top value stay in range
-		}
+			float alpha = (light / 255.0) * 1; //gets a decimal value of the light value which will be used as the alpha of each pixel
 
-		//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
-		//I will put this fix on the to do list		
-		image[y_pos][x] = Colour_RGBA(alpha, 1, 1, 1).ToHex();
+			if (alpha < 0.4) //culling
+			{
+				alpha = 0;
+			}
+			else
+			{
+				alpha = (alpha * 2.5) - 1; //making a wide range of remaining values
+			}
+
+			if (alpha > 1)
+			{
+				alpha = 1; //making the top value stay in range
+			}
+
+			//for some reason my colour to hex function does it backwards (ABGR) so alpha is passed in as the red value
+			//I will put this fix on the to do list		
+			image[i][x] = Colour_RGBA(alpha, 1, 1, 1).ToHex();
+		}
 	}
 }
 

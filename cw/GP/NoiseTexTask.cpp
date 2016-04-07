@@ -2,6 +2,6 @@
 
 void NoiseTextask::Run()
 {
-	noise_class_->TexGenHelper(y_pos_);
+	noise_class_->TexGenHelper(y_pos_, amount_);
 
 }

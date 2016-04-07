@@ -1,21 +1,8 @@
 ﻿  Noise.cpp
 z:\coding\graphics cw\cw\gp\noise.cpp(12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(209): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(226): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(228): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(236): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
-  TestScene.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
-  SceneManager.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
-  NoiseTexTask.cpp
-  NoiseSmoothTask.cpp
-  Main.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
-  EarthScene.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
-z:\coding\graphics cw\cw\gp\earthscene.cpp(124): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  Generating Code...
+z:\coding\graphics cw\cw\gp\noise.cpp(164): warning C4244: 'argument': conversion from '__int64' to 'const int', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(211): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(229): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(231): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+z:\coding\graphics cw\cw\gp\noise.cpp(239): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe

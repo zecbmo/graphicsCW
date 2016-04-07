@@ -2,7 +2,7 @@
 
 EarthScene::~EarthScene()
 {
-	//cloud_noise_.WriteCollectedDataToFile();
+	cloud_noise_.WriteCollectedDataToFile();
 }
 
 void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
