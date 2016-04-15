@@ -12,7 +12,7 @@ public:
 	LoadingScene();
 	~LoadingScene();
 
-	void Init(HWND* hwnd, Input* in, float *dt);
+	void Init(HWND* hwnd, Input* in, float *dt, HDC	hdc, HGLRC hrc, HGLRC hrc2);
 	void Update();
 	void Render();	// render scene
 
@@ -20,6 +20,8 @@ public:
 private:
 	CameraManager camera_manager_;
 	Plane loading_screen_;
+	Plane loading_bar_;
+
 };
 
 

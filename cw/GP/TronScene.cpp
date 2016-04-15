@@ -1,13 +1,12 @@
 #include "TronScene.h"
 
-void TronScene::Init(HWND * hwnd, Input * in, float * dt)
+void TronScene::Init(HWND * hwnd, Input * in, float * dt, HDC	hdc, HGLRC hrc, HGLRC hrc2)
 {
 	InitHelper(hwnd, in, dt);
-	scene_to_load_ = TRON_SCENE;
-	title_ = "Tron 3.0 : beta alpha 9";
-
-	sky_box_.InitCubeBox("Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png");
-	sky_box_.SetMoving(true);
+	hdc_ = hdc;
+	hrc_ = hrc;
+	hrc2_ = hrc2;
+	
 
 	light_.Init(GL_LIGHT0, POINT_LIGHT);
 	light_.SetPosition(10, 10, 10);
@@ -22,6 +21,44 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	camera_manager_.GetCamera("main")->SetAllSpeeds(20, 20, 20, 20);
 	camera_manager_.ChangeCamera("main");
 
+
+
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_COLOR_MATERIAL);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+void TronScene::ThreadFucntion(HDC	hdc, HGLRC hrc, HGLRC hrc2)
+{
+	HGLRC temp = wglGetCurrentContext();
+	wglMakeCurrent(hdc, hrc2);
+	temp = wglGetCurrentContext();
+
+	scene_to_load_ = TRON_SCENE;
+	title_ = "Tron 3.0 : beta alpha 9";
+
+	sky_box_.InitCubeBox("Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png", "Textures/tronsky.png");
+	sky_box_.SetMoving(true);
+
+	recogniser_.Init(1);
+	recogniser_.SetPosition(Vector3(-5.16, 0, 61));
+
+	mcp_cylinder_.Init(60, 5, "Textures/troncylinder.png");
+	mcp_cylinder_.SetMoving(true);
+	mcp_cone_.Init(2, 60, "Textures/troncylinder.png");
+	mcp_cone_.GetMaterial()->SetColourByTemplate(WHITE);
+	mcp_cone_.SetRotation(-90, 0, 0);
+	mcp_cone_.SetMoving(true);
+	mcp_.Init(60, 1, "Textures/mcp.png");
+	mcp_.SetPosition(Vector3(24, 12, 0.34));
+	mcp_.SetRotation(90, 0, 0);
+	mcp_.SetScale(4, 4, 4);
+	mcp_.GetMaterial()->SetColour(Colour_RGBA(1, 0.25, 0.25, 0.75));
+
 	floor_.Init(50, 10, "Textures/tronfloor.png");
 	floor_.GetMaterial()->SetColour(Colour_RGBA(0, 0.25, 0.5, 1));
 	corridor_.Init(5, 1, "Textures/tronfloor.png");
@@ -29,7 +66,7 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 
 	wall_.Init(10);
 	wall_two_.Init(12);
-	light_base_.Init(Vector3(0,1.5,0));
+	light_base_.Init(Vector3(0, 1.5, 0));
 
 	arena_.Init(Vector3(0, 0.01, 63));
 
@@ -53,7 +90,7 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	light_beam_centres_.SetMoving(true);
 	light_beam_outers_.SetMoving(true);
 
-	wall_pannel_.Init(2,1, "Textures/tronpannel.png");
+	wall_pannel_.Init(2, 1, "Textures/tronpannel.png");
 	wall_display_.Init(4, 1, "Textures/tronwallpic.png");
 	wall_display_.GetMaterial()->SetAlpha(0.75);
 	wall_display_2_.Init(2, 1, "Textures/tronGlow.png");
@@ -72,37 +109,14 @@ void TronScene::Init(HWND * hwnd, Input * in, float * dt)
 	railings_setter_.GetMaterial()->SetColourByTemplate(BLUE);
 
 
-	mcp_base_.Init(60, 1,"Textures/box.png");
+	mcp_base_.Init(60, 1, "Textures/box.png");
 	mcp_base_.SetPosition(Vector3(24.16, 0.86, 0.34));
 	mcp_base_.SetRotation(-90, 0, 0);
 	mcp_base_.SetScale(5.16, 5.16, 1.18);
-	mcp_base_.GetMaterial()->SetColour(Colour_RGBA(0.5,0.3,0.3,1));
+	mcp_base_.GetMaterial()->SetColour(Colour_RGBA(0.5, 0.3, 0.3, 1));
 
-	mcp_cylinder_.Init(60, 5, "Textures/troncylinder.png");
-	mcp_cylinder_.SetMoving(true);
-	mcp_cone_.Init(2,60, "Textures/troncylinder.png");
-	mcp_cone_.GetMaterial()->SetColourByTemplate(WHITE);
-	mcp_cone_.SetRotation(-90,0,0);
-	mcp_cone_.SetMoving(true);
-	mcp_.Init(60, 1, "Textures/mcp.png");
-	mcp_.SetPosition(Vector3(24, 12, 0.34));
-	mcp_.SetRotation(90, 0, 0);	
-	mcp_.SetScale(4, 4, 4);
-	mcp_.GetMaterial()->SetColour(Colour_RGBA(1,0.25,0.25,0.75));
-
-	recogniser_.Init(1);
-	recogniser_.SetPosition(Vector3(-5.16, 0, 61));
-
-
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_COLOR_MATERIAL);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	wglMakeCurrent(NULL, NULL);
 }
-
 void TronScene::Update()
 {
 	SharedControls();
@@ -117,10 +131,7 @@ void TronScene::Update()
 
 	arena_.Update(*dt_);
 
-	if (input_->IsKeyDown('7'))
-	{
-		scene_to_load_ = TESTING_SCENE;
-	}
+
 	///////////////////////////////////mover
 	GameObjectMover(recogniser_);
 	////////////////////////////////
@@ -151,7 +162,7 @@ void TronScene::Render()
 	arena_.Render();
 	DrawWallPictures();		
 	DisplayHUD(camera_manager_.CurrentCamera());
-	SwapBuffers(hdc);// Swap the frame buffers.
+	SwapBuffers(hdc_);// Swap the frame buffers.
 }
 
 void TronScene::DrawCorridor()

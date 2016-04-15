@@ -23,11 +23,15 @@ public:
 	~SceneManager();
 
 	void Init(HWND* hwnd, Input* input, float* dt);
+
 	void Update();
 	void Resize(); 
 	
 
+
 private:
+	void InitializeOpenGL(int width, int height); // width and height
+	bool CreatePixelFormat(HDC hdc);
 	SceneType current_scene_type_;
 	SceneType scene_to_load_type_;
 
@@ -40,6 +44,12 @@ private:
 	HWND* hwnd_;
 	Input* input_;
 	float* dt_;
+
+	RECT screen_rect_;
+	HDC	hdc;
+	HGLRC hrc;			//hardware RENDERING CONTEXT
+	HGLRC hrc2;
+
 	bool loading_;
 	//list of different scenes in game
 

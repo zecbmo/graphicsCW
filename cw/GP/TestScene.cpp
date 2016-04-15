@@ -10,10 +10,12 @@ TestScene::TestScene()
 TestScene::~TestScene()
 {
 }
-void TestScene::Init(HWND* wnd, Input* in, float* dt)
+void TestScene::Init(HWND* wnd, Input* in, float* dt, HDC	hdc, HGLRC hrc, HGLRC hrc2)
 {
 	InitHelper(wnd, in, dt);
-
+	hdc_ = hdc;
+	hrc_ = hrc;
+	hrc2_ = hrc2;
 	scene_to_load_ = TESTING_SCENE;
 	
 	//////// Lighting
@@ -25,9 +27,6 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	light_.ResetAmbientToZero();
 	/////// Materials 
 	//glEnable(GL_COLOR_MATERIAL);
-	sky_box_.Init(CUBE_SKY, "Textures/skyUP.png");
-
-	title_ = "Testing Scene";
 
 	/////// Textures 
 	//cameras
@@ -55,46 +54,62 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt)
 	camera_manager_.GetCamera("rot one")->SetRotationTime(4);
 
 
-	custom_.CreateShape(CUBE_CT);
+	
 
 	
 	//disc_.CreateShape(CUBE_CT);
 
 	
+
+	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+
+}
+void TestScene::ThreadFucntion(HDC	hdc, HGLRC hrc, HGLRC hrc2)
+{
+	HGLRC temp = wglGetCurrentContext();
+	wglMakeCurrent(hdc, hrc2);
+	temp = wglGetCurrentContext();
+
+	sky_box_.Init(CUBE_SKY, "Textures/skyUP.png");
+
+	title_ = "Testing Scene";
+
+	custom_.CreateShape(CUBE_CT);
+
 	cloud_noise_.GenerateNoise();
 
 	text = SOIL_load_OGL_texture
 		(
-			"Textures/day_skybox.png",
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
-			SOIL_FLAG_COMPRESS_TO_DXT
+		"Textures/day_skybox.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
+		SOIL_FLAG_COMPRESS_TO_DXT
 
-			);
-	std::string temp = SOIL_last_result();
+		);
+	//std::string temp = SOIL_last_result();
 	int lklk = 0;
-	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
 	floor_.Init(1, 1, "Textures/tronfloor.png");
-}
 
+	wglMakeCurrent(NULL, NULL);
+}
 void TestScene::Update()
 {
 	SharedControls();
 	camera_manager_.Update();
 
 	// Do important update here
-	if (input_->IsKeyDown('1'))
+	if (input_->IsKeyDown('6'))
 	{
 		camera_manager_.ChangeCamera("fixed two");
 	}
-	else if (input_->IsKeyDown('2'))
+	else if (input_->IsKeyDown('7'))
 	{
 		camera_manager_.ChangeCamera("fixed one");
 	}
-	else if (input_->IsKeyDown('3'))
+	else if (input_->IsKeyDown('8'))
 	{
 		camera_manager_.ChangeCamera("rot one");
 	}
@@ -103,15 +118,7 @@ void TestScene::Update()
 		camera_manager_.ChangeCamera("fps one");
 	}
 
-	if (input_->IsKeyDown('9'))
-	{
-		scene_to_load_ = BASE_SCENE;
-	}
 
-	if (input_->IsKeyDown('0'))
-	{
-		scene_to_load_ = EARTH_SCENE;
-	}
 
 
 	Render();
@@ -247,7 +254,7 @@ void TestScene::Render()
 	glDisable(GL_BLEND);*/
 	//Render HUD last
 
-	SwapBuffers(hdc);// Swap the frame buffers.
+	SwapBuffers(hdc_);// Swap the frame buffers.
 }
 void TestScene::DrawShadowMatrixScene()
 {

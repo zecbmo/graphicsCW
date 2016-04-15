@@ -49,8 +49,8 @@ class Scene3D
 public:
 	Scene3D() { is_loaded_ = false; };
 	virtual ~Scene3D() {};
-	virtual void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
-	virtual void ThreadFucntion(){};
+	virtual void Init(HWND* hwnd, Input* in, float *dt, HDC	hdc, HGLRC hrc, HGLRC hrc2);	//initialse function
+	virtual void ThreadFucntion(HDC	hdc, HGLRC hrc, HGLRC hrc2){};
 	virtual void Update();
 	virtual void Render();	// render scene
 	
@@ -60,14 +60,14 @@ public:
 	inline bool IsLoaded() { return is_loaded_; };
 
 
-	HDC	hdc;
-	HGLRC hrc;			//hardware RENDERING CONTEXT
-	HGLRC hrc2;
+	HDC	hdc_;
+	HGLRC hrc_;			//hardware RENDERING CONTEXT
+	HGLRC hrc2_;
 
 protected:
-	bool CreatePixelFormat(HDC hdc);
+	//bool CreatePixelFormat(HDC hdc);
 	void ResizeGLWindow(int width, int height);	//width and height
-	void InitializeOpenGL(int width, int height); // width and height
+	//void InitializeOpenGL(int width, int height); // width and height
 	void InitHelper(HWND* wnd, Input* in, float* dt);
 	void SharedControls();
 	void GameObjectMover(GameObject &gameObject);;

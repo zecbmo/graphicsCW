@@ -6,38 +6,38 @@
 
 
 
-bool Scene3D::CreatePixelFormat(HDC hdc) 
-{ 
-    PIXELFORMATDESCRIPTOR pfd = {0}; 
-    int pixelformat; 
-	
-    pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);	// Set the size of the structure
-    pfd.nVersion = 1;							// Always set this to 1
-	// Pass in the appropriate OpenGL flags
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER; 
-    pfd.dwLayerMask = PFD_MAIN_PLANE;			// standard mask (this is ignored anyway)
-    pfd.iPixelType = PFD_TYPE_RGBA;				// RGB and Alpha pixel type
-    pfd.cColorBits = COLOUR_DEPTH;				// Here we use our #define for the color bits
-    pfd.cDepthBits = COLOUR_DEPTH;				// Ignored for RBA
-    pfd.cAccumBits = 0;							// nothing for accumulation
-    pfd.cStencilBits = 0;						// nothing for stencil
- 
-	//Gets a best match on the pixel format as passed in from device
-    if ( (pixelformat = ChoosePixelFormat(hdc, &pfd)) == false ) 
-    { 
-        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK); 
-        return false; 
-    } 
- 
-	//sets the pixel format if its ok. 
-    if (SetPixelFormat(hdc, pixelformat, &pfd) == false) 
-    { 
-        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK); 
-        return false; 
-    } 
- 
-    return true;
-}
+//bool Scene3D::CreatePixelFormat(HDC hdc) 
+//{ 
+//    PIXELFORMATDESCRIPTOR pfd = {0}; 
+//    int pixelformat; 
+//	
+//    pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);	// Set the size of the structure
+//    pfd.nVersion = 1;							// Always set this to 1
+//	// Pass in the appropriate OpenGL flags
+//	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER; 
+//    pfd.dwLayerMask = PFD_MAIN_PLANE;			// standard mask (this is ignored anyway)
+//    pfd.iPixelType = PFD_TYPE_RGBA;				// RGB and Alpha pixel type
+//    pfd.cColorBits = COLOUR_DEPTH;				// Here we use our #define for the color bits
+//    pfd.cDepthBits = COLOUR_DEPTH;				// Ignored for RBA
+//    pfd.cAccumBits = 0;							// nothing for accumulation
+//    pfd.cStencilBits = 0;						// nothing for stencil
+// 
+//	//Gets a best match on the pixel format as passed in from device
+//    if ( (pixelformat = ChoosePixelFormat(hdc, &pfd)) == false ) 
+//    { 
+//        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK); 
+//        return false; 
+//    } 
+// 
+//	//sets the pixel format if its ok. 
+//    if (SetPixelFormat(hdc, pixelformat, &pfd) == false) 
+//    { 
+//        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK); 
+//        return false; 
+//    } 
+// 
+//    return true;
+//}
 
 void Scene3D::ResizeGLWindow(int width, int height)// Initialize The GL Window
 {
@@ -58,41 +58,46 @@ void Scene3D::ResizeGLWindow(int width, int height)// Initialize The GL Window
 	glLoadIdentity();// Reset The Modelview Matrix
 }
 
-void Scene3D::InitializeOpenGL(int width, int height) 
-{  
-    hdc = GetDC(*hwnd_);//  sets  global HDC
+//void Scene3D::InitializeOpenGL(int width, int height) 
+//{  
+//    hdc = GetDC(*hwnd_);//  sets  global HDC
+//
+//    if (!CreatePixelFormat(hdc))//  sets  pixel format
+//        PostQuitMessage (0);
+//
+//    hrc = wglCreateContext(hdc);	//  creates  rendering context from  hdc
+//	wglMakeCurrent(hdc, hrc);
+//	hrc2 = wglCreateContext(hdc);
+//	bool error = wglShareLists(hrc, hrc2);
+//	if (error == FALSE)
+//	{
+//		DWORD errorCode = GetLastError();
+//		LPVOID lpMsgBuf;
+//		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+//			NULL, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
+//		MessageBox(NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION);
+//		LocalFree(lpMsgBuf);
+//		//Destroy the GL context and just use 1 GL context
+//		wglDeleteContext(hrc2);
+//	}
+//
+//   	//	Use this HRC.
+//
+//	ResizeGLWindow(width, height);	// Setup the Screen
+//}
 
-    if (!CreatePixelFormat(hdc))//  sets  pixel format
-        PostQuitMessage (0);
-
-    hrc = wglCreateContext(hdc);	//  creates  rendering context from  hdc
-	hrc2 = wglCreateContext(hdc);
-	bool error = wglShareLists(hrc2, hrc);
-	if (error == FALSE)
-	{
-		DWORD errorCode = GetLastError();
-		LPVOID lpMsgBuf;
-		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
-		MessageBox(NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION);
-		LocalFree(lpMsgBuf);
-		//Destroy the GL context and just use 1 GL context
-		wglDeleteContext(hrc2);
-	}
-
-    wglMakeCurrent(hdc, hrc);		//	Use this HRC.
-
-	ResizeGLWindow(width, height);	// Setup the Screen
-}
 
 
-
-void Scene3D::Init(HWND* wnd, Input* in, float* dt)
+void Scene3D::Init(HWND* wnd, Input* in, float* dt, HDC	hdc, HGLRC hrc, HGLRC hrc2)
 {
 	InitHelper(wnd, in, dt);
+	ResizeGLWindow(screenRect.right, screenRect.bottom);
 	scene_to_load_ = BASE_SCENE;
 	//Individual inits will go here
 	//Init, Update and Render left here and allows for quick copy and paste to create new scenes
+	hdc_ = hdc; 
+	hrc_ = hrc;
+	hrc2_ = hrc2;
 }
 
 void Scene3D::Update()
@@ -112,7 +117,7 @@ void Scene3D::Render()
 
 	//Empty but left to remind of details of what is needed
 
-	SwapBuffers(hdc);// Swap the frame buffers.
+	SwapBuffers(hdc_);// Swap the frame buffers.
 }		
 
 void Scene3D::Resize()
@@ -129,23 +134,23 @@ void Scene3D::InitHelper(HWND* wnd, Input* in, float* dt)
 	input_ = in;
 	dt_ = dt;
 	GetClientRect(*hwnd_, &screenRect);	//get rect into our handy global rect
-	InitializeOpenGL(screenRect.right, screenRect.bottom); // initialise openGL
+	//InitializeOpenGL(screenRect.right, screenRect.bottom); // initialise openGL
 
-	const GLubyte *str;
-	int glPolyOffExtAvailable;
+	//const GLubyte *str;
+	//int glPolyOffExtAvailable;
 
-	str = glGetString(GL_EXTENSIONS);
-	glPolyOffExtAvailable = (strstr((const char *)str, "WGL_EXT_swap_control") != NULL);
+	//str = glGetString(GL_EXTENSIONS);
+	//glPolyOffExtAvailable = (strstr((const char *)str, "WGL_EXT_swap_control") != NULL);
 
-	//wglSwapIntervalEXT(0);
+	////wglSwapIntervalEXT(0);
 
-	//OpenGL settings
-	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background *no it isnt
-	glClearDepth(1.0f);									// Depth Buffer Setup
-	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
-	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+	////OpenGL settings
+	//glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
+	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background *no it isnt
+	//glClearDepth(1.0f);									// Depth Buffer Setup
+	//glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
+	//glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
+	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 	wireframe_ = false;
 	is_loaded_ = true;
 	movement_speed_ = 1;
@@ -164,6 +169,26 @@ void Scene3D::SharedControls()
 		wireframe_ = !wireframe_;
 		input_->SetKeyUp('T');
 	}
+
+	if (input_->IsKeyDown('1'))
+	{
+		scene_to_load_ = TESTING_SCENE;
+		input_->SetKeyUp('1');
+	}
+	
+	if (input_->IsKeyDown('2'))
+	{
+		scene_to_load_ = TRON_SCENE;
+		input_->SetKeyUp('2');
+	}
+
+	if (input_->IsKeyDown('3'))
+	{
+		scene_to_load_ = EARTH_SCENE;
+		input_->SetKeyUp('3');
+	}
+
+
 
 	if (wireframe_)
 	{

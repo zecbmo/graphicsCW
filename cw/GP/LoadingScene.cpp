@@ -7,10 +7,12 @@ LoadingScene::LoadingScene()
 LoadingScene::~LoadingScene()
 {
 }
-void LoadingScene::Init(HWND* wnd, Input* in, float* dt)
+void LoadingScene::Init(HWND* wnd, Input* in, float* dt, HDC hdc, HGLRC hrc, HGLRC hrc2)
 {
 	InitHelper(wnd, in, dt);
-
+	hdc_ = hdc;
+	hrc_ = hrc;
+	hrc2_ = hrc2;
 	scene_to_load_ = LOADING_SCENE;
 
 	//////// Lighting
@@ -27,6 +29,9 @@ void LoadingScene::Init(HWND* wnd, Input* in, float* dt)
 	loading_screen_.Init(10, 1, "Textures/loading.png");
 	loading_screen_.SetScale(150, 90, 1);
 
+	loading_bar_.Init(10, 1, "Textures/loading_bar.png");
+	loading_bar_.SetScale(20, 20, 1);
+
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 }
@@ -35,8 +40,8 @@ void LoadingScene::Update()
 {
 	SharedControls();
 	camera_manager_.Update();
-
-	
+	Vector3 temp = loading_bar_.GetRotation();
+	loading_bar_.SetRotation(temp.GetX()+1,0,0);
 
 	Render();
 }
@@ -67,6 +72,11 @@ void LoadingScene::Render()
 	loading_screen_.Render();
 	glPopMatrix();
 
+	glPushMatrix();
+	GUIToScreenSize(0.5, 0.5);
+	loading_bar_.Render();
+	glPopMatrix();
+
 
 
 
@@ -83,5 +93,5 @@ void LoadingScene::Render()
 
 
 
-	SwapBuffers(hdc);// Swap the frame buffers.
+	SwapBuffers(hdc_);// Swap the frame buffers.
 }

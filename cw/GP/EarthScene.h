@@ -9,8 +9,8 @@ public:
 	EarthScene() {};
 	~EarthScene();
 
-	void Init(HWND* hwnd, Input* in, float *dt);
-	void ThreadFucntion();
+	void Init(HWND* hwnd, Input* in, float *dt, HDC	hdc, HGLRC hrc, HGLRC hrc2);
+	void ThreadFucntion(HDC	hdc, HGLRC hrc, HGLRC hrc2);
 	void Update();
 	void Render();	// render scene
 
