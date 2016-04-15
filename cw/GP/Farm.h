@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FARM_H_
+#define FARM_H_
+
 
 #include "Task.h"
 #include <queue>
@@ -25,3 +27,7 @@ private:
 
 };
 
+extern Farm farm; //define a global farm created to easily add tasks from different areas of the program
+//calling farm.run() will complete all tasks in the queue and can be called from different locations 
+
+#endif

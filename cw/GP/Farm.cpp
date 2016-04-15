@@ -18,7 +18,7 @@ void Farm::Run()
 {
 	
 
-	int numCores = 2;
+	int numCores = 4;
 
 	for (int i = 0; i < numCores; i++)
 		threads_.push_back(new std::thread(std::mem_fun(&Farm::WorkerFunction), this));

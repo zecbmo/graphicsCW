@@ -46,7 +46,6 @@ float Noise::SmoothNoise(float x, float y, float z)
 	value += (1 - fract_x) * fract_y * (1 - fract_z) * noise_[z2][y1][x2];
 	value += (1 - fract_x) * (1 - fract_y) * (1 - fract_z) * noise_[z2][y2][x2];
 
-
 	return value;
 	
 }
@@ -146,10 +145,10 @@ GLuint Noise::GetCloudNoiseTexture(float dt)
 
 	for (int y = 0; y < NOISE_HEIGHT; y+=amount)
 	{
-		tex_farm_.AddTask(new NoiseTextask(y, amount, this));
+		farm.AddTask(new NoiseTextask(y, amount, this));
 	}
 
-	tex_farm_.Run();
+	farm.Run();
 
 	the_clock::time_point end = the_clock::now();
 

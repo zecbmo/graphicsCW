@@ -176,6 +176,9 @@
     <ClCompile Include="NoiseSmoothTask.cpp">
       <Filter>Source Files\TaskFarm</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -297,6 +300,9 @@
     </ClInclude>
     <ClInclude Include="NoiseSmoothTask.h">
       <Filter>Source Files\TaskFarm</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

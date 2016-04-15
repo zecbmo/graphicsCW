@@ -19,6 +19,7 @@
 #include "SkyBox.h"
 #include "Floor.h"
 #include "Widget.h"
+#include "plane.h"
 
 #define COLOUR_DEPTH 16	//Colour depth
 /*
@@ -36,7 +37,7 @@
 •	Advance features such as shadows and use of the stencil buffer
 */
 
-enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE, TRON_SCENE};
+enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE, TRON_SCENE, LOADING_SCENE };
 
 enum MovementType {ROTATION, POSITION, SCALE};
 

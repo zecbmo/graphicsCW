@@ -1,7 +1,10 @@
 #include "SceneManager.h"
 
+Farm farm; //declare farm here as it is first class that uses it
+
 SceneManager::SceneManager()
 {
+	
 }
 
 SceneManager::~SceneManager()
@@ -15,9 +18,9 @@ void SceneManager::Init(HWND* hwnd, Input* input, float* dt)
 	hwnd_ = hwnd;
 	input_ = input;
 	dt_ = dt;
-	current_scene_ = new EarthScene;
-	current_scene_type_ = EARTH_SCENE;
+	current_scene_ = new LoadingScene;	
 	current_scene_->Init(hwnd_, input_, dt_);	
+	current_scene_type_ = current_scene_->GetSceneToLoad();
 }
 void SceneManager::Update()
 {
@@ -25,6 +28,13 @@ void SceneManager::Update()
 	{
 		LoadScene();
 	}
+
+	///farm add update for loading 
+	//farm you add init for other
+
+	//2 threads to signal
+
+	
 
 	current_scene_->Update();
 }

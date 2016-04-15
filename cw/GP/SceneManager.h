@@ -10,6 +10,7 @@
 #include "TestScene.h"
 #include "EarthScene.h"
 #include "TronScene.h"
+#include "LoadingScene.h"
 
 
 
@@ -28,6 +29,7 @@ public:
 private:
 	SceneType current_scene_type_;
 	Scene3D* current_scene_;
+	Scene3D* loading_scene_;
 	void LoadScene();
 	void CleanUp();
 	//used for initialisation of scenes

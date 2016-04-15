@@ -1,8 +1,62 @@
-﻿  Noise.cpp
-z:\coding\graphics cw\cw\gp\noise.cpp(12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(164): warning C4244: 'argument': conversion from '__int64' to 'const int', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(211): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(229): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(231): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-z:\coding\graphics cw\cw\gp\noise.cpp(239): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe
+﻿Build started 15/04/2016 11:22:11.
+     1>Project "M:\Desktop\graphics\cw3\cw\GP\GP.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IM:\Desktop\graphics\cw3\cw\GP\\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Scene3D.cpp
+         Scene3D.cpp
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(435): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(440): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(441): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(452): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(458): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(463): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(504): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(514): warning C4244: 'initializing' : conversion from 'LONG' to 'float', possible loss of data
+     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(515): warning C4244: 'initializing' : conversion from 'LONG' to 'float', possible loss of data
+       Link:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"M:\Desktop\graphics\cw3\cw\Debug\CW.exe" /INCREMENTAL /NOLOGO /LIBPATH:M:\Desktop\graphics\cw3\cw\GP\\lib winmm.lib opengl32.lib glu32.lib Msimg32.lib SOIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"M:\Desktop\graphics\cw3\cw\Debug\CW.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"M:\Desktop\graphics\cw3\cw\Debug\CW.lib" /MACHINE:X86 Debug\BaseColour.obj
+         Debug\Box.obj
+         Debug\Camera.obj
+         Debug\CameraManager.obj
+         Debug\Cone.obj
+         Debug\Cylinder.obj
+         Debug\EarthScene.obj
+         Debug\ErrorSystem.obj
+         Debug\Farm.obj
+         Debug\FloatingCamera.obj
+         Debug\FPS_CAMERA.obj
+         Debug\GameObject.obj
+         Debug\Input.obj
+         Debug\Light.obj
+         Debug\LoadingScene.obj
+         Debug\Main.obj
+         Debug\Materials.obj
+         Debug\Model.obj
+         Debug\Noise.obj
+         Debug\NoiseSmoothTask.obj
+         Debug\NoiseTexTask.obj
+         Debug\plane.obj
+         Debug\RotatingCamera.obj
+         Debug\Scene3D.obj
+         Debug\SceneManager.obj
+         Debug\Shapes.obj
+         Debug\SkyBox.obj
+         Debug\Task.obj
+         Debug\TestScene.obj
+         Debug\TextRenderer.obj
+         Debug\Timer.obj
+         Debug\TokenStream.obj
+         Debug\Floor.obj
+         Debug\TronDiscArena.obj
+         Debug\TronLight.obj
+         Debug\TronRecogniser.obj
+         Debug\TronScene.obj
+         Debug\TronWall.obj
+         Debug\TronWall2.obj
+         Debug\Vector3.obj
+         Debug\Widget.obj
+         GP.vcxproj -> M:\Desktop\graphics\cw3\cw\Debug\CW.exe
+     1>Done Building Project "M:\Desktop\graphics\cw3\cw\GP\GP.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.63
