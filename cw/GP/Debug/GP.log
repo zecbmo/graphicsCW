@@ -1,17 +1,17 @@
-﻿Build started 15/04/2016 11:22:11.
+﻿Build started 15/04/2016 15:29:10.
      1>Project "M:\Desktop\graphics\cw3\cw\GP\GP.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IM:\Desktop\graphics\cw3\cw\GP\\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Scene3D.cpp
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IM:\Desktop\graphics\cw3\cw\GP\\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt EarthScene.cpp LoadSceneTask.cpp LoadingScene.cpp Main.cpp Scene3D.cpp SceneManager.cpp TestScene.cpp TronScene.cpp
+         SceneManager.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         TronScene.cpp
+         TestScene.cpp
          Scene3D.cpp
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(435): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(440): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(441): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(452): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(458): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(463): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(504): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(514): warning C4244: 'initializing' : conversion from 'LONG' to 'float', possible loss of data
-     1>m:\desktop\graphics\cw3\cw\gp\scene3d.cpp(515): warning C4244: 'initializing' : conversion from 'LONG' to 'float', possible loss of data
+         Main.cpp
+         LoadingScene.cpp
+         LoadSceneTask.cpp
+         EarthScene.cpp
        Link:
          C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"M:\Desktop\graphics\cw3\cw\Debug\CW.exe" /INCREMENTAL /NOLOGO /LIBPATH:M:\Desktop\graphics\cw3\cw\GP\\lib winmm.lib opengl32.lib glu32.lib Msimg32.lib SOIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"M:\Desktop\graphics\cw3\cw\Debug\CW.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"M:\Desktop\graphics\cw3\cw\Debug\CW.lib" /MACHINE:X86 Debug\BaseColour.obj
          Debug\Box.obj
@@ -28,6 +28,7 @@
          Debug\Input.obj
          Debug\Light.obj
          Debug\LoadingScene.obj
+         Debug\LoadSceneTask.obj
          Debug\Main.obj
          Debug\Materials.obj
          Debug\Model.obj
@@ -59,4 +60,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.63
+Time Elapsed 00:00:02.96

@@ -16,8 +16,6 @@ void Farm::AddTask(Task *task)
 }
 void Farm::Run()
 {
-	
-
 	int numCores = 4;
 
 	for (int i = 0; i < numCores; i++)
@@ -29,7 +27,22 @@ void Farm::Run()
 	}
 
 	threads_.clear();
+}
+void Farm::StartTasks()
+{
+	int numCores = 2;
 
+	for (int i = 0; i < numCores; i++)
+		threads_.push_back(new std::thread(std::mem_fun(&Farm::WorkerFunction), this));
+}
+void Farm::EndTasks()
+{
+	for (int i = 0; i < threads_.size(); i++)
+	{
+		threads_[i]->join();
+	}
+
+	threads_.clear();
 }
 void Farm::WorkerFunction()
 {

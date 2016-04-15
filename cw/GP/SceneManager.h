@@ -11,6 +11,7 @@
 #include "EarthScene.h"
 #include "TronScene.h"
 #include "LoadingScene.h"
+#include "LoadSceneTask.h"
 
 
 
@@ -28,15 +29,18 @@ public:
 
 private:
 	SceneType current_scene_type_;
+	SceneType scene_to_load_type_;
+
 	Scene3D* current_scene_;
 	Scene3D* loading_scene_;
+	Scene3D*  scene_to_load_;
 	void LoadScene();
 	void CleanUp();
 	//used for initialisation of scenes
 	HWND* hwnd_;
 	Input* input_;
 	float* dt_;
-
+	bool loading_;
 	//list of different scenes in game
 
 };

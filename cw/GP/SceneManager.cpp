@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 
 Farm farm; //declare farm here as it is first class that uses it
-
+std::atomic<bool> scene_loaded = false;
 SceneManager::SceneManager()
 {
 	
@@ -18,9 +18,12 @@ void SceneManager::Init(HWND* hwnd, Input* input, float* dt)
 	hwnd_ = hwnd;
 	input_ = input;
 	dt_ = dt;
-	current_scene_ = new LoadingScene;	
+	current_scene_ = new TestScene;	
 	current_scene_->Init(hwnd_, input_, dt_);	
 	current_scene_type_ = current_scene_->GetSceneToLoad();
+	loading_scene_ = new LoadingScene;
+	loading_scene_->Init(hwnd_, input_, dt_);
+	loading_ = false;
 }
 void SceneManager::Update()
 {
@@ -28,62 +31,70 @@ void SceneManager::Update()
 	{
 		LoadScene();
 	}
-
-	///farm add update for loading 
-	//farm you add init for other
-
-	//2 threads to signal
+	wglMakeCurrent(current_scene_->hdc, current_scene_->hrc);
+	if (loading_ && scene_loaded)
+	{
+		
+		current_scene_ = scene_to_load_;
+		scene_to_load_ = NULL;
+		farm.EndTasks();
+		current_scene_->Init(hwnd_, input_, dt_);
+		current_scene_type_ = current_scene_->GetSceneToLoad();		
+		loading_ = false; //local conrtoller
+		scene_loaded = false; //global conrtoller
+	}
+	
+	current_scene_->Update();
+	
 
 	
 
-	current_scene_->Update();
+	
 }
 void SceneManager::LoadScene()
 {
-	current_scene_type_ = current_scene_->GetSceneToLoad();
+	scene_to_load_type_ = current_scene_->GetSceneToLoad();
+	current_scene_type_ = LOADING_SCENE;
 	delete current_scene_;
-	switch (current_scene_type_)
+	switch (scene_to_load_type_)
 	{
 	case TESTING_SCENE:
-		current_scene_ = new TestScene;
+		scene_to_load_ = new TestScene;
 		break;
 	case OPTIONS_SCENE:
 		break;
 	case LEVEL_SCENE:
 		break;
 	case BASE_SCENE:
-		current_scene_ =  new Scene3D;
+		scene_to_load_ = new Scene3D;
 		break;
 	case EARTH_SCENE:
-		current_scene_ = new EarthScene;
+		scene_to_load_ = new EarthScene;
 		break;
 	case TRON_SCENE: 
-		current_scene_ = new TronScene;
+		scene_to_load_ = new TronScene;
 		break;
 	default:
 		break;
 	}
 
-	if (current_scene_->IsLoaded())
-	{
-		current_scene_->SetSceneToLoad(current_scene_type_); 
-		//sets the enum type to match the scene being loaded. 
-		//eg if tests scene loads the base scene... it's scene to load variable becomes BASE_SCENE
-		//when we reload test scene this needs to be switched back to TEST_SCENE
-	}
-	else
-	{
-		//create two threads. 
-		//one that initialises the scene
-		//one that displays a loading screen
-		//the init thread will signal to the other thread when it is finished loading
-		//the init thread will continue on as the main thread
+	current_scene_ = loading_scene_;
+	
 
-		current_scene_->Init(hwnd_, input_, dt_);
-	}
+	//add the loading 
+	farm.AddTask(new LoadSceneTask(scene_to_load_));
+	//add update task to display loading screen
+	//farm.AddTask(new DisplayLoadingScreen(current_scene_));
+	farm.StartTasks();
+	loading_ = true;
+	
+	
 }
 void SceneManager::CleanUp()
 {
+	delete loading_scene_;
+	loading_scene_ = NULL;
+
 	delete current_scene_;
 	current_scene_ = NULL;
 }

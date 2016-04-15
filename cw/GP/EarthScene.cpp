@@ -43,20 +43,7 @@ void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
 
 	glEnable(GL_TEXTURE_2D);
 	
-	earth_texture_ = SOIL_load_OGL_texture
-	(
-		"Textures/earth.bmp",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
-		SOIL_FLAG_COMPRESS_TO_DXT
 
-	);
-
-	if (SOIL_last_result() == "Unable to open file")
-	{
-		error::ErrorMessage("Texture not loaded.");
-	}
 	
 	title_ = "Earth and Animated 3D noise clouds";
 	cloud_noise_.GenerateNoise();
@@ -76,7 +63,25 @@ void EarthScene::Init(HWND * hwnd, Input * in, float * dt)
 	default_material_.SetAmbientColour(0, 0, 0, 1);
 	
 }
+void EarthScene::ThreadFucntion()
+{
+	wglMakeCurrent(hdc, hrc2);
+	earth_texture_ = SOIL_load_OGL_texture
+		(
+		"Textures/earth.bmp",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
+		SOIL_FLAG_COMPRESS_TO_DXT
 
+		);
+
+	if (SOIL_last_result() == "Unable to open file")
+	{
+		error::ErrorMessage("Texture not loaded.");
+	}
+	wglMakeCurrent(NULL, NULL);
+}
 void EarthScene::Update()
 {
 	SharedControls();

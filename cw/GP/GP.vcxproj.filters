@@ -179,6 +179,9 @@
     <ClCompile Include="LoadingScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="LoadSceneTask.cpp">
+      <Filter>Source Files\TaskFarm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -303,6 +306,9 @@
     </ClInclude>
     <ClInclude Include="LoadingScene.h">
       <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadSceneTask.h">
+      <Filter>Source Files\TaskFarm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

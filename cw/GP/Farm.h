@@ -18,6 +18,8 @@ public:
 
 	void AddTask(Task *task);
 	void Run();
+	void StartTasks();
+	void EndTasks();
 
 private:
 	std::mutex queueLock_;

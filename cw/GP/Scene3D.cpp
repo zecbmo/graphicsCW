@@ -66,6 +66,20 @@ void Scene3D::InitializeOpenGL(int width, int height)
         PostQuitMessage (0);
 
     hrc = wglCreateContext(hdc);	//  creates  rendering context from  hdc
+	hrc2 = wglCreateContext(hdc);
+	bool error = wglShareLists(hrc2, hrc);
+	if (error == FALSE)
+	{
+		DWORD errorCode = GetLastError();
+		LPVOID lpMsgBuf;
+		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
+		MessageBox(NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION);
+		LocalFree(lpMsgBuf);
+		//Destroy the GL context and just use 1 GL context
+		wglDeleteContext(hrc2);
+	}
+
     wglMakeCurrent(hdc, hrc);		//	Use this HRC.
 
 	ResizeGLWindow(width, height);	// Setup the Screen

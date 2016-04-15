@@ -50,12 +50,19 @@ public:
 	Scene3D() { is_loaded_ = false; };
 	virtual ~Scene3D() {};
 	virtual void Init(HWND* hwnd, Input* in, float *dt);	//initialse function
+	virtual void ThreadFucntion(){};
 	virtual void Update();
 	virtual void Render();	// render scene
+	
 	void Resize();
 	inline SceneType GetSceneToLoad() { return scene_to_load_; };
 	inline void SetSceneToLoad(SceneType type) { scene_to_load_ = type; };
 	inline bool IsLoaded() { return is_loaded_; };
+
+
+	HDC	hdc;
+	HGLRC hrc;			//hardware RENDERING CONTEXT
+	HGLRC hrc2;
 
 protected:
 	bool CreatePixelFormat(HDC hdc);
@@ -80,8 +87,8 @@ protected:
 	HWND* hwnd_;
 	Input* input_;
 	RECT screenRect;
-	HDC	hdc;
-	HGLRC hrc;			//hardware RENDERING CONTEXT
+	
+	
 	int s_wdith, s_height;
 	float* dt_;
 	SceneType scene_to_load_;
