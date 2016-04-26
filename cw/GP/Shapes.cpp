@@ -38,6 +38,10 @@ void Shapes::CreateShape(ShapesType type, float resolution)
 		InitPlane(resolution);
 		is_quad_ = true;
 		break;
+	case PLANE_BIG:
+		InitBigPlane(resolution);
+		is_quad_ = true;
+		break;
 	case SPHERE_HALF_UV:
 		InitSphere(resolution);
 		is_quad_ = true;
@@ -735,7 +739,81 @@ void Shapes::InitPlane(float resolution)
 	}
 
 }
+void Shapes::InitBigPlane(float resolution)
+{
+	float x = 0;
+	float y = 0;
+	float z = 0;
 
+	
+	for (int j = 0; j < resolution; j++)
+	{
+		for (int i = 0; i < resolution; i++)
+		{
+			vertices_.push_back(x);
+			vertices_.push_back(y);
+			vertices_.push_back(z);
+
+			vertices_.push_back(x + 1);
+			vertices_.push_back(y);
+			vertices_.push_back(z);
+
+			vertices_.push_back(x + 1);
+			vertices_.push_back(y);
+			vertices_.push_back(z + 1);
+
+			vertices_.push_back(x);
+			vertices_.push_back(y);
+			vertices_.push_back(z + 1);
+
+			//{
+			//	x, y, z,//bottom left		
+			//	x + 1, y, z, //top left
+			//	x + 1, y, z + 1,  //top right
+			//	x, y, z + 1	//bottom right
+			//};
+
+			UVs_.push_back(0);
+			UVs_.push_back(1);
+
+			UVs_.push_back(0);
+			UVs_.push_back(0);
+
+			UVs_.push_back(1);
+			UVs_.push_back(0);
+
+			UVs_.push_back(1);
+			UVs_.push_back(1);
+
+
+
+
+			//UVs_ =
+			//{
+			//	0, 1 * resolution, //bottom left	
+			//	0, 0, //top left
+			//	1 * resolution, 0, //top right
+			//	1 * resolution, 1 * resolution, //bottom right
+			//};
+			//add normals to each of the 4 corners
+			for (int i = 0; i < 4; i++)
+			{
+				normals_.push_back(0);
+				normals_.push_back(1);
+				normals_.push_back(0);
+
+			}
+
+			x += 1;
+			
+		}
+		z += 1;
+		x = 0;
+	}
+
+
+	
+}
 void Shapes::CreateCylinder(float resolution, float height)
 {
 	is_quad_ = true;

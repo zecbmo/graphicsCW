@@ -14,7 +14,10 @@ bool Model::Load(char* modelFilename, char* textureFilename)
 	}
 
 	// Load the texture for this model.
-	LoadTexture(textureFilename);
+	LoadTextureMod(textureFilename);
+	
+	scale_ = Vector3(1, 1, 1);
+	material_.Init(DEFAULT, WHITE);
 	
 	return true;
 }
@@ -43,6 +46,10 @@ void Model::Render()
 	//	glNormal3f(nX, nY, nZ);
 	//	glVertex3f(vX, vY, vZ);
 	//}
+	BeginObjectDrawing();
+
+	glBindTexture(GL_TEXTURE_2D, texture_);
+	material_.BindMaterial();
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -53,7 +60,7 @@ void Model::Render()
 	glNormalPointer(GL_FLOAT, 0, normals.data());
 
 
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, texture_);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glDrawArrays(GL_TRIANGLES, 0, vertex.size()/3); //vertex size / 3
@@ -66,8 +73,8 @@ void Model::Render()
 	
 
 
-	//glEnd();
 
+	EndObjectDrawing();
 
 }
 
@@ -232,10 +239,10 @@ bool Model::LoadModel(char* filename)
     return true;
 }
 
-void Model::LoadTexture(char* filename)
+void Model::LoadTextureMod(char* filename)
 {
 
-	texture = SOIL_load_OGL_texture
+	texture_ = SOIL_load_OGL_texture
 	(
 		filename,
 		SOIL_LOAD_AUTO,
@@ -244,7 +251,7 @@ void Model::LoadTexture(char* filename)
 	);
 
 	//check for an error during the load process
-	if(texture==0 )
+	if(texture_==0 )
 	{
 		printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
 	}

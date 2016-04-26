@@ -20,7 +20,9 @@
 #include "Floor.h"
 #include "Widget.h"
 #include "plane.h"
-
+#include "Sphere.h"
+#include "NewFloor.h"
+#include "Box.h"
 #define COLOUR_DEPTH 16	//Colour depth
 /*
 •	The scene must show lighting from at least 1 light source.Preferably multiple lights or different types, colours and some animated.
@@ -37,7 +39,7 @@
 •	Advance features such as shadows and use of the stencil buffer
 */
 
-enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE, TRON_SCENE, LOADING_SCENE };
+enum SceneType { TESTING_SCENE, OPTIONS_SCENE, LEVEL_SCENE, BASE_SCENE, EARTH_SCENE, TRON_SCENE, LOADING_SCENE, ROBOT_ARM, SPONGEBOB};
 
 enum MovementType {ROTATION, POSITION, SCALE};
 
@@ -109,6 +111,7 @@ protected:
 
 	GameObject* object_tracker_;
 	Widget widget_;
+	
 	
 
 };

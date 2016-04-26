@@ -20,14 +20,53 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt, HDC	hdc, HGLRC hrc, HGLRC 
 	
 	//////// Lighting
 	glEnable(GL_LIGHTING);
-	light_.Init(GL_LIGHT0, DIRECTIONAL_LIGHT);
-	//light_.SetColourByTemplate(BLUE);
+	light_.Init(GL_LIGHT0, POINT_LIGHT);
+	
+	light_point_.Init(GL_LIGHT1, POINT_LIGHT);
+	light_point2_.Init(GL_LIGHT3, POINT_LIGHT);
+	light_point3_.Init(GL_LIGHT4, POINT_LIGHT);
+	light_point4_.Init(GL_LIGHT5, POINT_LIGHT);
+	light_spot_.Init(GL_LIGHT2, SPOT_LIGHT);
+	light_spot2_.Init(GL_LIGHT6, SPOT_LIGHT);
+
+
 	light_.SetPosition(Vector3(0.0f, 10.0f, 0.0f));
 	light_.SetAllValues(1, 1, 1, 1);
 	light_.ResetAmbientToZero();
-	/////// Materials 
-	//glEnable(GL_COLOR_MATERIAL);
+	
+	
 
+
+	light_point_.SetPosition(Vector3(20.0f, 3.0f, 0.0f));
+	light_point_.SetAllValues(1, 1, 1, 1);
+	light_point_.SetAllAttenuations(0.5, 0, 0.2);
+
+	light_point2_.SetPosition(Vector3(20.0f, 3.0f, 5.0f));
+	light_point2_.SetAllValues(1, 1, 1, 1);
+	light_point2_.SetAllAttenuations(0.5, 0, 0.2);
+
+	light_point3_.SetPosition(Vector3(20.0f, 3.0f, -5.0f));
+	light_point3_.SetAllValues(1, 1, 1, 1);
+	light_point3_.SetAllAttenuations(0.5, 0, 0.2);
+
+	light_point4_.SetPosition(Vector3(-20.0f, 5.0f, 0.0f));
+	light_point4_.SetAllValues(1, 1, 1, 1);
+	light_point4_.SetAllAttenuations(0.5, 0, 0.1);
+
+
+	light_spot_.SetPosition(Vector3(30.0f, 1.0f, 0.0f));
+	light_spot_.SetAllValues(1, 1, 1, 1);
+	light_spot_.SetSpotDirection(Vector3(1, 0, 0));
+	light_spot_.SetAllAttenuations(0.5, 0, 0.2);
+	light_spot_.SetSpotCutoff(20);
+	light_spot_.SetSpotExponent(00);
+
+	light_spot2_.SetPosition(Vector3(30.0f, 10.0f, 5.0f));
+	light_spot2_.SetAllValues(1, 1, 1, 1);
+	light_spot2_.SetSpotDirection(Vector3(0, -1, 0));
+	light_spot2_.SetAllAttenuations(0.5, 0, 0.2);
+	light_spot2_.SetSpotCutoff(20);
+	light_spot2_.SetSpotExponent(0);
 	/////// Textures 
 	//cameras
 	camera_manager_.Init(input_, dt, &screenRect, hwnd_);
@@ -55,12 +94,13 @@ void TestScene::Init(HWND* wnd, Input* in, float* dt, HDC	hdc, HGLRC hrc, HGLRC 
 
 
 	
-
+	sphere_.Init(Colour_RGBA(1,1,1,1));
+	sphere_.GetMaterial()->SetDirectColourControl(true);
 	
 	//disc_.CreateShape(CUBE_CT);
 
 	
-
+	glEnable(GL_COLOR_MATERIAL);
 	//camera_manager_.GetCamera("floating one")->SetSensitivity(5);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
@@ -76,13 +116,13 @@ void TestScene::ThreadFucntion(HDC	hdc, HGLRC hrc, HGLRC hrc2)
 
 	title_ = "Testing Scene";
 
-	custom_.CreateShape(CUBE_CT);
+	custom_.CreateShape(CUBE_ST);
 
 	cloud_noise_.GenerateNoise();
 
 	text = SOIL_load_OGL_texture
 		(
-		"Textures/day_skybox.png",
+		"Textures/crate.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
@@ -91,8 +131,14 @@ void TestScene::ThreadFucntion(HDC	hdc, HGLRC hrc, HGLRC hrc2)
 		);
 	//std::string temp = SOIL_last_result();
 	int lklk = 0;
-	floor_.Init(1, 1, "Textures/tronfloor.png");
+	floor_.Init(100,  "Textures/tronfloor.png");
+	floor_.SetPosition(Vector3(-50, -1, -50));
+	moveF = 0;
+	moveR = 0;
+	speed_ = 1;
 
+	box_.Init("Textures/crate.png");
+	MakeManyCubes();
 	wglMakeCurrent(NULL, NULL);
 }
 void TestScene::Update()
@@ -117,13 +163,41 @@ void TestScene::Update()
 	{
 		camera_manager_.ChangeCamera("fps one");
 	}
+	
+	RotateLight();
+
+	if (timer_ > 1.0)
+	{
+		float r = RandomNumber(1, 100) / 100.0;
+		float g = RandomNumber(1, 100) / 100.0;
+		float b = RandomNumber(1, 100) / 100.0;
+
+		light_point_.SetAllValues(Colour_RGBA(r, g, b, 1));
+
+		r = RandomNumber(1, 100) / 100.0;
+		g = RandomNumber(1, 100) / 100.0;
+		b = RandomNumber(1, 100) / 100.0;
+		light_point2_.SetAllValues(Colour_RGBA(r, g, b, 1));
+
+		r = RandomNumber(1, 100) / 100.0;
+		g = RandomNumber(1, 100) / 100.0;
+		b = RandomNumber(1, 100) / 100.0;
+		light_point3_.SetAllValues(Colour_RGBA(r, g, b, 1));
+		timer_ = 0;
+	}
 
 
+	timer_ += *dt_;
 
+	//light_spot_.SetSpotDirection(camera_manager_.CurrentCamera()->GetForwardVec());
+	//light_spot_.SetPosition(camera_manager_.CurrentCamera()->GetPosition());
+
+
+	//GameObjectMover(floor_);
 
 	Render();
 }
-float rot = 0;
+
 void TestScene::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clear The Screen And The Depth Buffer
@@ -137,123 +211,84 @@ void TestScene::Render()
 	sky_box_.Render(camera_manager_.CurrentCamera()->GetPosition());
 	//Light done first	
 	int tempNm = GL_LIGHT0;
-	light_.Debug(true);
-	
-
-
-	//glDisable(GL_LIGHTING);
-	//GLUquadricObj *qObj = gluNewQuadric();
-	//gluQuadricNormals(qObj, GLU_SMOOTH);
-	//gluQuadricTexture(qObj, GL_TRUE);
-	////light_.Render();
-
-	//Material temp;
-
-	//temp.Init(EMERALD, BLACK);
-	//temp.SetDirectColourControl(true);
-
-	//temp.BindMaterial();
-	//glPushMatrix();
-	//glTranslatef(-5, 0, 0);
-	//gluSphere(gluNewQuadric(), 1, 20, 20);
-	//glPopMatrix();
-
-	//temp.SetMaterialByTemplate(JADE);
-
-	//temp.SetColourByTemplate(BROWN);
-	//temp.BindMaterial();
-	//glPushMatrix();
-	//glTranslatef(-2.5, 0, 0);
-	//gluSphere(gluNewQuadric(), 1, 20, 20);
-	//glPopMatrix();
-
-	//glEnable(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, text);
-	//temp.SetMaterialByTemplate(PLASTIC);
-	//temp.SetColour(Colour_RGBA(1, 1, 1, 1));
-	//temp.SetDirectColourControl(false);
-	//temp.BindMaterial();
-
-	//glPushMatrix();
-	//glTranslatef(0, 2, 0);
-	//gluSphere(qObj, 1, 40, 40);
-	//glPopMatrix();
-
-
-	//temp.SetMaterialByTemplate(RUBY);
-	//temp.SetColourByTemplate(ORANGE);
-
-	//temp.BindMaterial();
-
-	//glPushMatrix();
-	//glTranslatef(2.5, 0, 0);
-	//gluSphere(gluNewQuadric(), 1, 20, 20);
-	//glPopMatrix();
-	//////////////////////////////////////////////////////////////////////////////////
-	
-	//////////////////////shadows
-	glPushMatrix();
-	DrawShadowMatrixScene();
 	light_.Render();
-	//
-	//for(int i = 0; i < 50; i++)
-	//{
-	//	for (int j = 0; j < 50; j++)
-	//	{
-	//		glPushMatrix();
-	//		glTranslatef(i,0,j);
-	//		floor_.Render();
-	//		glPopMatrix();
-	//	}
-	//}
-	////////////////////////////////////////////////////////////////////////////
-	//temp.SetMaterialByTemplate(GOLD, WHITE);
-	//temp.BindMaterial();
+	light_.Debug(true);
 
-	//GLuint text2 = cloud_noise_.GetCloudNoiseTexture(*dt_);
+	light_point_.Render();
+	light_point_.Debug(true);
 
-	//glDisable(GL_LIGHTING);
-	//glPushMatrix();
-	//glBindTexture(GL_TEXTURE_2D, text);
-	//glTranslatef(5, 5, 0);
-	//glRotatef(-20, 0, 1, 0);
-	//glScalef(5, 5, 5);
-	//disc_.Draw();
-	//glPopMatrix();
-	//glEnable(GL_LIGHTING);
+	light_point2_.Render();
+	light_point2_.Debug(true);
 
-	
-	/////custom shapes
+	light_point3_.Render();
+	light_point3_.Debug(true);
 
+	light_point4_.Render();
+	light_point4_.Debug(true);
+
+
+	light_spot_.Render();
+	light_spot_.Debug(true);
+
+	light_spot2_.Render();
+	light_spot2_.Debug(true);
+
+	floor_.Render();
 	
 
 	
-	glPopMatrix();
+	DrawShadowMatrixScene();
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(JADE);
+	sphere_.SetPosition(Vector3(-21, 2, 0));
+	sphere_.Render();
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(PLASTIC);
+	sphere_.SetPosition(Vector3(-21, 2, 2));
+	sphere_.Render();
+
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(GOLD);
+	sphere_.SetPosition(Vector3(-21, 2, -2));
+	sphere_.Render();
+
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(BRONZE);
+	sphere_.SetPosition(Vector3(-21, 2, 4));
+	sphere_.Render();
+
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(COPPER);
+	sphere_.SetPosition(Vector3(-21, 2, -4));
+	sphere_.Render();
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(SILVER);
+	sphere_.SetPosition(Vector3(-19, 2, 0));
+	sphere_.Render();
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(TURQUOISE);
+	sphere_.SetPosition(Vector3(-19, 2, 2));
+	sphere_.Render();
+
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(RUBY);
+	sphere_.SetPosition(Vector3(-19, 2, -2));
+	sphere_.Render();
+
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(PEARL);
+	sphere_.SetPosition(Vector3(-19, 2, 4));
+	sphere_.Render();
+
+
+	sphere_.GetMaterial()->SetMaterialByTemplate(OBSIDIAN);
+	sphere_.SetPosition(Vector3(-19, 2, -4));
+	sphere_.Render();
 	glPushMatrix();
-	glTranslatef(4,0,0);
-	gluSphere(gluNewQuadric(),2,20,20);
+	glTranslatef(0, 10, 20);
+	glCallList(cubes_);
 	glPopMatrix();
-	/*glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glEnable(GL_BLEND);
-	glBindTexture(GL_TEXTURE_2D, text2);
-
-	rot+= 5 * *dt_;
-	glPushMatrix();
-	glTranslatef(0, 2, 0);
-	glRotatef(rot, 0, 1, 0);
-	glRotatef(90, 1, 0, 0);
-
-	gluSphere(qObj, 1.004, 40, 40);
-	glPopMatrix();
-
-	glBindTexture(GL_TEXTURE_2D, NULL);
-	glDisable(GL_BLEND);*/
-	//Render HUD last
-
+//	DisplayHUD(camera_manager_.CurrentCamera());
 	SwapBuffers(hdc_);// Swap the frame buffers.
 }
 void TestScene::DrawShadowMatrixScene()
@@ -292,13 +327,13 @@ void TestScene::DrawShadowMatrixScene()
 	GenerateShadowMatrix(matrix, Light_Position, v0, v1, v2);
 
 	//draw floor
-	glBegin(GL_QUADS);
-	glNormal3f(0.0, 1.0, 0.0);
-	glVertex3f(-5.0, -1.0, -5.0);
-	glVertex3f(-5.0, -1.0, 5.0);
-	glVertex3f(5.0, -1.0, 5.0);
-	glVertex3f(5.0, -1.0, -5.0);
-	glEnd();
+	//glBegin(GL_QUADS);
+	//glNormal3f(0.0, 1.0, 0.0);
+	//glVertex3f(-5.0, -1.0, -5.0);
+	//glVertex3f(-5.0, -1.0, 5.0);
+	//glVertex3f(5.0, -1.0, 5.0);
+	//glVertex3f(5.0, -1.0, -5.0);
+	//glEnd();
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
@@ -385,4 +420,76 @@ void TestScene::GenerateShadowMatrix(float matrix[16], float light_pos[4], GLflo
 	matrix[13] = -d * y;
 	matrix[14] = -d * z;
 	matrix[15] = -(a * x + b * y + c * z);
+}
+void TestScene::RotateLight()
+{
+	GLdouble cX = 0;      // x coordinate of circle center
+	GLdouble cY = 0;
+	GLdouble cZ = 0;     // y coordinate of circle center
+						 //GLdouble step = 15;  // amount to add to theta each time (degrees)
+	GLdouble radius = 10;
+
+
+	//	move = move*6.28;
+	//	moveR = moveR*3.14;
+
+	GLdouble X = cX + (radius*cos(moveF*6.28))*(sin(moveR*6.28));
+	GLdouble Y = cY + (radius*sin(moveF*6.28))*(sin(moveR*6.28));
+
+	GLdouble Z = cZ + radius*cos(moveR*6.28);
+
+	GLdouble fakePI = 3.14 / 180;
+
+	if (input_->IsKeyDown(VK_RIGHT))
+	{
+
+		moveR += speed_**dt_;
+
+	}
+	if (input_->IsKeyDown(VK_LEFT))
+	{
+		moveR -= speed_**dt_;
+
+	}
+
+
+	light_.SetPosition(Vector3(X, 10, Z));
+
+}
+int TestScene::RandomNumber(int min, int max)
+{
+	
+	return min+ rand()%(max -min);
+}
+void TestScene::MakeManyCubes()
+{
+
+
+	cubes_ = glGenLists(1);
+	glNewList(cubes_, GL_COMPILE);
+
+	glMatrixMode(GL_MODELVIEW);
+
+	for (int j = -10; j < 10; j += 2)
+	{
+		for (int i = -10; i < 10; i += 2)
+		{
+			for (int k = -10; k < 10; k += 2)
+			{
+				glPushMatrix();
+				glTranslatef(i * 1, k * 1, j * 1);
+
+
+				glPushMatrix();
+				box_.Render();
+				glPopMatrix();
+						
+			}
+
+		}
+	}
+
+
+	glEndList();
+
 }

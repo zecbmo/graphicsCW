@@ -39,9 +39,9 @@ void SceneManager::Init(HWND* hwnd, Input* input, float* dt)
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 
-	current_scene_ = new TestScene;
+	current_scene_ = new MenuScene;
 	current_scene_->Init(hwnd_, input_, dt_, hdc, hrc, hrc2);
-	current_scene_type_ = LOADING_SCENE;
+	current_scene_type_ = LOADING_SCENE; //set to loading scene to init threads
 	loading_scene_ = new LoadingScene;
 	loading_scene_->Init(hwnd_, input_, dt_, hdc, hrc, hrc2);
 	loading_ = false;
@@ -141,7 +141,8 @@ void SceneManager::LoadScene()
 	case TESTING_SCENE:
 		scene_to_load_ = new TestScene;
 		break;
-	case OPTIONS_SCENE:
+	case OPTIONS_SCENE: 
+		scene_to_load_ = new MenuScene;
 		break;
 	case LEVEL_SCENE:
 		break;
@@ -153,6 +154,12 @@ void SceneManager::LoadScene()
 		break;
 	case TRON_SCENE: 
 		scene_to_load_ = new TronScene;
+		break;
+	case ROBOT_ARM:
+		scene_to_load_ = new RobotScene;
+		break;
+	case SPONGEBOB:
+		scene_to_load_ = new SpongebobScene;
 		break;
 	default:
 		break;

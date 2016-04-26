@@ -12,9 +12,9 @@
 #include "TronScene.h"
 #include "LoadingScene.h"
 #include "LoadSceneTask.h"
-
-
-
+#include "RobotArm.h"
+#include "Spongebob.h"
+#include "MenuScene.h"
 
 class SceneManager
 {

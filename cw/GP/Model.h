@@ -15,22 +15,23 @@ using namespace std;
 #include <vector>
 #include "Vector3.h"
 #include "SOIL.h"
+#include "GameObject.h"
 
-class Model
+class Model : public GameObject
 {
 
 public:
 	
-	bool Load(char*, char*);
+	bool Load(char*  modelFilename, char* textureFilename);
 	void Render();
 	
 private:
 	
-	void LoadTexture(char*);
+	void LoadTextureMod(char*);
 	bool LoadModel(char*);
 	
 	int m_vertexCount;
-	GLuint texture;
+	
 
 	int numOfPolygons;
 	vector<float> vertex, normals, texCoords;

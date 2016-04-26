@@ -182,6 +182,21 @@
     <ClCompile Include="LoadSceneTask.cpp">
       <Filter>Source Files\TaskFarm</Filter>
     </ClCompile>
+    <ClCompile Include="RobotArm.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Spongebob.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="NewFloor.cpp">
+      <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseColour.h">
@@ -309,6 +324,21 @@
     </ClInclude>
     <ClInclude Include="LoadSceneTask.h">
       <Filter>Source Files\TaskFarm</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotArm.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Spongebob.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="NewFloor.h">
+      <Filter>Source Files\Scenes\SharedGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

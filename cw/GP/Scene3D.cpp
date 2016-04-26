@@ -172,23 +172,36 @@ void Scene3D::SharedControls()
 
 	if (input_->IsKeyDown('1'))
 	{
-		scene_to_load_ = TESTING_SCENE;
+		scene_to_load_ = TRON_SCENE;
 		input_->SetKeyUp('1');
 	}
 	
 	if (input_->IsKeyDown('2'))
 	{
-		scene_to_load_ = TRON_SCENE;
+		scene_to_load_ = EARTH_SCENE;
 		input_->SetKeyUp('2');
 	}
 
 	if (input_->IsKeyDown('3'))
 	{
-		scene_to_load_ = EARTH_SCENE;
+		scene_to_load_ = ROBOT_ARM;
 		input_->SetKeyUp('3');
 	}
-
-
+	if (input_->IsKeyDown('4'))
+	{
+		scene_to_load_ = SPONGEBOB;
+		input_->SetKeyUp('4');
+	}
+	if (input_->IsKeyDown('5'))
+	{
+		scene_to_load_ = TESTING_SCENE;
+		input_->SetKeyUp('5');
+	}
+	if (input_->IsKeyDown('6'))
+	{
+		scene_to_load_ = OPTIONS_SCENE;
+		input_->SetKeyUp('6');
+	}
 
 	if (wireframe_)
 	{
