@@ -1,4 +1,0 @@
-﻿  SceneManager.cpp
-z:\coding\graphics cw\cw\gp\input.h(14): warning C4091: 'typedef ': ignored on left of 'Input::Mouse' when no variable is declared
-z:\coding\graphics cw\cw\gp\scenemanager.cpp(59): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
-  GP.vcxproj -> Z:\Coding\Graphics CW\cw\Debug\CW.exe
